@@ -11,17 +11,8 @@
  * ──────────────────────────────────────────────────────────
  */
 
-// ⚠️ Замените YOUR_FORM_ID на реальный ID формы с formspree.io
-// Пример: 'https://formspree.io/f/xpwzabcd'
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
-
-// Проверка при запуске: предупреждаем разработчика если ID не заменён
-if (FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
-  console.warn(
-    '[Форма записи] Formspree не настроен! Зарегистрируйтесь на https://formspree.io, ' +
-    'создайте форму для natalyapodolog@yandex.ru и замените YOUR_FORM_ID в js/form.js'
-  );
-}
+// Реальный Formspree endpoint — письма приходят на natalyapodolog@yandex.ru
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mojpaqgd';
 
 document.addEventListener('DOMContentLoaded', () => {
   initBookingForm();
@@ -159,9 +150,18 @@ function handleFormSubmit(form, successEl) {
 
   const fd = new FormData(form);
   const service = fd.get('service') || '';
+  const email = fd.get('email') || '';
 
   // Тема письма
   fd.append('_subject', `Новая запись на приём — ${service}`);
+
+  // Если клиент указал email — использовать как reply-to
+  if (email) {
+    fd.append('_replyto', email);
+  }
+
+  // Отключаем honeypot/CAPTCHA страницу — работаем через JSON API
+  fd.append('_captcha', 'false');
 
   fetch(FORMSPREE_ENDPOINT, {
     method: 'POST',

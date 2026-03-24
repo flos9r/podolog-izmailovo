@@ -409,9 +409,10 @@ function initReviewsSlider() {
     const max = getMax();
     current = Math.max(0, Math.min(index, max));
 
-    const cardWidth = track.querySelector('.review-card')?.offsetWidth || 0;
-    const gap = 24;
-    track.style.transform = `translateX(-${current * (cardWidth + gap)}px)`;
+    // Используем offsetLeft карточки для точного позиционирования
+    const targetCard = track.querySelectorAll('.review-card')[current];
+    const offset = targetCard ? targetCard.offsetLeft : 0;
+    track.style.transform = `translateX(-${offset}px)`;
 
     dotsContainer?.querySelectorAll('.reviews__dot').forEach((dot, i) => {
       dot.classList.toggle('is-active', i === current);
