@@ -88,15 +88,22 @@ const siteData = {
   ],
 
   prices: [
-    { service: "Консультация", price: "1 500 ₽", duration: "30 мин" },
-    { service: "Первичный приём", price: "2 500 ₽", duration: "60–90 мин" },
-    { service: "Повторный приём", price: "2 000 ₽", duration: "45–60 мин" },
-    { service: "Обработка вросшего ногтя", price: "3 000 ₽", duration: "40–60 мин" },
-    { service: "Удаление мозолей и натоптышей", price: "2 000 ₽", duration: "30–45 мин" },
-    { service: "Обработка стоп", price: "2 500 ₽", duration: "45–60 мин" },
-    { service: "Медицинский педикюр", price: "3 500 ₽", duration: "60–90 мин" },
-    { service: "Установка корректирующей системы", price: "4 000 ₽", duration: "30–45 мин" },
-    { service: "Лечение грибка ногтей", price: "2 500 ₽", duration: "45–60 мин" },
+    { service: "Консультация подолога", price: "2 300 ₽", duration: "30 мин" },
+    { service: "Обработка стопы (с дерматомикозом)", price: "2 500–4 000 ₽", duration: "60–90 мин" },
+    { service: "Обработка стопы", price: "3 500–4 500 ₽", duration: "60–90 мин" },
+    { service: "Обработка ногтей", price: "3 000–3 500 ₽", duration: "45–60 мин" },
+    { service: "Обработка вросшего ногтя", price: "2 800–3 500 ₽", duration: "40–60 мин" },
+    { service: "Обработка мозоли", price: "2 800 ₽", duration: "30–45 мин" },
+    { service: "Педикюр", price: "от 4 000 ₽", duration: "60–90 мин" },
+    { service: "Обработка детских ногтей", price: "1 500 ₽", duration: "30–45 мин" },
+    { service: "Протезирование ногтевой пластины", price: "1 500 ₽", duration: "30–45 мин" },
+    { service: "Тампонирование", price: "2 200 ₽", duration: "20–30 мин" },
+    { service: "Тейпирование", price: "700–1 000 ₽", duration: "15–20 мин" },
+    { service: "Повязка повторная", price: "от 1 500 ₽", duration: "15–20 мин" },
+    { service: "Повязка разгрузочная", price: "от 2 000 ₽", duration: "20–30 мин" },
+    { service: "Снятие искусственного материала", price: "700 ₽", duration: "15–20 мин" },
+    { service: "Парафинотерапия", price: "1 200 ₽", duration: "20–30 мин" },
+    { service: "Взятие материала на анализ", price: "1 000 ₽", duration: "10–15 мин" },
   ],
 
   gallery: [
@@ -210,18 +217,17 @@ const siteData = {
   ],
 
   contacts: {
-    // TODO: Замените placeholder на реальный номер телефона перед публикацией
-    phone: "+7 (XXX) XXX-XX-XX",
-    phoneDisplay: "+7 (XXX) XXX-XX-XX",
+    phone: "+79197616401",
+    phoneDisplay: "+7 (919) 761-64-01",
     email: "info@podolog-izmailovo.ru",
-    whatsapp: "",
+    whatsapp: "79197616401",
     telegram: "",
     instagram: "",
-    address: "Москва, район Измайлово",
-    addressFull: "г. Москва, район Измайлово",
+    address: "ул. 5-ая Парковая, д 62Б, Москва",
+    addressFull: "г. Москва, ул. 5-ая Парковая, д 62Б",
     workingHours: "Пн–Сб: 09:00–19:00",
-    workingHoursNote: "Воскресенье — по записи",
-    mapQuery: "Измайлово, Москва",
+    workingHoursNote: "Воскресенье — выходной",
+    mapQuery: "5-ая+Парковая+62Б+Москва",
   },
 };
 
