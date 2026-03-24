@@ -1,0 +1,254 @@
+/**
+ * responsive.css — медиа-запросы (mobile-first)
+ */
+
+/* ── Планшеты (≤ 1024px) ─────────────────────────────── */
+@media (max-width: 1024px) {
+  :root {
+    --section-padding-y: 4rem;
+    --font-size-4xl: 2.5rem;
+    --font-size-3xl: 2rem;
+  }
+
+  .hero__content {
+    gap: var(--space-10);
+  }
+
+  .hero__photo-wrap {
+    width: 320px;
+  }
+
+  .about__grid {
+    gap: var(--space-10);
+  }
+
+  .about__badge {
+    right: calc(-1 * var(--space-4));
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── Мобильные (≤ 768px) ─────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --section-padding-y: 3rem;
+    --font-size-4xl: 2rem;
+    --font-size-3xl: 1.75rem;
+    --font-size-2xl: 1.5rem;
+    --container-padding: 1rem;
+    --header-height: 60px;
+  }
+
+  /* Header / Nav */
+  .burger {
+    display: flex;
+  }
+
+  .nav {
+    display: none;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-bg);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+    z-index: calc(var(--z-header) - 1);
+    padding: var(--space-8);
+  }
+
+  .nav__list {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .nav__link {
+    font-size: var(--font-size-lg);
+  }
+
+  .nav__cta {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav__cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Hero */
+  .hero__content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: var(--space-8);
+    padding-block: var(--space-12);
+  }
+
+  .hero__image {
+    order: -1;
+  }
+
+  .hero__photo-wrap {
+    width: 240px;
+  }
+
+  .hero__photo-wrap::before {
+    inset: -8px;
+  }
+
+  .hero__actions {
+    justify-content: center;
+  }
+
+  .hero__stats {
+    justify-content: center;
+  }
+
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  /* About */
+  .about__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .about__image {
+    max-width: 360px;
+    margin-inline: auto;
+  }
+
+  .about__badge {
+    right: 0;
+  }
+
+  /* Services */
+  .services__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Prices */
+  .price-row {
+    grid-template-columns: 1fr auto;
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .price-row__duration {
+    display: none;
+  }
+
+  .price-row__head .price-row__duration {
+    display: none;
+  }
+
+  /* Gallery */
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  /* Advantages */
+  .advantages__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reviews */
+  .review-card {
+    flex: 0 0 calc(100% - var(--space-6));
+  }
+
+  /* Contacts */
+  .contacts__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  /* Booking form */
+  .booking__form {
+    padding: var(--space-6);
+  }
+
+  .form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer */
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Scroll top */
+  .scroll-top {
+    bottom: var(--space-5);
+    right: var(--space-5);
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Section header */
+  .section-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* ── Маленькие мобильные (≤ 480px) ──────────────────── */
+@media (max-width: 480px) {
+  :root {
+    --font-size-4xl: 1.75rem;
+    --font-size-3xl: 1.5rem;
+  }
+
+  .hero__title {
+    font-size: 1.75rem;
+  }
+
+  .hero__photo-wrap {
+    width: 200px;
+  }
+
+  .gallery__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn--lg {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-base);
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__actions .btn {
+    justify-content: center;
+  }
+}
+
+/* ── Большие экраны (≥ 1400px) ──────────────────────── */
+@media (min-width: 1400px) {
+  :root {
+    --container-max: 1320px;
+    --font-size-4xl: 3.5rem;
+  }
+}
