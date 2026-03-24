@@ -12,7 +12,16 @@
  */
 
 // ⚠️ Замените YOUR_FORM_ID на реальный ID формы с formspree.io
+// Пример: 'https://formspree.io/f/xpwzabcd'
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+// Проверка при запуске: предупреждаем разработчика если ID не заменён
+if (FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
+  console.warn(
+    '[Форма записи] Formspree не настроен! Зарегистрируйтесь на https://formspree.io, ' +
+    'создайте форму для natalyapodolog@yandex.ru и замените YOUR_FORM_ID в js/form.js'
+  );
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   initBookingForm();
