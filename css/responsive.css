@@ -141,6 +141,12 @@ iframe {
   }
 
   /* ── Hero ───────────────────────────────────────────── */
+  .hero {
+    min-height: auto;
+    padding-top: var(--header-height);
+    padding-bottom: var(--space-12);
+  }
+
   .hero__content {
     grid-template-columns: 1fr;
     text-align: center;
@@ -189,7 +195,9 @@ iframe {
     width: 100%;
     justify-content: center;
     text-align: center;
-    min-height: 48px;   /* удобная для касания высота */
+    min-height: 48px;
+    white-space: normal;
+    word-break: break-word;
   }
 
   .hero__stats {
@@ -200,6 +208,12 @@ iframe {
 
   .hero__stat {
     min-width: 0;
+    flex: 0 0 auto;
+  }
+
+  /* ── Buttons (mobile) ───────────────────────────────── */
+  .btn {
+    white-space: normal;
   }
 
   /* ── Section headers ────────────────────────────────── */
@@ -260,7 +274,7 @@ iframe {
   }
 
   .price-row__duration {
-    display: none;    /* скрываем длительность на мобильном — мало места */
+    display: none;
   }
 
   .price-row__head .price-row__duration {
@@ -317,12 +331,11 @@ iframe {
   }
 
   .reviews__track {
-    /* На мобильном каждая карточка = полная ширина */
     gap: var(--space-4);
   }
 
   .review-card {
-    flex: 0 0 100%;    /* одна карточка на весь экран */
+    flex: 0 0 100%;
     padding: var(--space-5);
     word-break: break-word;
     overflow-wrap: break-word;
@@ -369,13 +382,14 @@ iframe {
   .form__input,
   .form__select,
   .form__textarea {
-    font-size: 16px;   /* 16px — предотвращает авто-зум в Safari */
+    font-size: 16px;   /* предотвращает авто-зум в Safari */
   }
 
   .form__submit {
     width: 100%;
     min-height: 48px;
     font-size: var(--font-size-base);
+    white-space: normal;
   }
 
   /* ── Contacts ───────────────────────────────────────── */
@@ -449,6 +463,10 @@ iframe {
 
   .hero__photo-wrap {
     width: 170px;
+  }
+
+  .hero__stat {
+    flex: 0 0 auto;
   }
 
   .section-title {

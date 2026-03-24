@@ -78,10 +78,9 @@ function renderServices() {
 
   grid.innerHTML = siteData.services.map(s => `
     <article class="service-card" id="service-${s.id}">
-      <span class="service-card__icon" role="img" aria-label="${s.name}">${s.icon}</span>
       <h3 class="service-card__name">${s.name}</h3>
       <p class="service-card__desc">${s.description}</p>
-      <span class="service-card__duration">⏱ ${s.duration}</span>
+      <span class="service-card__duration">${s.duration}</span>
     </article>
   `).join('');
 }
@@ -122,7 +121,6 @@ function renderGallery() {
         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
       />
       <div class="gallery__placeholder" style="display:none;">
-        <span>🦶</span>
         <span>${item.alt}</span>
       </div>
       <div class="gallery__item-overlay">
@@ -154,7 +152,6 @@ function renderAdvantages() {
 
   grid.innerHTML = siteData.advantages.map(a => `
     <div class="advantage-card">
-      <div class="advantage-card__icon" role="img" aria-label="${a.title}">${a.icon}</div>
       <div class="advantage-card__body">
         <h3 class="advantage-card__title">${a.title}</h3>
         <p class="advantage-card__desc">${a.description}</p>
@@ -173,6 +170,15 @@ function renderReviews() {
         ${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}
       </div>
       <p class="review-card__text">${r.text}</p>
+      ${r.screenshot ? `
+      <div class="review-card__screenshot">
+        <img
+          src="${r.screenshot}"
+          alt="Скриншот отзыва от ${r.name} на Яндекс Картах"
+          loading="lazy"
+          class="review-card__screenshot-img"
+        />
+      </div>` : ''}
       <div class="review-card__footer">
         <div>
           <div class="review-card__name">${r.name}</div>
@@ -216,17 +222,17 @@ function renderContacts() {
     let html = '';
     if (c.whatsapp) {
       html += `<a href="https://wa.me/${c.whatsapp}" class="messenger-btn messenger-btn--whatsapp" target="_blank" rel="noopener noreferrer">
-        <span>📱</span> WhatsApp
+        WhatsApp
       </a>`;
     }
     if (c.telegram) {
       html += `<a href="https://t.me/${c.telegram}" class="messenger-btn messenger-btn--telegram" target="_blank" rel="noopener noreferrer">
-        <span>✈️</span> Telegram
+        Telegram
       </a>`;
     }
     if (c.instagram) {
       html += `<a href="https://instagram.com/${c.instagram}" class="messenger-btn messenger-btn--instagram" target="_blank" rel="noopener noreferrer">
-        <span>📷</span> Instagram
+        Instagram
       </a>`;
     }
     messengersContainer.innerHTML = html || '<p style="color: var(--color-text-muted); font-size: 0.875rem;">Мессенджеры скоро будут добавлены</p>';

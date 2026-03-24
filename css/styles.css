@@ -452,14 +452,6 @@ input, textarea, select {
   border: 2px dashed rgba(201, 168, 124, 0.4);
   position: relative;
   z-index: var(--z-raised);
-}
-
-.hero__photo-placeholder span:first-child {
-  font-size: 64px;
-  opacity: 0.6;
-}
-
-.hero__photo-placeholder span:last-child {
   font-size: var(--font-size-sm);
   color: rgba(245, 243, 240, 0.5);
   text-align: center;
@@ -499,13 +491,11 @@ input, textarea, select {
   align-items: center;
   justify-content: center;
   gap: var(--space-4);
-  font-size: 80px;
   box-shadow: var(--shadow-xl);
-}
-
-.about__photo-placeholder span:last-child {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
+  text-align: center;
+  padding-inline: var(--space-6);
 }
 
 .about__badge {
@@ -616,12 +606,6 @@ input, textarea, select {
 
 .service-card:hover::before {
   opacity: 1;
-}
-
-.service-card__icon {
-  font-size: 36px;
-  margin-bottom: var(--space-4);
-  display: block;
 }
 
 .service-card__name {
@@ -793,10 +777,9 @@ input, textarea, select {
   gap: var(--space-2);
   background: linear-gradient(135deg, var(--color-bg-alt), var(--color-accent-light));
   transition: transform var(--transition-slow);
-  font-size: 36px;
 }
 
-.gallery__placeholder span:last-child {
+.gallery__placeholder span {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   text-align: center;
@@ -892,12 +875,11 @@ input, textarea, select {
 }
 
 .advantage-card {
-  display: flex;
-  gap: var(--space-5);
   padding: var(--space-6);
   background-color: #fff;
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
   transition: box-shadow var(--transition-base);
 }
 
@@ -905,20 +887,8 @@ input, textarea, select {
   box-shadow: var(--shadow-md);
 }
 
-.advantage-card__icon {
-  font-size: 36px;
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(123, 110, 138, 0.08);
-  border-radius: var(--radius-md);
-}
-
 .advantage-card__body {
-  flex: 1;
+  width: 100%;
 }
 
 .advantage-card__title {
@@ -970,8 +940,22 @@ input, textarea, select {
   font-size: var(--font-size-base);
   color: var(--color-text-muted);
   line-height: var(--line-height-loose);
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-4);
   font-style: italic;
+}
+
+.review-card__screenshot {
+  margin-bottom: var(--space-5);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.review-card__screenshot-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
 }
 
 .review-card__text::before {
@@ -1080,7 +1064,10 @@ input, textarea, select {
 }
 
 .contact-item__icon {
-  font-size: 24px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semi);
+  letter-spacing: 0.03em;
+  color: var(--color-primary);
   width: 48px;
   height: 48px;
   display: flex;
@@ -1089,6 +1076,8 @@ input, textarea, select {
   background-color: rgba(123, 110, 138, 0.08);
   border-radius: var(--radius-md);
   flex-shrink: 0;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .contact-item__label {
@@ -1519,11 +1508,6 @@ input, textarea, select {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   margin-top: var(--space-3);
-}
-
-.reviews__yandex-badge-icon {
-  font-size: 18px;
-  flex-shrink: 0;
 }
 
 .reviews__yandex-badge-text {
