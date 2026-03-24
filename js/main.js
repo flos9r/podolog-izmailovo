@@ -178,7 +178,10 @@ function renderReviews() {
           <div class="review-card__name">${r.name}</div>
           <div class="review-card__service">${r.service}</div>
         </div>
-        <div class="review-card__date">${r.date}</div>
+        <div class="review-card__meta">
+          <div class="review-card__date">${r.date}</div>
+          ${r.source ? `<div class="review-card__source">${r.source}</div>` : ''}
+        </div>
       </div>
     </article>
   `).join('');

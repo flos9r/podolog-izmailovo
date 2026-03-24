@@ -252,3 +252,131 @@
     --font-size-4xl: 3.5rem;
   }
 }
+
+/* ── Additional mobile fixes ─────────────────────────── */
+
+/* Prevent horizontal overflow on all devices */
+html, body {
+  overflow-x: hidden;
+}
+
+* {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  /* Reviews source note */
+  .reviews__source-note {
+    padding-inline: var(--space-4);
+  }
+
+  /* Yandex badge */
+  .reviews__yandex-badge {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* Price table — tighter spacing */
+  .price-row {
+    grid-template-columns: 1fr auto;
+    gap: var(--space-3);
+  }
+
+  .price-row__service {
+    word-break: break-word;
+  }
+
+  /* Contacts */
+  .contact-item__value {
+    font-size: var(--font-size-base);
+    word-break: break-all;
+  }
+
+  /* Messenger buttons */
+  .contacts__messengers {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .messenger-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Gallery */
+  .gallery__filter {
+    gap: var(--space-2);
+  }
+
+  .gallery__filter-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-xs);
+  }
+
+  /* Footer bottom — stacked */
+  .footer__bottom {
+    gap: var(--space-3);
+  }
+
+  /* Section header spacing */
+  .section-header {
+    margin-bottom: var(--space-8);
+  }
+
+  /* Review card text size for readability */
+  .review-card__text {
+    font-size: var(--font-size-sm);
+  }
+
+  /* Hero actions — full width buttons */
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* About text improvements */
+  .about__desc {
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Review card footer wrap */
+  .review-card__footer {
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+
+  .review-card__meta {
+    text-align: left;
+  }
+
+  /* Prices full-width */
+  .prices__table {
+    border-radius: var(--radius-md);
+  }
+
+  .price-row {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-xs);
+  }
+
+  .price-row__price {
+    font-size: var(--font-size-base);
+  }
+
+  /* Booking form submit */
+  .form__submit {
+    font-size: var(--font-size-base);
+  }
+
+  /* Map placeholder */
+  .map__container {
+    height: 280px;
+  }
+}

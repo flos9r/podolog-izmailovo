@@ -1503,3 +1503,144 @@ input, textarea, select {
 }
 
 @import url('responsive.css');
+
+/* ═══════════════════════════════════════════════════════
+   REVIEWS — Yandex Badge & Attribution
+═══════════════════════════════════════════════════════ */
+
+.reviews__yandex-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: rgba(255, 204, 0, 0.12);
+  border: 1px solid rgba(255, 204, 0, 0.35);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-3);
+}
+
+.reviews__yandex-badge-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.reviews__yandex-badge-text {
+  font-weight: var(--font-weight-medium);
+}
+
+.reviews__source-note {
+  text-align: center;
+  margin-top: var(--space-6);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-normal);
+}
+
+.reviews__source-note a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.reviews__source-note a:hover {
+  color: var(--color-primary-dark);
+}
+
+/* Review card — meta block (date + source) */
+
+.review-card__meta {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.review-card__date {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.review-card__source {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  margin-top: 2px;
+  font-weight: var(--font-weight-medium);
+}
+
+/* ═══════════════════════════════════════════════════════
+   VISUAL IMPROVEMENTS
+═══════════════════════════════════════════════════════ */
+
+/* Crisper section labels */
+.section-label {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Stronger service card accent line */
+.service-card {
+  border-radius: var(--radius-xl);
+}
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: var(--space-8);
+  right: var(--space-8);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
+/* Buttons — slightly rounder look with better shadow */
+.btn--primary,
+.btn--accent {
+  letter-spacing: 0.01em;
+}
+
+.btn--primary:focus-visible,
+.btn--accent:focus-visible,
+.btn--outline:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 3px;
+}
+
+/* Better advantage card hover */
+.advantage-card {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.advantage-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Review card hover */
+.review-card {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Price row visual improvement */
+.price-row__service {
+  font-size: var(--font-size-sm);
+}
+
+/* Contact item link hover */
+.contact-item__value a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Messenger button improvements */
+.messenger-btn {
+  gap: var(--space-3);
+  font-weight: var(--font-weight-semi);
+}
+
