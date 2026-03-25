@@ -944,20 +944,6 @@ input, textarea, select {
   font-style: italic;
 }
 
-.review-card__screenshot {
-  margin-bottom: var(--space-5);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-}
-
-.review-card__screenshot-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: var(--radius-md);
-}
-
 .review-card__text::before {
   content: '"';
   font-size: var(--font-size-3xl);
@@ -1628,3 +1614,105 @@ input, textarea, select {
   font-weight: var(--font-weight-semi);
 }
 
+
+/* ═══════════════════════════════════════════════════════
+   AVAILABLE SLOTS
+═══════════════════════════════════════════════════════ */
+
+.slots__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-6);
+}
+
+.slots__empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-base);
+  padding: var(--space-8) 0;
+}
+
+.slot-card {
+  background-color: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.slot-card__date {
+  font-family: 'Playfair Display', var(--font-heading);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semi);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.slot-card__times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.slot-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  background-color: rgba(123, 110, 138, 0.08);
+  border: 1px solid rgba(123, 110, 138, 0.2);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 44px;
+  min-width: 64px;
+}
+
+.slot-btn:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.slot-btn.is-selected {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ═══════════════════════════════════════════════════════
+   IMAGE WRAPPERS
+   Используйте .img-wrap на родителе изображения, чтобы:
+   - зарезервировать место (нет прыжков вёрстки),
+   - корректно кадрировать через object-fit.
+   Модификаторы: --portrait (4:5), --banner (16:9), --square (1:1)
+═══════════════════════════════════════════════════════ */
+
+.img-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background-color: var(--color-bg-alt);
+}
+
+.img-wrap--portrait { aspect-ratio: 4 / 5; }
+.img-wrap--banner   { aspect-ratio: 16 / 9; }
+.img-wrap--square   { aspect-ratio: 1; }
+
+.img-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}

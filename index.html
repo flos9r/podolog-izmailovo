@@ -27,10 +27,10 @@
 
       <nav class="nav" id="main-nav" role="navigation" aria-label="Основная навигация">
         <ul class="nav__list" role="list">
-          <li><a class="nav__link" href="#about">О специалисте</a></li>
+          <li><a class="nav__link" href="#about">О Наталье</a></li>
           <li><a class="nav__link" href="#services">Услуги</a></li>
           <li><a class="nav__link" href="#prices">Цены</a></li>
-          <li><a class="nav__link" href="#gallery">Галерея</a></li>
+          <li><a class="nav__link" href="#slots">Запись</a></li>
           <li><a class="nav__link" href="#reviews">Отзывы</a></li>
           <li><a class="nav__link" href="#contacts">Контакты</a></li>
         </ul>
@@ -388,6 +388,29 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════
+         AVAILABLE SLOTS
+    ═══════════════════════════════════════════════ -->
+    <section class="section section--alt" id="slots" aria-labelledby="slots-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Свободное время</span>
+          <h2 class="section-title" id="slots-heading">Ближайшее свободное время</h2>
+          <p class="section-desc">
+            Нажмите на удобное время — оно автоматически появится в форме записи
+          </p>
+        </header>
+
+        <div class="slots__grid" id="slots-grid" aria-label="Доступные слоты для записи">
+          <!-- Слоты генерируются из data.js → availableSlots -->
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+          <a href="#booking" class="btn btn--primary btn--lg">Записаться на приём</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
          BOOKING FORM
     ═══════════════════════════════════════════════ -->
     <section class="section booking" id="booking" aria-labelledby="booking-heading">
@@ -492,17 +515,8 @@
               <div class="form__group">
                 <label class="form__label" for="form-time">Желаемое время</label>
                 <select class="form__select" id="form-time" name="time">
-                  <option value="">Любое удобное</option>
-                  <option value="09:00">09:00</option>
-                  <option value="10:00">10:00</option>
-                  <option value="11:00">11:00</option>
-                  <option value="12:00">12:00</option>
-                  <option value="13:00">13:00</option>
-                  <option value="14:00">14:00</option>
-                  <option value="15:00">15:00</option>
-                  <option value="16:00">16:00</option>
-                  <option value="17:00">17:00</option>
-                  <option value="18:00">18:00</option>
+                  <option value="">Выберите время</option>
+                  <!-- Опции генерируются из data.js → availableSlots -->
                 </select>
               </div>
 

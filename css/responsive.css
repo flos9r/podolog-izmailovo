@@ -529,3 +529,85 @@ iframe {
     --font-size-4xl: 3.5rem;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   ДОСТУПНЫЕ СЛОТЫ — мобильная адаптация
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .slots__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .slot-card {
+    padding: var(--space-4);
+  }
+
+  .slot-btn {
+    font-size: var(--font-size-xs);
+    padding: var(--space-2) var(--space-3);
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slots__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .slot-card__times {
+    gap: var(--space-2);
+  }
+
+  .slot-btn {
+    flex: 1 0 calc(50% - var(--space-2));
+    justify-content: center;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   NAV — улучшение мобильного меню
+═══════════════════════════════════════════════════════ */
+
+/* На планшетах nav-список может не помещаться — добавляем
+   горизонтальный скролл на случай если меню ещё не бургер */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .nav__list {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    gap: var(--space-5);
+  }
+
+  .nav__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav__link {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ИНТЕРАКТИВНЫЕ ЭЛЕМЕНТЫ — минимальный tap-target 44px
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .nav__link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .reviews__btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .gallery__filter-btn {
+    min-height: 40px;
+  }
+}
