@@ -88,10 +88,12 @@ input, textarea, select {
   display: inline-block;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semi);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-primary);
   margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--color-accent-light);
 }
 
 .section-title {
@@ -581,6 +583,7 @@ input, textarea, select {
   border-radius: var(--radius-lg);
   padding: var(--space-8);
   border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
@@ -880,6 +883,7 @@ input, textarea, select {
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
   border-left: 4px solid var(--color-primary);
+  box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition-base);
 }
 
@@ -925,7 +929,8 @@ input, textarea, select {
   border-radius: var(--radius-xl);
   padding: var(--space-8);
   border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
+  border-top: 3px solid var(--color-primary-light);
 }
 
 .review-card__rating {
