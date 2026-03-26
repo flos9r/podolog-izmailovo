@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollTop();
   initSmoothScroll();
   initActiveNavLinks();
+  initArticleModal();
 });
 
 /* ═══════════════════════════════════════════════════════
@@ -29,6 +30,8 @@ function renderAll() {
   renderFooter();
   renderAvailableSlots();
   populateFormServiceSelect();
+  renderTools();
+  renderArticles();
 }
 
 function renderSpecialist() {
@@ -605,4 +608,110 @@ function initActiveNavLinks() {
   }, { rootMargin: '-40% 0px -55% 0px' });
 
   sections.forEach(section => observer.observe(section));
+}
+
+/* ─────────────────────────────────────────────────────
+   TOOLS RENDERING
+───────────────────────────────────────────────────── */
+function renderTools() {
+  const grid = document.getElementById('tools-grid');
+  if (!grid) return;
+  const tools = (typeof siteData !== 'undefined' && siteData.tools) ? siteData.tools : [];
+  if (!tools.length) {
+    grid.innerHTML = '<p style="text-align:center;color:var(--color-text-muted)">Информация об инструментах обновляется</p>';
+    return;
+  }
+  grid.innerHTML = tools.map(t => `
+    <div class="tool-card">
+      <p class="tool-card__purpose">${t.purpose}</p>
+      <h3 class="tool-card__name">${t.name}</h3>
+      <p class="tool-card__desc">${t.description}</p>
+      <ul class="tool-card__benefits">
+        ${t.benefits.map(b => `<li>${b}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+}
+
+/* ─────────────────────────────────────────────────────
+   ARTICLES RENDERING
+───────────────────────────────────────────────────── */
+function renderArticles() {
+  const grid = document.getElementById('articles-grid');
+  if (!grid) return;
+  const articles = (typeof siteData !== 'undefined' && siteData.articles) ? siteData.articles : [];
+  if (!articles.length) {
+    grid.innerHTML = '<p style="text-align:center;color:var(--color-text-muted)">Статьи готовятся</p>';
+    return;
+  }
+  grid.innerHTML = articles.map(a => `
+    <div class="article-card" role="button" tabindex="0"
+         data-article-id="${a.id}"
+         aria-label="Читать статью: ${a.title}">
+      <h3 class="article-card__title">${a.title}</h3>
+      <p class="article-card__excerpt">${a.excerpt}</p>
+      <p class="article-card__cta">Читать</p>
+    </div>
+  `).join('');
+
+  // Attach click handlers
+  grid.querySelectorAll('.article-card').forEach(card => {
+    const handler = () => openArticle(card.dataset.articleId);
+    card.addEventListener('click', handler);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); } });
+  });
+}
+
+function openArticle(id) {
+  const articles = (typeof siteData !== 'undefined' && siteData.articles) ? siteData.articles : [];
+  const a = articles.find(x => x.id === id);
+  if (!a) return;
+
+  const modal = document.getElementById('article-modal');
+  const body = document.getElementById('article-modal-body');
+  if (!modal || !body) return;
+
+  const sectionsHtml = a.content.map(s => `
+    <h3>${s.heading}</h3>
+    <p>${s.text}</p>
+  `).join('');
+
+  const sourcesHtml = a.sources && a.sources.length ? `
+    <div class="article-modal__sources">
+      <h4>Источники</h4>
+      <ul>
+        ${a.sources.map(s => `<li><a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.text}</a></li>`).join('')}
+      </ul>
+    </div>
+  ` : '';
+
+  body.innerHTML = `<h2>${a.title}</h2>${sectionsHtml}${sourcesHtml}`;
+  modal.removeAttribute('hidden');
+  document.body.style.overflow = 'hidden';
+
+  // Focus trap
+  const closeBtn = document.getElementById('article-modal-close');
+  if (closeBtn) closeBtn.focus();
+}
+
+function closeArticle() {
+  const modal = document.getElementById('article-modal');
+  if (!modal) return;
+  modal.setAttribute('hidden', '');
+  document.body.style.overflow = '';
+}
+
+function initArticleModal() {
+  const closeBtn = document.getElementById('article-modal-close');
+  if (closeBtn) closeBtn.addEventListener('click', closeArticle);
+
+  const modal = document.getElementById('article-modal');
+  if (modal) {
+    const backdrop = modal.querySelector('.article-modal__backdrop');
+    if (backdrop) backdrop.addEventListener('click', closeArticle);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeArticle();
+  });
 }

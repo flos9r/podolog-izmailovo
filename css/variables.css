@@ -5,24 +5,24 @@
 
 :root {
   /* ── Цвета ──────────────────────────────────────────── */
-  --color-primary:        #7b6e8a;   /* основной акцентный (лавандово-сливовый) */
-  --color-primary-light:  #a898b8;   /* светлый вариант основного */
-  --color-primary-dark:   #5a4f6a;   /* тёмный вариант основного */
+  --color-primary:        #2d5a4a;   /* основной акцентный (тёмный зелёный) */
+  --color-primary-light:  #4a7c6a;   /* светлый вариант основного */
+  --color-primary-dark:   #1e3d31;   /* тёмный вариант основного */
 
-  --color-accent:         #c9a87c;   /* второй акцент (тёплое золото) */
-  --color-accent-light:   #e0c9a8;   /* светлый акцент */
-  --color-accent-dark:    #a8855a;   /* тёмный акцент */
+  --color-accent:         #d4a574;   /* второй акцент (тёплый бежевый) */
+  --color-accent-light:   #e8c9a0;   /* светлый акцент */
+  --color-accent-dark:    #b8895a;   /* тёмный акцент */
 
-  --color-bg:             #faf9f7;   /* фон страницы */
-  --color-bg-alt:         #f2efec;   /* альтернативный фон секций */
-  --color-bg-dark:        #3d3540;   /* тёмный фон (footer, hero) */
+  --color-bg:             #f8f6f3;   /* фон страницы */
+  --color-bg-alt:         #f0ede8;   /* альтернативный фон секций */
+  --color-bg-dark:        #1e2d28;   /* тёмный фон (footer, hero) */
 
-  --color-text:           #2e2830;   /* основной текст */
-  --color-text-muted:     #6e6470;   /* приглушённый текст */
+  --color-text:           #1e2820;   /* основной текст */
+  --color-text-muted:     #4a5e50;   /* приглушённый текст */
   --color-text-light:     #f5f3f0;   /* светлый текст на тёмном фоне */
 
   --color-border:         #e0dbd6;   /* границы */
-  --color-shadow:         rgba(123, 110, 138, 0.12);
+  --color-shadow:         rgba(45, 90, 74, 0.12);
 
   --color-success:        #5a9e6f;   /* успех/зелёный */
   --color-error:          #c05a5a;   /* ошибка/красный */

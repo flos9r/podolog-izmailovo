@@ -611,3 +611,115 @@ iframe {
     min-height: 40px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   HERO REDESIGN — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .hero__layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    padding-block: var(--space-10);
+    min-height: auto;
+  }
+
+  .hero__quote-block {
+    order: -1;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .hero__photo-wrap {
+    width: 120px;
+    flex-shrink: 0;
+    aspect-ratio: 4/5;
+  }
+
+  .hero__quote {
+    flex: 1;
+    padding: var(--space-4);
+  }
+
+  .hero__quote-text {
+    font-size: var(--font-size-base);
+  }
+
+  .hero__main {
+    gap: var(--space-5);
+    text-align: center;
+  }
+
+  .hero__title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+
+  .hero__subtitle {
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__stats {
+    justify-content: center;
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__quote-block {
+    flex-direction: column;
+  }
+
+  .hero__photo-wrap {
+    width: 100%;
+    aspect-ratio: 16/9;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PODOLOGY / TOOLS / ARTICLES — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .podology__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .podology__card {
+    padding: var(--space-6);
+  }
+
+  .tools__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .tool-card {
+    padding: var(--space-6);
+  }
+
+  .articles__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .article-card {
+    padding: var(--space-6);
+  }
+
+  .article-modal__content {
+    padding: var(--space-6) var(--space-5);
+    border-radius: var(--radius-lg);
+  }
+
+  .disclaimer-bar__text {
+    font-size: var(--font-size-xs);
+  }
+}

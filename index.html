@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Наталья Сунцова — профессиональный подолог в Измайлово, Москва. Медицинский педикюр, лечение вросшего ногтя, удаление мозолей. Запись онлайн." />
+  <meta name="description" content="Наталья Сунцова — профессиональный подолог в Измайлово, Москва. Аппаратный педикюр, коррекция вросшего ногтя, работа с мозолями и натоптышами. Запись онлайн." />
   <meta name="keywords" content="подолог, Измайлово, медицинский педикюр, вросший ноготь, мозоли, Москва" />
   <meta property="og:title" content="Наталья Сунцова — Подолог в Измайлово" />
-  <meta property="og:description" content="Профессиональный подолог в Измайлово. Медицинский педикюр, лечение стоп и ногтей. Запись онлайн." />
+  <meta property="og:description" content="Профессиональный подолог в Измайлово. Аппаратный педикюр, работа с вросшим ногтём и натоптышами. Запись онлайн." />
   <meta property="og:type" content="website" />
   <title>Наталья Сунцова — Подолог в Измайлово</title>
   <link rel="stylesheet" href="css/styles.css" />
@@ -30,8 +30,9 @@
         <ul class="nav__list" role="list">
           <li><a class="nav__link" href="#about">Специалист</a></li>
           <li><a class="nav__link" href="#services">Услуги</a></li>
-          <li><a class="nav__link" href="#prices">Цены</a></li>
-          <li><a class="nav__link" href="#slots">Запись</a></li>
+          <li><a class="nav__link" href="#podology">Подология</a></li>
+          <li><a class="nav__link" href="#tools">Инструменты</a></li>
+          <li><a class="nav__link" href="#articles">Статьи</a></li>
           <li><a class="nav__link" href="#reviews">Отзывы</a></li>
           <li><a class="nav__link" href="#contacts">Контакты</a></li>
         </ul>
@@ -61,59 +62,71 @@
          HERO
     ═══════════════════════════════════════════════ -->
     <section class="hero" id="home" aria-label="Главный экран">
-      <div class="hero__bg" aria-hidden="true"></div>
-      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="container">
+        <div class="hero__layout">
 
-      <div class="container hero__content">
-        <div class="hero__text">
-          <div class="hero__badge" aria-label="Расположение">
-            Москва, ул. 5-ая Парковая
+          <!-- Quote + Photo block -->
+          <div class="hero__quote-block">
+            <div class="hero__photo-wrap">
+              <!--
+                Фото специалиста: положите файл images/specialist.jpg
+                и замените placeholder ниже на:
+                <img class="hero__photo" src="images/specialist.jpg" alt="Наталья Сунцова — подолог" />
+              -->
+              <div class="hero__photo-placeholder" aria-hidden="true">
+                <span>Фото специалиста</span>
+              </div>
+            </div>
+            <blockquote class="hero__quote">
+              <p class="hero__quote-text">«Занимаюсь любимым делом&nbsp;— подологией»</p>
+              <footer class="hero__quote-author">
+                <span id="hero-specialist-name">Наталья Сунцова</span>
+                <span class="hero__quote-role">Подолог · Измайлово</span>
+              </footer>
+            </blockquote>
           </div>
 
-          <h1 class="hero__title">
-            <span id="hero-specialist-name">Наталья Сунцова</span> —<br>
-            <span id="hero-specialist-title">Подолог</span>
-          </h1>
+          <!-- Main info block -->
+          <div class="hero__main">
+            <p class="hero__eyebrow">Профессиональный уход за стопами</p>
+            <h1 class="hero__title">
+              Подолог в&nbsp;Измайлово
+            </h1>
+            <p class="hero__subtitle">
+              Аппаратный педикюр, коррекция вросшего ногтя, работа с мозолями и натоптышами. Строго по записи, без очередей.
+            </p>
 
-          <p class="hero__subtitle">
-            Медицинский педикюр, лечение вросшего ногтя, работа с мозолями в Измайлово. Работаю по записи, строго по протоколу.
-          </p>
-
-          <div class="hero__actions">
-            <a href="#booking" class="btn btn--accent btn--lg">Записаться на приём</a>
-            <a href="#contacts" class="btn btn--light btn--lg">Связаться</a>
-          </div>
-
-          <div class="hero__stats">
-            <div class="hero__stat">
-              <span class="hero__stat-value">8+</span>
-              <span class="hero__stat-label">лет опыта</span>
+            <div class="hero__actions">
+              <a href="#booking" class="btn btn--accent btn--lg">Записаться на приём</a>
+              <a href="#services" class="btn btn--outline-light btn--lg">Услуги и цены</a>
             </div>
-            <div class="hero__stat">
-              <span class="hero__stat-value">500+</span>
-              <span class="hero__stat-label">довольных клиентов</span>
-            </div>
-            <div class="hero__stat">
-              <span class="hero__stat-value">100%</span>
-              <span class="hero__stat-label">стерильность</span>
-            </div>
-          </div>
-        </div>
 
-        <div class="hero__image">
-          <div class="hero__photo-wrap">
-            <!--
-              Замените содержимое hero__photo-placeholder на тег img,
-              когда у вас будет реальное фото специалиста:
-              <img class="hero__photo" id="specialist-photo" src="images/specialist.jpg" alt="Наталья Сунцова — подолог в Измайлово" />
-            -->
-            <div class="hero__photo-placeholder" aria-hidden="true">
-              <span>Фото специалиста<br>будет добавлено</span>
+            <div class="hero__stats" aria-label="Ключевые показатели">
+              <div class="hero__stat">
+                <span class="hero__stat-value">8+</span>
+                <span class="hero__stat-label">лет опыта</span>
+              </div>
+              <div class="hero__stat">
+                <span class="hero__stat-value">1&thinsp;000+</span>
+                <span class="hero__stat-label">довольных клиентов</span>
+              </div>
+              <div class="hero__stat">
+                <span class="hero__stat-value">5.0</span>
+                <span class="hero__stat-label">рейтинг на Яндекс Картах</span>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
+
+    <!-- Legal disclaimer -->
+    <div class="disclaimer-bar">
+      <div class="container">
+        <p class="disclaimer-bar__text">Подолог — специалист в области профессионального ухода за стопами и ногтями. Услуги носят косметический и профилактический характер. При наличии заболеваний необходима консультация врача.</p>
+      </div>
+    </div>
 
     <!-- ═══════════════════════════════════════════════
          ABOUT
@@ -152,7 +165,7 @@
               <ul id="about-certs" aria-label="Список сертификатов">
                 <li class="about__cert-item">Сертификат подолога международного образца</li>
                 <li class="about__cert-item">Курс медицинского педикюра</li>
-                <li class="about__cert-item">Специализация: лечение вросшего ногтя</li>
+                <li class="about__cert-item">Специализация: коррекция вросшего ногтя</li>
                 <li class="about__cert-item">Курс ортопедии и биомеханики стопы</li>
               </ul>
             </div>
@@ -255,7 +268,7 @@
           <span class="section-label">Почему выбирают меня</span>
           <h2 class="section-title" id="advantages-heading">Мои преимущества</h2>
           <p class="section-desc">
-            Стерильность, медицинские протоколы, опыт более 8 лет
+            Стерильность, профессиональные стандарты, опыт более 8 лет
           </p>
         </header>
 
@@ -555,6 +568,110 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════
+         PODOLOGY INFO
+    ═══════════════════════════════════════════════ -->
+    <section class="section" id="podology" aria-labelledby="podology-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">О профессии</span>
+          <h2 class="section-title" id="podology-heading">Что такое подология</h2>
+          <p class="section-desc">
+            Подология — это профессия, которая занимается состоянием стоп: кожей, ногтями, их строением и уходом за ними.
+          </p>
+        </header>
+
+        <div class="podology__grid">
+          <div class="podology__card">
+            <div class="podology__card-label">История</div>
+            <h3 class="podology__card-title">Как появилась профессия</h3>
+            <p class="podology__card-text">
+              Уход за стопами существует столько же, сколько человечество носит обувь. Первые упоминания о специалистах по стопам появились в Европе в XIX веке. В XX веке профессия оформилась официально — появились профессиональные ассоциации, стандарты обучения и сертификации.
+            </p>
+            <p class="podology__card-text">
+              Сегодня подология — признанная специальность в Великобритании, Германии, Австрии, Канаде и других странах. Международная федерация подологов (FIP) объединяет специалистов из более чем 30 государств.
+            </p>
+          </div>
+
+          <div class="podology__card">
+            <div class="podology__card-label">Суть профессии</div>
+            <h3 class="podology__card-title">Чем занимается подолог</h3>
+            <p class="podology__card-text">
+              Подолог работает с состоянием стоп: огрубевшей кожей, натоптышами, мозолями, вросшими и деформированными ногтями. Это не медицина в клиническом смысле — скорее специализированный уход, требующий знаний анатомии, владения профессиональным оборудованием и опыта работы.
+            </p>
+            <p class="podology__card-text">
+              Хороший подолог работает на пересечении эстетики и функции: после процедуры стопам должно быть комфортно — и выглядеть они должны соответствующе.
+            </p>
+          </div>
+
+          <div class="podology__card podology__card--accent">
+            <div class="podology__card-label">Зачем это нужно</div>
+            <h3 class="podology__card-title">Почему регулярный уход важен</h3>
+            <ul class="podology__list">
+              <li>Натоптыши и мозоли меняют распределение нагрузки при ходьбе</li>
+              <li>Вросший ноготь без ухода может стать хронической проблемой</li>
+              <li>Огрубевшая кожа склонна к трещинам — особенно на пятках</li>
+              <li>Регулярная обработка предупреждает более сложные ситуации</li>
+              <li>Стопы несут вес тела каждый день — они заслуживают внимания</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="podology__source-note">
+          Источники: <a href="https://www.ifpodiatrists.org" target="_blank" rel="noopener noreferrer">Международная федерация подологов (FIP)</a>, <a href="https://www.apma.org" target="_blank" rel="noopener noreferrer">American Podiatric Medical Association (APMA)</a>, <a href="https://www.nhs.uk/conditions/foot-problems/" target="_blank" rel="noopener noreferrer">NHS UK</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         TOOLS
+    ═══════════════════════════════════════════════ -->
+    <section class="section section--alt" id="tools" aria-labelledby="tools-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Рабочий кабинет</span>
+          <h2 class="section-title" id="tools-heading">Инструменты и оборудование</h2>
+          <p class="section-desc">
+            То, чем я работаю, напрямую влияет на результат и ваш комфорт. Коротко о каждом инструменте.
+          </p>
+        </header>
+
+        <div class="tools__grid" id="tools-grid" aria-label="Список инструментов">
+          <!-- Генерируется из data.js → tools -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         ARTICLES
+    ═══════════════════════════════════════════════ -->
+    <section class="section" id="articles" aria-labelledby="articles-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Полезно знать</span>
+          <h2 class="section-title" id="articles-heading">Статьи и материалы</h2>
+          <p class="section-desc">
+            Ответы на частые вопросы и практические советы по уходу за стопами.
+          </p>
+        </header>
+
+        <div class="articles__grid" id="articles-grid" aria-label="Список статей">
+          <!-- Генерируется из data.js → articles -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Article modal -->
+    <div class="article-modal" id="article-modal" role="dialog" aria-modal="true" aria-labelledby="article-modal-title" hidden>
+      <div class="article-modal__backdrop"></div>
+      <div class="article-modal__content">
+        <button class="article-modal__close" id="article-modal-close" aria-label="Закрыть статью">&times;</button>
+        <article class="article-modal__body" id="article-modal-body">
+          <!-- Filled by JS -->
+        </article>
+      </div>
+    </div>
+
   </main>
 
   <!-- ═══════════════════════════════════════════════
@@ -568,7 +685,7 @@
           <div class="footer__brand-name" data-footer="name">Наталья Сунцова</div>
           <div class="footer__brand-title">Подолог · Москва, 5-ая Парковая</div>
           <p class="footer__brand-desc">
-            Медицинский педикюр, лечение вросшего ногтя, работа с мозолями. Измайлово, Москва.
+            Аппаратный педикюр, коррекция вросшего ногтя, работа с мозолями. Измайлово, Москва.
           </p>
         </div>
 
