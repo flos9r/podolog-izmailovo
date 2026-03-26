@@ -102,6 +102,9 @@
 
 ## 6. Как вставить фото специалиста
 
+> **Подробный гайд со всеми деталями:** [docs/photos-guide.md](photos-guide.md)
+
+Кратко:
 1. Положите файл `specialist.jpg` в папку `images/`.
 2. Откройте `index.html` → найдите `hero__photo-placeholder`.
 3. Замените блок:
@@ -112,13 +115,17 @@
    ```
    На:
    ```html
-   <img class="hero__photo" src="images/specialist.jpg" alt="Наталья Сунцова — подолог" />
+   <img class="hero__photo image-shell__img" id="specialist-photo"
+        src="images/specialist.jpg" alt="Наталья Сунцова — подолог" />
    ```
 
 ---
 
 ## 7. Как вставить фото в раздел "Специалист"
 
+> **Подробный гайд со всеми деталями:** [docs/photos-guide.md](photos-guide.md)
+
+Кратко:
 1. Положите файл `about.jpg` в папку `images/`.
 2. Откройте `index.html` → найдите `about__photo-placeholder`.
 3. Замените:
@@ -136,6 +143,9 @@
 
 ## 8. Как добавить фото в галерею
 
+> **Подробный гайд со всеми деталями:** [docs/photos-guide.md](photos-guide.md)
+
+Кратко:
 1. Положите файл `work-N.jpg` в папку `images/gallery/`.
 2. Откройте `js/data.js` → найдите `gallery: [`.
 3. Добавьте новый элемент:
