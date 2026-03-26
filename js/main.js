@@ -278,46 +278,64 @@ function initHeader() {
 
 function initMobileNav() {
   const burger = document.getElementById('burger');
-  const nav = document.getElementById('main-nav');
-  if (!burger || !nav) return;
+  const sheet = document.getElementById('mobile-sheet');
+  const overlay = document.getElementById('mobile-overlay');
+  const closeBtn = document.getElementById('mobile-sheet-close');
+  if (!burger || !sheet) return;
+
+  function openSheet() {
+    sheet.classList.add('is-open');
+    sheet.style.display = 'block';
+    if (overlay) {
+      overlay.style.display = 'block';
+      requestAnimationFrame(() => { overlay.classList.add('is-visible'); });
+    }
+    document.body.style.overflow = 'hidden';
+    burger.setAttribute('aria-expanded', 'true');
+    burger.setAttribute('aria-label', 'Закрыть меню');
+    sheet.setAttribute('aria-hidden', 'false');
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeSheet() {
+    sheet.classList.remove('is-open');
+    if (overlay) {
+      overlay.classList.remove('is-visible');
+      overlay.addEventListener('transitionend', () => {
+        overlay.style.display = 'none';
+      }, { once: true });
+    }
+    document.body.style.overflow = '';
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Открыть меню');
+    sheet.setAttribute('aria-hidden', 'true');
+    burger.focus();
+  }
 
   burger.addEventListener('click', () => {
-    const isOpen = burger.classList.toggle('is-open');
-    nav.classList.toggle('is-open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-    burger.setAttribute('aria-expanded', isOpen);
-    burger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+    const isOpen = sheet.classList.contains('is-open');
+    isOpen ? closeSheet() : openSheet();
   });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeSheet);
+  }
+
+  if (overlay) {
+    overlay.addEventListener('click', closeSheet);
+  }
 
   // Close on nav link click
-  nav.querySelectorAll('.nav__link').forEach(link => {
+  sheet.querySelectorAll('.mobile-sheet__link, .mobile-sheet__cta').forEach(link => {
     link.addEventListener('click', () => {
-      burger.classList.remove('is-open');
-      nav.classList.remove('is-open');
-      document.body.style.overflow = '';
-      burger.setAttribute('aria-expanded', 'false');
-      burger.setAttribute('aria-label', 'Открыть меню');
+      closeSheet();
     });
-  });
-
-  // Close on outside click
-  document.addEventListener('click', (e) => {
-    if (!burger.contains(e.target) && !nav.contains(e.target)) {
-      burger.classList.remove('is-open');
-      nav.classList.remove('is-open');
-      document.body.style.overflow = '';
-    }
   });
 
   // Close on Escape key
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && nav.classList.contains('is-open')) {
-      burger.classList.remove('is-open');
-      nav.classList.remove('is-open');
-      document.body.style.overflow = '';
-      burger.setAttribute('aria-expanded', 'false');
-      burger.setAttribute('aria-label', 'Открыть меню');
-      burger.focus();
+    if (e.key === 'Escape' && sheet.classList.contains('is-open')) {
+      closeSheet();
     }
   });
 }
@@ -584,30 +602,31 @@ function initArticleBanner() {
   const articles = (typeof siteData !== 'undefined' && siteData.articles) ? siteData.articles : [];
   if (!articles.length) return;
 
-  const latest = articles[0];
+  // Feature the most compelling article (index 0 is the latest)
+  const featured = articles[0];
 
-  // Check if user already dismissed (stored for 7 days)
-  const BANNER_DISMISS_DURATION_MS = 7 * 24 * 60 * 60 * 1000;
+  // Check 7-day dismissal TTL
+  const BANNER_TTL_MS = 7 * 24 * 60 * 60 * 1000;
   const dismissedUntil = parseInt(localStorage.getItem('articleBannerDismissed') || '0', 10);
   if (Date.now() < dismissedUntil) return;
 
-  titleEl.textContent = latest.title;
-  if (descEl && latest.excerpt) {
-    descEl.textContent = latest.excerpt;
+  titleEl.textContent = featured.title;
+  if (descEl && featured.excerpt) {
+    descEl.textContent = featured.excerpt;
   }
 
   if (ctaEl) {
     ctaEl.addEventListener('click', (e) => {
       e.preventDefault();
       banner.hidden = true;
-      openArticle(latest.id);
+      openArticle(featured.id);
     });
   }
 
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
       banner.hidden = true;
-      localStorage.setItem('articleBannerDismissed', String(Date.now() + BANNER_DISMISS_DURATION_MS));
+      localStorage.setItem('articleBannerDismissed', String(Date.now() + BANNER_TTL_MS));
     });
   }
 

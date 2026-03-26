@@ -36,10 +36,11 @@
           <li><a class="nav__link" href="#reviews">Отзывы</a></li>
           <li><a class="nav__link" href="#contacts">Контакты</a></li>
         </ul>
-        <div class="nav__cta">
-          <a href="#booking" class="btn btn--primary">Записаться</a>
-        </div>
       </nav>
+
+      <div class="header__cta">
+        <a href="#booking" class="btn btn--primary header__cta-btn">Записаться</a>
+      </div>
 
       <button
         class="burger"
@@ -57,19 +58,21 @@
   </header>
 
   <!-- ═══════════════════════════════════════════════
-       BREAKING NEWS BANNER — inline, non-intrusive
+       FLOATING ARTICLE CARD — editorial accent, bottom-right
   ═══════════════════════════════════════════════ -->
-  <div class="article-banner" id="article-banner" role="complementary" aria-live="polite" aria-label="Новая статья" hidden>
-    <div class="container article-banner__inner">
-      <span class="article-banner__label">Новая статья</span>
-      <div class="article-banner__text">
-        <p class="article-banner__title" id="article-banner-title"></p>
-        <p class="article-banner__desc" id="article-banner-desc"></p>
+  <div class="pub-float" id="article-banner" role="complementary" aria-live="polite" aria-label="Новая статья" hidden>
+    <div class="pub-float__inner">
+      <div class="pub-float__meta">
+        <span class="pub-float__pill">Новая статья</span>
+        <button class="pub-float__close" id="article-banner-close" aria-label="Закрыть">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><line x1="1" y1="1" x2="13" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="13" y1="1" x2="1" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
       </div>
-      <a class="article-banner__cta" id="article-banner-cta" href="#articles">Читать</a>
-      <button class="article-banner__close" id="article-banner-close" aria-label="Закрыть уведомление о статье">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><line x1="1" y1="1" x2="13" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="13" y1="1" x2="1" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      </button>
+      <a class="pub-float__link" id="article-banner-cta" href="#articles">
+        <span class="pub-float__title" id="article-banner-title"></span>
+        <span class="pub-float__excerpt" id="article-banner-desc"></span>
+        <span class="pub-float__read">Читать статью →</span>
+      </a>
     </div>
   </div>
 
@@ -821,6 +824,30 @@
 
   <!-- Scroll to top -->
   <button class="scroll-top" id="scroll-top" aria-label="Наверх">↑</button>
+
+  <!-- ═══════════════════════════════════════════════
+       MOBILE BOTTOM SHEET NAV
+  ═══════════════════════════════════════════════ -->
+  <div class="mobile-overlay" id="mobile-overlay" aria-hidden="true"></div>
+  <div class="mobile-sheet" id="mobile-sheet" role="dialog" aria-modal="true" aria-label="Навигация" aria-hidden="true">
+    <div class="mobile-sheet__handle" aria-hidden="true"></div>
+    <button class="mobile-sheet__close" id="mobile-sheet-close" aria-label="Закрыть меню">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <nav class="mobile-sheet__nav" aria-label="Мобильная навигация">
+      <a class="mobile-sheet__link" href="#about">Специалист</a>
+      <a class="mobile-sheet__link" href="#services">Услуги</a>
+      <a class="mobile-sheet__link" href="#podology">Подология</a>
+      <a class="mobile-sheet__link" href="#tools">Инструменты</a>
+      <a class="mobile-sheet__link" href="#articles">Статьи</a>
+      <a class="mobile-sheet__link" href="#reviews">Отзывы</a>
+      <a class="mobile-sheet__link" href="#contacts">Контакты</a>
+    </nav>
+    <a href="#booking" class="btn btn--primary mobile-sheet__cta">Записаться</a>
+  </div>
 
   <!-- Scripts -->
   <script src="js/data.js"></script>

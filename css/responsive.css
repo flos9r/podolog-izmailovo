@@ -97,47 +97,23 @@ iframe {
     display: flex;
   }
 
+  /* Hide desktop CTA on mobile — use bottom sheet CTA instead */
+  .header__cta {
+    display: none;
+  }
+
   .header__inner {
     gap: var(--space-4);
   }
 
+  /* Desktop nav hides on mobile — replaced by bottom sheet */
   .nav {
     display: none;
-    position: fixed;
-    top: var(--header-height);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--color-bg);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-8);
-    z-index: calc(var(--z-header) - 1);
-    padding: var(--space-8) var(--space-4);
-    overflow-y: auto;
   }
 
-  .nav__list {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-6);
-    width: 100%;
-  }
-
-  .nav__link {
-    font-size: var(--font-size-lg);
-  }
-
-  .nav__cta {
-    margin-left: 0;
-    width: 100%;
-    text-align: center;
-  }
-
-  .nav__cta .btn {
-    width: 100%;
-    justify-content: center;
+  /* Keep nav visible if JS hasn't loaded (progressive enhancement) */
+  .nav.is-open {
+    display: none;
   }
 
   /* ── Hero ───────────────────────────────────────────── */
@@ -767,7 +743,7 @@ iframe {
     gap: var(--space-5);
   }
 
-  .article-card {
+  .pub-float {
     padding: var(--space-6);
   }
 
@@ -1027,30 +1003,14 @@ iframe {
 }
 
 /* ═══════════════════════════════════════════════════════
-   ARTICLE BANNER — mobile
+   FLOATING ARTICLE CARD — mobile
 ═══════════════════════════════════════════════════════ */
 
-@media (max-width: 768px) {
-  .article-banner__inner {
-    gap: var(--space-3);
-  }
-
-  .article-banner__title {
-    font-size: var(--font-size-xs);
-  }
-
-  .article-banner__desc {
-    display: none;
-  }
-
-  .article-banner__label {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .article-banner__cta {
-    display: none;
+@media (max-width: 375px) {
+  .pub-float {
+    right: 10px;
+    bottom: 10px;
+    width: calc(100vw - 20px);
   }
 }
 

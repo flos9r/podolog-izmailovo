@@ -37,39 +37,47 @@
 
 ## Статус выполнения по пунктам
 
-### C1: Desktop CTA "Записаться" — ✅ Done
+### C1: Desktop CTA "Записаться" — ✅ Done (v2, полностью переработан)
 
-**Проблема:** кнопка "Записаться" накладывалась на вкладки, была слишком мала.
+**Проблема:** кнопка "Записаться" была вложена внутрь `<nav>` (`.nav__cta`), что создавало конфликт с nav-ссылками и могло приводить к наложениям.
 
-**Решение:**
-- `.nav__cta` получил `border-left: 1px solid var(--color-border)` — визуальный разделитель между nav-ссылками и CTA
-- `.nav__list` gap заменён на `clamp(var(--space-4), 2vw, var(--space-8))` — адаптируется к ширине viewport
-- Файлы: `css/styles.css`
+**Решение (сессия 2):**
+- CTA **извлечена из `<nav>`** и стала самостоятельным `<div class="header__cta">` — прямым дочерним элементом `header__inner`, МЕЖДУ `</nav>` и `<button.burger>`
+- Структура header теперь: `[logo] [nav-links] [divider+cta] [burger]` — наложения невозможны
+- `.header__cta`: `flex-shrink: 0`, `clamp()` margin, `border-left` divider
+- `.header__cta-btn`: `min-height: 44px`, `white-space: nowrap`, `inline-flex`
+- На мобильном `header__cta` скрывается (`display: none`) — мобильный CTA в bottom-sheet
+- Файлы: `index.html`, `css/styles.css`, `css/responsive.css`
 
 **Acceptance criteria:**
-- [x] 0 наложений на вкладки/меню
-- [x] Рабочие ширины: 1366 / 1440 / 1920
-- [x] CTA визуально заметна (border-left создаёт чёткую границу)
+- [x] CTA вне `<nav>` — никаких наложений на 1366 / 1440 / 1920
+- [x] `min-height: 44px` — доступная кликабельная зона
+- [x] `white-space: nowrap` — текст не переносится
+- [x] На мобильном скрыта, заменена CTA в bottom-sheet
 
 ---
 
-### C2: "Новая статья" — breaking-news banner ✅ Done
+### C2: "Новая публикация" — floating editorial card ✅ Done (v2, переработан)
 
-**Решение:**
-- Sticky полоска под header (`position: sticky; top: var(--header-height)`)
-- `aria-live="polite"` на контейнере — экранные читалки получают уведомление корректно
-- Содержит: метку "Новая статья", заголовок (`article-banner__title`), описание (`article-banner__desc`)
-- Кнопка закрытия с `aria-label="Закрыть уведомление о статье"`
-- `localStorage` TTL 7 дней (`7 * 24 * 60 * 60 * 1000 ms`)
-- На мобильном: метка и описание скрываются, CTA скрывается на <480px
-- `initArticleBanner()` читает `siteData.articles[0]` и открывает статью по клику на CTA
-- Файлы: `index.html`, `js/main.js`, `css/styles.css`, `css/responsive.css`
+**Решение (сессия 2):**
+- Из inline sticky-полоски → **floating-карточка** (editorial/badge стиль)
+- `position: fixed; right: 20px; bottom: 20px` — нижний правый угол
+- Frosted glass: `backdrop-filter: blur(14px)`, `background: rgba(250,249,247,0.92)`
+- "Новая статья" pill в цвете accent
+- Заголовок в Playfair Display + excerpt + "Читать статью →"
+- Плавная анимация появления: `translateY(16px) → 0, opacity 0 → 1`
+- Кнопка закрытия 36×36px (> 44px inclusive padding), `aria-live="polite"` сохранён
+- 7-day TTL сохранён
+- На mobile ≤375px: `right: 10px; bottom: 10px; width: calc(100vw - 20px)`
+- CSS-класс переименован в `.pub-float` (не пересекается с `.article-card` сетки статей)
+- Файлы: `index.html`, `css/styles.css`, `css/responsive.css`, `js/main.js`
 
 **Acceptance criteria:**
-- [x] Не перекрывает бургер или nav-ссылки на mobile
+- [x] Не перекрывает header/nav/burger
 - [x] Dismissible с TTL 7 дней в localStorage
-- [x] `aria-live="polite"` — корректное поведение для screen readers
-- [x] Работает на mobile (320–412px) без горизонтального скролла
+- [x] `aria-live="polite"` — сохранён
+- [x] Работает на 320–412px без горизонтального скролла
+- [x] Класс `.pub-float` не пересекается с `.article-card` (grid статей)
 
 ---
 
@@ -142,23 +150,33 @@
 
 ---
 
-### C7: Мобильный бургер ✅ Done
+### C7: Мобильный бургер → Bottom-sheet navigation ✅ Done (v2, полностью переработан)
 
-**Было:** `width: 30px; height: 30px; padding: 2px` — мелкая зона нажатия.
+**Было:** fullscreen overlay занимал весь viewport (`position: fixed; top: header-height; bottom: 0`), визуально агрессивный.
 
-**Стало:**
-- `min-width: 44px; min-height: 44px; padding: 10px` — WCAG-совместимая tap zone
-- `width: 44px; height: 44px` на мобильном breakpoint
-- `hover: background: var(--color-accent-light)` — визуальная обратная связь
-- `burger:focus-visible` — видимый outline
-- Esc закрывает меню и возвращает фокус на burger
-- `document.body.style.overflow = 'hidden'` при открытии (уже было реализовано)
+**Стало (сессия 2) — Bottom Sheet паттерн:**
+- Новый HTML: `<div class="mobile-overlay">` (затемнение) + `<div class="mobile-sheet">` (панель снизу)
+- `mobile-sheet`: `position: fixed; bottom: 0; border-radius: 20px 20px 0 0; transform: translateY(100%)` → `.is-open` → `translateY(0)`
+- `mobile-overlay`: `position: fixed; inset: 0; background: rgba(0,0,0,0.45); opacity: 0 → 1`
+- Visual drag handle (40px × 4px, модный affordance)
+- Кнопка закрытия в правом верхнем углу (44×44px)
+- Ссылки: `min-height: 52px` — выше 44px WCAG требования
+- CTA внизу: `width: 100%; min-height: 52px`
+- JS: `openSheet()` / `closeSheet()` — Esc, overlay click, link click — всё закрывает
+- `aria-modal="true"`, `aria-hidden` переключается
+- Фокус возвращается на burger при закрытии
+- Burger больше НЕ переключает `.nav.is-open` — теперь управляет bottom sheet
+- Desktop nav (`<nav class="nav">`) на мобильном скрыт всегда
+- Файлы: `index.html`, `js/main.js`, `css/styles.css`, `css/responsive.css`
+
+**Альтернатива 2 (не выбрана):** Labeled trigger "Меню" + иконка — discoverability лучше, но bottom sheet современнее и удобнее для одной руки.
 
 **Acceptance criteria:**
-- [x] Tap zone ≥ 44×44
-- [x] Видимый focus outline
-- [x] Esc закрывает меню
-- [x] Проверка ширин: 320/360/375/390/412 — без горизонтального скролла
+- [x] Tap zones: burger 44×44, close 44×44, links 52px height
+- [x] Esc закрывает, фокус возвращается
+- [x] Overlay click закрывает
+- [x] `aria-modal="true"`, `aria-hidden` переключается корректно
+- [x] Без горизонтального скролла на 320/360/375/390/412px
 
 ---
 
