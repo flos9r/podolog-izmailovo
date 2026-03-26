@@ -12,7 +12,8 @@
 |---|---|
 | `index.html` | Удалена секция "Доступные записи", добавлен booking-info grid (3 шага), удалён международный сертификат из HTML, добавлен article-banner с aria-live, переработан podology__card--accent |
 | `js/data.js` | Удалён "Сертификат подолога международного образца" из certifications[] |
-| `js/main.js` | Удалён вызов renderAvailableSlots() из renderAll(), добавлен initArticleBanner() с excerpt + 7-day TTL, добавлен Esc-handler для мобильного меню |
+| `js/main.js` | Удалён вызов renderAvailableSlots() из renderAll(), добавлен initArticleBanner() с excerpt + 7-day TTL, добавлен Esc-handler для мобильного меню; удалены мёртвые функции renderAvailableSlots() и populateFormTime() |
+| `js/form.js` | Удалён `setMinBookingDate()`, удалён валидатор `date`, удалены поля желаемой даты/времени из HTML |
 | `css/styles.css` | .nav__cta с border-left divider; .nav__list с clamp() gap; .article-banner + .article-banner__text + .article-banner__desc; .booking-info__grid; .podology__reasons; .burger min 44×44; .burger:focus-visible + .article-banner__close:focus-visible |
 | `css/responsive.css` | Мобильные стили для article-banner (label/desc скрыты), booking-info__grid (1 col), podology__reasons, burger (44×44 на mobile) |
 

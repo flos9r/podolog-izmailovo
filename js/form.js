@@ -16,7 +16,6 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mojpaqgd';
 
 document.addEventListener('DOMContentLoaded', () => {
   initBookingForm();
-  setMinBookingDate();
 });
 
 /* ═══════════════════════════════════════════════════════
@@ -59,14 +58,6 @@ function initBookingForm() {
   });
 }
 
-/** Ставим минимальную дату = сегодня */
-function setMinBookingDate() {
-  const dateInput = document.getElementById('form-date');
-  if (!dateInput) return;
-  const today = new Date().toISOString().split('T')[0];
-  dateInput.min = today;
-}
-
 /* ─── Validators ─────────────────────────────────────── */
 
 const validators = {
@@ -85,16 +76,6 @@ const validators = {
   email: {
     validate: (v) => !v.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
     message: 'Введите корректный email',
-  },
-  date: {
-    validate: (v) => {
-      if (!v.trim()) return true;
-      const d = new Date(v);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return d >= today;
-    },
-    message: 'Выберите дату сегодня или позже',
   },
 };
 
