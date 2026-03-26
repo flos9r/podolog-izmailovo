@@ -2188,7 +2188,6 @@ input, textarea, select {
 .article-card:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
-  border-left-color: var(--color-accent);
   border-color: var(--color-border);
   border-left-color: var(--color-accent);
 }

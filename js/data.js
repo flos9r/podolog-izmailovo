@@ -220,7 +220,7 @@ const siteData = {
     email: "natalyapodolog@yandex.ru",
     whatsapp: "79197616401",
     telegram: "podolog_nata",
-    instagram: "",
+    instagram: "podolog_izmaylovo",
     address: "ул. 5-ая Парковая, д 62Б, Москва",
     addressFull: "г. Москва, ул. 5-ая Парковая, д 62Б",
     workingHours: "Пн–Сб: 09:00–19:00",
