@@ -65,18 +65,20 @@
       <div class="container">
         <div class="hero__layout">
 
-          <!-- Quote + Photo block -->
-          <div class="hero__quote-block">
-            <div class="hero__photo-wrap">
-              <!--
-                Фото специалиста: положите файл images/specialist.jpg
-                и замените placeholder ниже на:
-                <img class="hero__photo" src="images/specialist.jpg" alt="Наталья Сунцова — подолог" />
-              -->
+          <!-- Photo + Quote block (left column) -->
+          <div class="hero__visual">
+            <!--
+              ФОТО СПЕЦИАЛИСТА:
+              Замените hero__photo-placeholder на:
+              <img class="hero__photo image-shell__img" id="specialist-photo"
+                   src="images/specialist.jpg" alt="Наталья Сунцова — подолог" />
+            -->
+            <div class="hero__photo-wrap image-shell hero-image-shell">
               <div class="hero__photo-placeholder" aria-hidden="true">
                 <span>Фото специалиста</span>
               </div>
             </div>
+            <!-- Quote floats at bottom of photo -->
             <blockquote class="hero__quote">
               <p class="hero__quote-text">«Занимаюсь любимым делом&nbsp;— подологией»</p>
               <footer class="hero__quote-author">
@@ -86,18 +88,19 @@
             </blockquote>
           </div>
 
-          <!-- Main info block -->
+          <!-- Text + CTA block (right column) -->
           <div class="hero__main">
-            <p class="hero__eyebrow">Профессиональный уход за стопами</p>
+            <p class="hero__eyebrow">Подологический кабинет · Измайлово</p>
             <h1 class="hero__title">
-              Подолог в&nbsp;Измайлово
+              Профессиональный<br>уход за стопами
             </h1>
             <p class="hero__subtitle">
-              Аппаратный педикюр, коррекция вросшего ногтя, работа с мозолями и натоптышами. Строго по записи, без очередей.
+              Аппаратный педикюр, коррекция вросшего ногтя, работа с мозолями.
+              Без очередей — строго по записи.
             </p>
 
             <div class="hero__actions">
-              <a href="#booking" class="btn btn--accent btn--lg">Записаться на приём</a>
+              <a href="#booking" class="btn btn--accent btn--lg">Записаться</a>
               <a href="#services" class="btn btn--outline-light btn--lg">Услуги и цены</a>
             </div>
 
@@ -107,12 +110,12 @@
                 <span class="hero__stat-label">лет опыта</span>
               </div>
               <div class="hero__stat">
-                <span class="hero__stat-value">1&thinsp;000+</span>
+                <span class="hero__stat-value">1000+</span>
                 <span class="hero__stat-label">довольных клиентов</span>
               </div>
               <div class="hero__stat">
                 <span class="hero__stat-value">5.0</span>
-                <span class="hero__stat-label">рейтинг на Яндекс Картах</span>
+                <span class="hero__stat-label">Яндекс Карты</span>
               </div>
             </div>
           </div>
@@ -291,16 +294,8 @@
           </div>
         </header>
 
-        <div class="reviews__slider" aria-roledescription="карусель" aria-label="Отзывы клиентов">
-          <div class="reviews__track" id="reviews-track" aria-live="polite">
-            <!-- Карточки отзывов генерируются из data.js -->
-          </div>
-        </div>
-
-        <div class="reviews__controls" role="group" aria-label="Управление каруселью" hidden>
-          <button class="reviews__btn" id="reviews-prev" aria-label="Предыдущий отзыв">←</button>
-          <div class="reviews__dots" id="reviews-dots" role="group" aria-label="Навигация по отзывам"></div>
-          <button class="reviews__btn" id="reviews-next" aria-label="Следующий отзыв">→</button>
+        <div class="reviews__grid" id="reviews-track" aria-label="Отзывы клиентов" role="list">
+          <!-- Карточки отзывов генерируются из data.js -->
         </div>
 
         <p class="reviews__source-note">

@@ -791,9 +791,11 @@ input, textarea, select {
 
 /* Reviews use a simple grid — no carousel */
 .reviews__slider {
-  /* no overflow hidden needed for grid */
+  /* Legacy — no longer used as slider */
 }
 
+/* Grid for reviews — main layout */
+.reviews__grid,
 .reviews__track {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -803,7 +805,7 @@ input, textarea, select {
 .review-card {
   background-color: var(--color-surface);
   border-radius: var(--radius-xl);
-  padding: var(--space-8);
+  padding: var(--space-6) var(--space-7, 1.75rem);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-md);
   border-top: 3px solid var(--color-accent);
@@ -815,15 +817,27 @@ input, textarea, select {
 }
 
 .review-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
 .review-card__rating {
   display: flex;
-  gap: 2px;
-  font-size: var(--font-size-md);
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.review-card__stars {
+  font-size: var(--font-size-base);
   color: var(--color-accent);
+  letter-spacing: 1px;
+}
+
+.review-card__score {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semi);
+  color: var(--color-accent);
+  letter-spacing: 0.04em;
 }
 
 .review-card__text {
@@ -835,9 +849,9 @@ input, textarea, select {
 
 .review-card__text::before {
   content: '"';
-  font-size: var(--font-size-3xl);
+  font-size: 2.5rem;
   font-family: 'Playfair Display', var(--font-heading);
-  color: rgba(180, 123, 82, 0.25);
+  color: rgba(180, 123, 82, 0.22);
   line-height: 0.5;
   display: block;
   margin-bottom: var(--space-3);
@@ -849,6 +863,7 @@ input, textarea, select {
   align-items: flex-end;
   padding-top: var(--space-3);
   border-top: 1px solid var(--color-border);
+  gap: var(--space-3);
 }
 
 .review-card__name {
@@ -857,26 +872,15 @@ input, textarea, select {
   font-size: var(--font-size-sm);
 }
 
-.review-card__service {
-  font-size: var(--font-size-xs);
-  color: var(--color-primary);
-  margin-top: 2px;
-}
-
 .review-card__date {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
+  flex-shrink: 0;
 }
 
-/* Hide slider controls — we use grid layout */
-.reviews__controls {
-  display: none;
-}
-
-.reviews__dots {
-  display: none;
-}
-
+/* Hide old slider controls */
+.reviews__controls,
+.reviews__dots,
 .reviews__dot {
   display: none;
 }
@@ -1569,22 +1573,42 @@ input, textarea, select {
 }
 
 /* ═══════════════════════════════════════════════════════
-   HERO — REDESIGNED
+   HERO — EDITORIAL LAYOUT
 ═══════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+}
+
+/* Subtle accent glow in top-left */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: radial-gradient(ellipse at top left, rgba(180, 123, 82, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
 
 .hero__layout {
   display: grid;
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: 380px 1fr;
   gap: var(--space-16);
   align-items: center;
   min-height: calc(100vh - var(--header-height));
   padding-block: var(--space-16);
+  position: relative;
 }
 
-.hero__quote-block {
+/* ── Visual column (photo + quote) ──────────────────── */
+
+.hero__visual {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: 0;
+  position: relative;
 }
 
 .hero__photo-wrap {
@@ -1595,6 +1619,11 @@ input, textarea, select {
   overflow: hidden;
   background-color: var(--color-bg-alt);
   box-shadow: var(--shadow-lg);
+}
+
+/* Fallback — keep old class working if photo exists */
+.hero__photo-wrap.image-shell {
+  background: #ede7df;
 }
 
 .hero__photo {
@@ -1611,27 +1640,28 @@ input, textarea, select {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, #e8e1d7 0%, #d4c9bc 100%);
+  background: linear-gradient(160deg, #ede7df 0%, #d8cfc5 100%);
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   text-align: center;
   padding: var(--space-4);
 }
 
+/* Quote sits right below the photo */
 .hero__quote {
   margin: 0;
   padding: var(--space-5) var(--space-6);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-left: 3px solid var(--color-accent);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(8px);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(12px);
 }
 
 .hero__quote-text {
   font-family: 'Playfair Display', var(--font-heading);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   font-style: italic;
   color: var(--color-text);
   line-height: 1.5;
@@ -1657,10 +1687,26 @@ input, textarea, select {
   letter-spacing: 0.08em;
 }
 
+/* ── Text column ─────────────────────────────────────── */
+
 .hero__main {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-6);
+  position: relative;
+  /* Thin vertical accent line on left edge */
+  padding-left: var(--space-8);
+}
+
+.hero__main::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 80%;
+  background: linear-gradient(to bottom, var(--color-accent), transparent);
+  border-radius: 1px;
 }
 
 .hero__eyebrow {
@@ -1680,19 +1726,19 @@ input, textarea, select {
 
 .hero__title {
   font-family: 'Playfair Display', var(--font-heading);
-  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  font-size: clamp(2.6rem, 4.5vw, 3.75rem);
   font-weight: var(--font-weight-bold);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
   color: var(--color-text);
   margin: 0;
 }
 
 .hero__subtitle {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-base);
   color: var(--color-text-muted);
-  line-height: 1.65;
-  max-width: 480px;
+  line-height: 1.7;
+  max-width: 440px;
   margin: 0;
 }
 
@@ -1706,7 +1752,7 @@ input, textarea, select {
   display: flex;
   gap: var(--space-8);
   flex-wrap: wrap;
-  padding-top: var(--space-6);
+  padding-top: var(--space-5);
   border-top: 1px solid var(--color-border);
 }
 
@@ -1718,7 +1764,7 @@ input, textarea, select {
 
 .hero__stat-value {
   font-family: 'Playfair Display', var(--font-heading);
-  font-size: var(--font-size-2xl);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: var(--font-weight-bold);
   color: var(--color-accent);
   line-height: 1;
@@ -1874,7 +1920,7 @@ input, textarea, select {
 .tool-card {
   background: #fff;
   border-radius: var(--radius-lg);
-  padding: var(--space-7, var(--space-6));
+  padding: var(--space-6);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
   display: flex;
@@ -2245,15 +2291,13 @@ input, textarea, select {
 }
 
 /* ═══════════════════════════════════════════════════════
-   REVIEW GRID LAYOUT FIX (override any duplicates)
+   REVIEW GRID — canonical override (no slider)
 ═══════════════════════════════════════════════════════ */
 
-#reviews .reviews__track {
+.reviews__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-6);
-  overflow: visible;
-  transform: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════

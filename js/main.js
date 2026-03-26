@@ -169,18 +169,15 @@ function renderReviews() {
   if (!track) return;
 
   track.innerHTML = siteData.reviews.map(r => `
-    <article class="review-card">
+    <article class="review-card" role="listitem">
       <div class="review-card__rating" aria-label="Оценка: ${r.rating} из 5">
-        ${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}
+        <span class="review-card__stars" aria-hidden="true">${'★'.repeat(r.rating)}</span>
+        <span class="review-card__score">${r.rating}/5</span>
       </div>
       <p class="review-card__text">${r.text}</p>
       <div class="review-card__footer">
-        <div>
-          <div class="review-card__name">${r.name}</div>
-        </div>
-        <div class="review-card__meta">
-          <div class="review-card__date">${r.date}</div>
-        </div>
+        <strong class="review-card__name">${r.name}</strong>
+        <span class="review-card__date">${r.date}</span>
       </div>
     </article>
   `).join('');
