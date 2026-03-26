@@ -442,6 +442,166 @@ input, textarea, select {
   margin-top: 1px;
 }
 
+
+/* ── About voice quote ───────────────────────────────── */
+
+.about__voice {
+  margin: 0 0 var(--space-6);
+  padding: var(--space-5) var(--space-6);
+  border-left: 3px solid var(--color-accent);
+  background: rgba(180, 123, 82, 0.06);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.about__voice-text {
+  font-family: 'Playfair Display', var(--font-heading);
+  font-size: var(--font-size-md);
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* ── About trust list ────────────────────────────────── */
+
+.about__trust {
+  margin-bottom: var(--space-8);
+}
+
+.about__trust-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+}
+
+.about__trust-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.about__trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  line-height: 1.5;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.about__trust-item::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SOCIAL CTA — "Следите за работой"
+═══════════════════════════════════════════════════════ */
+
+.social-cta {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  color: var(--color-text-light);
+}
+
+.social-cta .section-label {
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.social-cta__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+}
+
+.social-cta__text {
+  flex: 1;
+}
+
+.social-cta__title {
+  font-family: 'Playfair Display', var(--font-heading);
+  font-size: clamp(1.75rem, 3vw, var(--font-size-3xl));
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+  color: #fff;
+  margin-bottom: var(--space-3);
+}
+
+.social-cta__desc {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.65;
+  max-width: 480px;
+}
+
+.social-cta__links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+.social-cta__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-6);
+  text-decoration: none;
+  transition: background var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
+  min-width: 220px;
+}
+
+.social-cta__link:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.social-cta__link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.social-cta__link-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.social-cta__link-platform {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semi);
+  color: #fff;
+  line-height: 1.2;
+}
+
+.social-cta__link-handle {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.65);
+}
+
 /* ═══════════════════════════════════════════════════════
    SERVICES
 ═══════════════════════════════════════════════════════ */

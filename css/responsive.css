@@ -251,6 +251,34 @@ iframe {
     font-size: var(--font-size-base);
   }
 
+  .about__voice {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .about__voice-text {
+    font-size: var(--font-size-base);
+  }
+
+  .about__trust-item {
+    font-size: var(--font-size-sm);
+  }
+
+  /* ── Social CTA ─────────────────────────────────────── */
+  .social-cta__inner {
+    flex-direction: column;
+    gap: var(--space-8);
+    align-items: flex-start;
+  }
+
+  .social-cta__desc {
+    max-width: 100%;
+  }
+
+  .social-cta__link {
+    min-width: 0;
+    width: 100%;
+  }
+
   /* ── Services ───────────────────────────────────────── */
   .services__grid {
     grid-template-columns: 1fr;

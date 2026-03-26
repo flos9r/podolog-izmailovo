@@ -95,8 +95,7 @@
               Профессиональный<br>уход за стопами
             </h1>
             <p class="hero__subtitle">
-              Аппаратный педикюр, коррекция вросшего ногтя, работа с мозолями.
-              Без очередей — строго по записи.
+              Вросшие ногти, натоптыши, трещины, деформации. Работаю со всеми — от детей до пожилых. Строго по записи, без очередей.
             </p>
 
             <div class="hero__actions">
@@ -156,20 +155,34 @@
           <div class="about__text">
             <span class="section-label">Специалист</span>
             <h2 class="about__title" id="about-heading"><span id="about-name">Наталья Сунцова</span></h2>
+
+            <!-- Specialist's own voice — not overridden by JS -->
+            <blockquote class="about__voice">
+              <p class="about__voice-text">Я занимаюсь стопами — вросшими и деформированными ногтями, натоптышами, трещинами, бородавками. Принимаю всех: и детей, и пожилых людей, и тех, кто обращается впервые.</p>
+            </blockquote>
+
             <p class="about__desc" id="about-desc">
-              Профессиональный подолог с многолетним опытом работы. Специализируюсь на профессиональном уходе за стопами, ногтями и кожей. Каждый клиент получает индивидуальный подход и заметный результат.
+              Меня зовут Наталья, я подолог с многолетним опытом работы. За восемь лет практики через кабинет прошли сотни посетителей — и я рада каждому, кто доверяет мне свои стопы.
             </p>
-            <p class="about__desc">
-              <strong id="about-experience">Более 8 лет в подологии</strong>. Регулярно повышаю квалификацию на профессиональных курсах и мастер-классах. Использую только сертифицированное оборудование и препараты.
-            </p>
+
+            <!-- Trust signals — from the specialist's own words -->
+            <div class="about__trust">
+              <h3 class="about__trust-title">Почему доверяют</h3>
+              <ul class="about__trust-list" aria-label="Основания для доверия">
+                <li class="about__trust-item">Медицинское образование</li>
+                <li class="about__trust-item">Стерильный инструментарий и одноразовые расходники</li>
+                <li class="about__trust-item">Постоянно обучаюсь в лучших школах РФ и международных</li>
+                <li class="about__trust-item"><strong id="about-experience">Более 8 лет</strong> практики</li>
+              </ul>
+            </div>
 
             <div class="about__certs">
               <h3 class="about__certs-title">Образование и сертификаты</h3>
               <ul id="about-certs" aria-label="Список сертификатов">
+                <li class="about__cert-item">Медицинское образование</li>
                 <li class="about__cert-item">Сертификат подолога международного образца</li>
-                <li class="about__cert-item">Курс медицинского педикюра</li>
                 <li class="about__cert-item">Специализация: коррекция вросшего ногтя</li>
-                <li class="about__cert-item">Курс ортопедии и биомеханики стопы</li>
+                <li class="about__cert-item">Курсы в лучших школах подологии РФ и международных</li>
               </ul>
             </div>
 
@@ -673,6 +686,38 @@
       </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════════
+         SOCIAL MEDIA
+    ═══════════════════════════════════════════════ -->
+    <section class="section social-cta" id="social" aria-labelledby="social-heading">
+      <div class="container">
+        <div class="social-cta__inner">
+          <div class="social-cta__text">
+            <span class="section-label">Подписывайтесь</span>
+            <h2 class="social-cta__title" id="social-heading">Следите за работой</h2>
+            <p class="social-cta__desc">Реальные случаи, советы по уходу за стопами и актуальное расписание — в Telegram-канале подолога.</p>
+          </div>
+          <div class="social-cta__links">
+            <a
+              href="https://t.me/podolog_nata"
+              class="social-cta__link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Подписаться в Telegram"
+            >
+              <span class="social-cta__link-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+              </span>
+              <span class="social-cta__link-body">
+                <span class="social-cta__link-platform">Telegram</span>
+                <span class="social-cta__link-handle">@podolog_nata</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ═══════════════════════════════════════════════
@@ -684,9 +729,9 @@
 
         <div class="footer__brand">
           <div class="footer__brand-name" data-footer="name">Наталья Сунцова</div>
-          <div class="footer__brand-title">Подолог · Москва, 5-ая Парковая</div>
+          <div class="footer__brand-title">Подолог · Москва, Измайлово</div>
           <p class="footer__brand-desc">
-            Аппаратный педикюр, коррекция вросшего ногтя, работа с мозолями. Измайлово, Москва.
+            Вросшие ногти, натоптыши, трещины, деформации. Работаю со всеми — строго по записи.
           </p>
         </div>
 
@@ -699,6 +744,7 @@
             <a href="#slots" class="footer__nav-link">Запись</a>
             <a href="#reviews" class="footer__nav-link">Отзывы</a>
             <a href="#contacts" class="footer__nav-link">Контакты</a>
+            <a href="#social" class="footer__nav-link">Telegram</a>
             <a href="#booking" class="footer__nav-link">Записаться</a>
           </nav>
         </div>
