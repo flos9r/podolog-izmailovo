@@ -2154,8 +2154,20 @@ input, textarea, select {
 
 .articles__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-6);
+}
+
+.articles__note {
+  text-align: center;
+  margin-top: var(--space-8);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.articles__note a {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
 }
 
 .article-card {
@@ -2163,18 +2175,67 @@ input, textarea, select {
   border-radius: var(--radius-lg);
   padding: var(--space-8);
   border: 1px solid var(--color-border);
+  border-left: 3px solid transparent;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
   cursor: pointer;
   transition: all var(--transition-base);
+  position: relative;
 }
 
 .article-card:hover {
   box-shadow: var(--shadow-lg);
-  transform: translateY(-3px);
-  border-color: var(--color-primary-light);
+  transform: translateY(-2px);
+  border-left-color: var(--color-accent);
+  border-color: var(--color-border);
+  border-left-color: var(--color-accent);
+}
+
+/* Featured first card spans both columns */
+.article-card--featured {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-8);
+  background: linear-gradient(135deg, rgba(45, 90, 74, 0.04) 0%, #fff 60%);
+  border-left: 3px solid var(--color-primary);
+}
+
+.article-card--featured:hover {
+  border-left-color: var(--color-accent);
+}
+
+.article-card--featured .article-card__title {
+  font-size: var(--font-size-xl);
+}
+
+/* Card header: tag + number side by side */
+.article-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-1);
+}
+
+.article-card__tag {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semi);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.article-card__num {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-border);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
 }
 
 .article-card__title {
@@ -2202,6 +2263,7 @@ input, textarea, select {
   align-items: center;
   gap: var(--space-2);
   margin: 0;
+  margin-top: auto;
 }
 
 .article-card__cta::after {
@@ -2430,25 +2492,10 @@ input, textarea, select {
 }
 
 /* ═══════════════════════════════════════════════════════
-   ARTICLES — card style
+   ARTICLES — card style (see primary definition above)
 ═══════════════════════════════════════════════════════ */
 
-.article-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-8);
-  box-shadow: var(--shadow-md);
-  backdrop-filter: blur(8px);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
-  cursor: pointer;
-}
-
-.article-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(180, 123, 82, 0.3);
-}
+/* article-card base styles defined in ARTICLES SECTION block above */
 
 /* ═══════════════════════════════════════════════════════
    REVIEW GRID — canonical override (no slider)

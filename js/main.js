@@ -584,10 +584,14 @@ function renderArticles() {
     grid.innerHTML = '<p style="text-align:center;color:var(--color-text-muted)">Статьи готовятся</p>';
     return;
   }
-  grid.innerHTML = articles.map(a => `
-    <div class="article-card" role="button" tabindex="0"
+  grid.innerHTML = articles.map((a, i) => `
+    <div class="article-card${i === 0 ? ' article-card--featured' : ''}" role="button" tabindex="0"
          data-article-id="${a.id}"
          aria-label="Читать статью: ${a.title}">
+      <div class="article-card__header">
+        ${a.tag ? `<span class="article-card__tag">${a.tag}</span>` : ''}
+        <span class="article-card__num">0${i + 1}</span>
+      </div>
       <h3 class="article-card__title">${a.title}</h3>
       <p class="article-card__excerpt">${a.excerpt}</p>
       <p class="article-card__cta">Читать</p>

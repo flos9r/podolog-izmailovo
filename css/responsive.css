@@ -771,6 +771,16 @@ iframe {
     padding: var(--space-6);
   }
 
+  /* Featured card: revert to column layout on mobile */
+  .article-card--featured {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .article-card--featured .article-card__title {
+    font-size: var(--font-size-lg);
+  }
+
   .article-modal__content {
     padding: var(--space-6) var(--space-5);
     border-radius: var(--radius-lg);
