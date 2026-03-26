@@ -708,7 +708,7 @@ input, textarea, select {
 
 .price-row {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto;
   gap: var(--space-4);
   align-items: center;
   padding: var(--space-5) var(--space-8);
@@ -739,12 +739,6 @@ input, textarea, select {
 
 .price-row__service {
   font-weight: var(--font-weight-medium);
-}
-
-.price-row__duration {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  white-space: nowrap;
 }
 
 .price-row__price {
@@ -2014,18 +2008,6 @@ input, textarea, select {
   box-shadow: var(--shadow-sm);
 }
 
-.podology__card--accent {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #1e4038 100%);
-  color: var(--color-text-light);
-  border-color: transparent;
-}
-
-.podology__card--accent .podology__card-label,
-.podology__card--accent .podology__card-title,
-.podology__card--accent .podology__card-text {
-  color: var(--color-text-light);
-}
-
 .podology__card-label {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semi);
@@ -2494,10 +2476,6 @@ input, textarea, select {
   backdrop-filter: blur(8px);
 }
 
-.podology__card--accent {
-  border-left: 4px solid var(--color-accent);
-}
-
 /* ═══════════════════════════════════════════════════════
    TOOLS SECTION — warm card style
 ═══════════════════════════════════════════════════════ */
@@ -2779,35 +2757,36 @@ input, textarea, select {
 }
 
 /* ═══════════════════════════════════════════════════════
-   PODOLOGY REASONS — reworked "Почему регулярный уход"
+   PODOLOGY WHY LIST — "Зачем это нужно"
 ═══════════════════════════════════════════════════════ */
 
-.podology__reasons {
+.podology__why-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 0 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  margin-top: var(--space-4);
+  gap: var(--space-3);
 }
 
-.podology__reason {
-  padding-left: var(--space-4);
-  border-left: 2px solid rgba(255,255,255,0.35);
-}
-
-.podology__reason-title {
+.podology__why-item {
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semi);
-  color: inherit;
-  margin: 0 0 var(--space-2) 0;
-  letter-spacing: 0.01em;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-loose);
+  padding-left: var(--space-5);
+  position: relative;
 }
 
-.podology__reason-text {
-  font-size: var(--font-size-sm);
-  color: inherit;
-  opacity: 0.85;
-  line-height: 1.65;
-  margin: 0;
+.podology__why-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  flex-shrink: 0;
 }
 
 /* ═══════════════════════════════════════════════════════

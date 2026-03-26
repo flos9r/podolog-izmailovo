@@ -277,14 +277,6 @@ iframe {
     padding: var(--space-3) var(--space-4);
   }
 
-  .price-row__duration {
-    display: none;
-  }
-
-  .price-row__head .price-row__duration {
-    display: none;
-  }
-
   .price-row__service {
     font-size: var(--font-size-sm);
     word-break: break-word;
@@ -1034,16 +1026,12 @@ iframe {
 }
 
 /* ═══════════════════════════════════════════════════════
-   PODOLOGY REASONS — mobile
+   PODOLOGY WHY LIST — mobile
 ═══════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-  .podology__reasons {
-    gap: var(--space-4);
-  }
-
-  .podology__reason {
-    padding-left: var(--space-3);
+  .podology__why-list {
+    gap: var(--space-3);
   }
 }
 

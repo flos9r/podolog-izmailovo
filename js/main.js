@@ -96,7 +96,6 @@ function renderPrices() {
   const rows = siteData.prices.map(p => `
     <div class="price-row" role="row">
       <span class="price-row__service" role="cell">${p.service}</span>
-      <span class="price-row__duration" role="cell">${p.duration}</span>
       <span class="price-row__price" role="cell">${p.price}</span>
     </div>
   `).join('');
@@ -104,7 +103,6 @@ function renderPrices() {
   table.innerHTML = `
     <div class="price-row price-row__head" role="row">
       <span role="columnheader">Услуга</span>
-      <span role="columnheader">Длительность</span>
       <span role="columnheader">Стоимость</span>
     </div>
     ${rows}
