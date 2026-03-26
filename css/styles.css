@@ -235,7 +235,8 @@ input, textarea, select {
 .nav__list {
   display: flex;
   align-items: center;
-  gap: var(--space-8);
+  gap: clamp(var(--space-4), 2vw, var(--space-8));
+  flex-wrap: nowrap;
 }
 
 .nav__link {
@@ -268,7 +269,10 @@ input, textarea, select {
 }
 
 .nav__cta {
-  margin-left: var(--space-4);
+  margin-left: var(--space-6);
+  padding-left: var(--space-6);
+  border-left: 1px solid var(--color-border);
+  flex-shrink: 0;
 }
 
 /* Mobile burger */
@@ -2589,3 +2593,181 @@ input, textarea, select {
   color: var(--color-accent);
   margin-top: var(--space-3);
 }
+
+/* ═══════════════════════════════════════════════════════
+   ARTICLE BANNER — inline breaking-news strip
+═══════════════════════════════════════════════════════ */
+
+.article-banner {
+  background: var(--color-primary);
+  color: #fff;
+  position: sticky;
+  top: var(--header-height);
+  z-index: calc(var(--z-header) - 2);
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.article-banner__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.article-banner__label {
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semi);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.18);
+  border-radius: var(--radius-full);
+  padding: 3px 10px;
+}
+
+.article-banner__title {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  margin: 0;
+}
+
+.article-banner__cta {
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semi);
+  color: rgba(255,255,255,0.85);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+
+.article-banner__cta:hover {
+  color: #fff;
+}
+
+.article-banner__close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast);
+  margin-left: var(--space-2);
+}
+
+.article-banner__close:hover {
+  color: #fff;
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOOKING INFO — replaces "Available Slots"
+═══════════════════════════════════════════════════════ */
+
+.booking-info__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.booking-info__card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-7) var(--space-6);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.booking-info__num {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-border);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-family: 'Playfair Display', var(--font-heading);
+}
+
+.booking-info__title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semi);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.booking-info__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-loose);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PODOLOGY REASONS — reworked "Почему регулярный уход"
+═══════════════════════════════════════════════════════ */
+
+.podology__reasons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+}
+
+.podology__reason {
+  padding-left: var(--space-4);
+  border-left: 2px solid rgba(255,255,255,0.35);
+}
+
+.podology__reason-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semi);
+  color: inherit;
+  margin: 0 0 var(--space-2) 0;
+  letter-spacing: 0.01em;
+}
+
+.podology__reason-text {
+  font-size: var(--font-size-sm);
+  color: inherit;
+  opacity: 0.85;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   BURGER — improved tap target
+═══════════════════════════════════════════════════════ */
+
+.burger {
+  min-width: 44px;
+  min-height: 44px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 8px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.burger:hover {
+  background: var(--color-accent-light);
+}
+

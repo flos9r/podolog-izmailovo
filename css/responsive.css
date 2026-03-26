@@ -1025,3 +1025,104 @@ iframe {
     font-size: 15px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   ARTICLE BANNER — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .article-banner__inner {
+    gap: var(--space-3);
+  }
+
+  .article-banner__title {
+    font-size: var(--font-size-xs);
+  }
+
+  .article-banner__label {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .article-banner__cta {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOOKING INFO GRID — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .booking-info__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .booking-info__card {
+    padding: var(--space-5);
+  }
+
+  .booking-info__num {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PODOLOGY REASONS — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .podology__reasons {
+    gap: var(--space-4);
+  }
+
+  .podology__reason {
+    padding-left: var(--space-3);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   BURGER — improved tap target mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .burger {
+    display: flex;
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+  }
+
+  .burger__line {
+    width: 22px;
+    height: 2px;
+    background-color: var(--color-text);
+    border-radius: 2px;
+    display: block;
+    transition: all var(--transition-base);
+  }
+
+  .burger.is-open .burger__line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .burger.is-open .burger__line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger.is-open .burger__line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+

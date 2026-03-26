@@ -56,6 +56,20 @@
     </div>
   </header>
 
+  <!-- ═══════════════════════════════════════════════
+       BREAKING NEWS BANNER — inline, non-intrusive
+  ═══════════════════════════════════════════════ -->
+  <div class="article-banner" id="article-banner" role="complementary" aria-label="Новая статья" hidden>
+    <div class="container article-banner__inner">
+      <span class="article-banner__label">Новая статья</span>
+      <p class="article-banner__title" id="article-banner-title"></p>
+      <a class="article-banner__cta" id="article-banner-cta" href="#articles">Читать</a>
+      <button class="article-banner__close" id="article-banner-close" aria-label="Закрыть">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
   <main role="main">
 
     <!-- ═══════════════════════════════════════════════
@@ -180,7 +194,6 @@
               <h3 class="about__certs-title">Образование и сертификаты</h3>
               <ul id="about-certs" aria-label="Список сертификатов">
                 <li class="about__cert-item">Медицинское образование</li>
-                <li class="about__cert-item">Сертификат подолога международного образца</li>
                 <li class="about__cert-item">Специализация: коррекция вросшего ногтя</li>
                 <li class="about__cert-item">Курсы в лучших школах подологии РФ и международных</li>
               </ul>
@@ -410,26 +423,40 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════
-         AVAILABLE SLOTS
+         BOOKING INFO (replaces "Available Slots")
     ═══════════════════════════════════════════════ -->
-    <section class="section section--alt" id="slots" aria-labelledby="slots-heading">
+    <section class="section section--alt" id="slots" aria-labelledby="booking-info-heading">
       <div class="container">
         <header class="section-header">
-          <span class="section-label">Ориентир по времени</span>
-          <h2 class="section-title" id="slots-heading">Доступные записи</h2>
+          <span class="section-label">Как проходит запись</span>
+          <h2 class="section-title" id="booking-info-heading">Запись на приём</h2>
           <p class="section-desc">
-            Время каждой процедуры различается — подолог подбирает его индивидуально. Показанные окна ориентировочные: точное время подтверждается после заявки.
+            Подолог подбирает время индивидуально под каждую ситуацию. Точное время и дата согласуются напрямую.
           </p>
         </header>
 
-        <div class="booking-notice">
-          <p class="booking-notice__text">
-            Одна и та же процедура может занять разное время в зависимости от ситуации. Несколько услуг можно совместить за один визит. После заявки специалист свяжется и уточнит удобный вариант.
-          </p>
+        <div class="booking-info__grid">
+          <div class="booking-info__card">
+            <div class="booking-info__num">01</div>
+            <h3 class="booking-info__title">Оставьте заявку</h3>
+            <p class="booking-info__text">Заполните форму ниже или напишите в мессенджер. Укажите, что вас беспокоит.</p>
+          </div>
+          <div class="booking-info__card">
+            <div class="booking-info__num">02</div>
+            <h3 class="booking-info__title">Наталья свяжется с вами</h3>
+            <p class="booking-info__text">После получения заявки специалист свяжется и предложит удобное время, исходя из ситуации.</p>
+          </div>
+          <div class="booking-info__card">
+            <div class="booking-info__num">03</div>
+            <h3 class="booking-info__title">Приходите на приём</h3>
+            <p class="booking-info__text">Продолжительность каждой процедуры разная — подолог оценивает это индивидуально. Несколько услуг можно совместить за один визит.</p>
+          </div>
         </div>
 
-        <div class="slots__grid" id="slots-grid" aria-label="Доступные слоты для записи">
-          <!-- Слоты генерируются из data.js → availableSlots -->
+        <div class="booking-notice">
+          <p class="booking-notice__text">
+            Точное время занимает разное количество минут в зависимости от ситуации — дату и время всегда согласуем напрямую, без ожидания в очереди.
+          </p>
         </div>
 
         <div style="text-align: center; margin-top: 2rem;">
@@ -573,9 +600,9 @@
 
           <div class="form__success" id="form-success" role="status" aria-live="polite">
             <div class="form__success-icon">&#10003;</div>
-            <h3 class="form__success-title">Заявка отправлена!</h3>
+            <h3 class="form__success-title">Заявка получена</h3>
             <p class="form__success-text">
-              Я свяжусь с вами в течение часа для подтверждения записи.
+              В ближайшее время Наталья свяжется с вами и согласует удобную дату, время и стоимость. Ожидайте звонка или сообщения.
             </p>
           </div>
         </div>
@@ -621,13 +648,24 @@
           <div class="podology__card podology__card--accent">
             <div class="podology__card-label">Зачем это нужно</div>
             <h3 class="podology__card-title">Почему регулярный уход важен</h3>
-            <ul class="podology__list">
-              <li>Натоптыши и мозоли меняют распределение нагрузки при ходьбе</li>
-              <li>Вросший ноготь без ухода может стать хронической проблемой</li>
-              <li>Огрубевшая кожа склонна к трещинам — особенно на пятках</li>
-              <li>Регулярная обработка предупреждает более сложные ситуации</li>
-              <li>Стопы несут вес тела каждый день — они заслуживают внимания</li>
-            </ul>
+            <div class="podology__reasons">
+              <div class="podology__reason">
+                <h4 class="podology__reason-title">Нагрузка на стопы накапливается</h4>
+                <p class="podology__reason-text">Натоптыши и мозоли незаметно меняют то, как вы ходите — нагрузка перераспределяется, и со временем это отражается на суставах и спине.</p>
+              </div>
+              <div class="podology__reason">
+                <h4 class="podology__reason-title">Маленькие проблемы становятся большими</h4>
+                <p class="podology__reason-text">Вросший ноготь или трещина на пятке — это не только дискомфорт. При отсутствии ухода ситуация усугубляется, и потом справиться с ней сложнее.</p>
+              </div>
+              <div class="podology__reason">
+                <h4 class="podology__reason-title">Профилактика проще, чем исправление</h4>
+                <p class="podology__reason-text">Регулярная профессиональная обработка раз в 6–8 недель помогает поддерживать кожу и ногти в порядке — и не допускать обострений.</p>
+              </div>
+              <div class="podology__reason">
+                <h4 class="podology__reason-title">Стопы несут вес тела каждый день</h4>
+                <p class="podology__reason-text">Ноги работают буквально весь день. Это одна из веских причин уделять им внимание — не раз в пять лет, а регулярно.</p>
+              </div>
+            </div>
           </div>
         </div>
 

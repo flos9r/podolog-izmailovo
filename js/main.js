@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initActiveNavLinks();
   initArticleModal();
+  initArticleBanner();
 });
 
 /* ═══════════════════════════════════════════════════════
@@ -28,7 +29,6 @@ function renderAll() {
   renderReviews();
   renderContacts();
   renderFooter();
-  renderAvailableSlots();
   populateFormServiceSelect();
   renderTools();
   renderArticles();
@@ -658,4 +658,43 @@ function initArticleModal() {
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeArticle();
   });
+}
+
+/* ─────────────────────────────────────────────────────
+   ARTICLE BANNER — shows latest article, dismissible
+───────────────────────────────────────────────────── */
+function initArticleBanner() {
+  const banner = document.getElementById('article-banner');
+  const titleEl = document.getElementById('article-banner-title');
+  const ctaEl = document.getElementById('article-banner-cta');
+  const closeBtn = document.getElementById('article-banner-close');
+  if (!banner || !titleEl) return;
+
+  const articles = (typeof siteData !== 'undefined' && siteData.articles) ? siteData.articles : [];
+  if (!articles.length) return;
+
+  const latest = articles[0];
+
+  // Check if user already dismissed (stored for 24h)
+  const dismissedUntil = parseInt(localStorage.getItem('articleBannerDismissed') || '0', 10);
+  if (Date.now() < dismissedUntil) return;
+
+  titleEl.textContent = latest.title;
+  if (ctaEl) {
+    ctaEl.addEventListener('click', (e) => {
+      e.preventDefault();
+      banner.hidden = true;
+      openArticle(latest.id);
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      banner.hidden = true;
+      // Dismiss for 24 hours
+      localStorage.setItem('articleBannerDismissed', String(Date.now() + 86400000));
+    });
+  }
+
+  banner.removeAttribute('hidden');
 }
