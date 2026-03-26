@@ -2261,3 +2261,51 @@ input, textarea, select {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+/* ═══════════════════════════════════════════════════════
+   BOOKING NOTICE
+═══════════════════════════════════════════════════════ */
+
+.booking-notice {
+  max-width: 640px;
+  margin: 0 auto var(--space-8);
+  padding: var(--space-5) var(--space-6);
+  background: #fff;
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--color-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.booking-notice__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-loose);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECTION DIVIDERS — visual rhythm between sections
+═══════════════════════════════════════════════════════ */
+
+.section + .section,
+.section + .disclaimer-bar,
+.disclaimer-bar + .section {
+  position: relative;
+}
+
+/* Stronger section label for new design */
+.section-label {
+  border-radius: var(--radius-full);
+  background: rgba(45, 90, 74, 0.08);
+  padding: var(--space-1) var(--space-4);
+}
+
+/* ═══════════════════════════════════════════════════════
+   ABOUT SECTION — "О специалисте" label fix
+═══════════════════════════════════════════════════════ */
+
+/* Keep section label in about consistent */
+#about .section-label {
+  background: rgba(45, 90, 74, 0.08);
+  color: var(--color-primary);
+}

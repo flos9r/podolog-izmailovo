@@ -723,3 +723,73 @@ iframe {
     font-size: var(--font-size-xs);
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   BOOKING NOTICE — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .booking-notice {
+    padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-6);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   GENERAL MOBILE SPACING IMPROVEMENTS
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  /* More breathing room between sections */
+  .section {
+    padding-block: var(--space-12);
+  }
+
+  /* Service cards on mobile */
+  .services__grid {
+    gap: var(--space-5);
+  }
+
+  /* Advantages cards */
+  .advantages__grid {
+    gap: var(--space-5);
+  }
+
+  /* Better spacing in about section */
+  .about__text {
+    gap: var(--space-5);
+  }
+
+  /* Nav links bigger tap targets */
+  .nav__link {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-2);
+  }
+
+  /* Footer nav spacing */
+  .footer__nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small screens */
+  .section {
+    padding-block: var(--space-10);
+  }
+
+  /* Slots grid */
+  .slots__grid {
+    gap: var(--space-4);
+  }
+
+  /* Section labels wrap correctly */
+  .section-label {
+    white-space: normal;
+    text-align: center;
+  }
+}
