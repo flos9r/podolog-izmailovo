@@ -805,7 +805,7 @@ input, textarea, select {
 .review-card {
   background-color: var(--color-surface);
   border-radius: var(--radius-xl);
-  padding: var(--space-6) var(--space-7, 1.75rem);
+  padding: var(--space-6) var(--space-8);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-md);
   border-top: 3px solid var(--color-accent);
