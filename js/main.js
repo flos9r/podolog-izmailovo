@@ -410,6 +410,18 @@ function initMobileNav() {
       document.body.style.overflow = '';
     }
   });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+      burger.classList.remove('is-open');
+      nav.classList.remove('is-open');
+      document.body.style.overflow = '';
+      burger.setAttribute('aria-expanded', 'false');
+      burger.setAttribute('aria-label', 'Открыть меню');
+      burger.focus();
+    }
+  });
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -666,6 +678,7 @@ function initArticleModal() {
 function initArticleBanner() {
   const banner = document.getElementById('article-banner');
   const titleEl = document.getElementById('article-banner-title');
+  const descEl = document.getElementById('article-banner-desc');
   const ctaEl = document.getElementById('article-banner-cta');
   const closeBtn = document.getElementById('article-banner-close');
   if (!banner || !titleEl) return;
@@ -675,11 +688,16 @@ function initArticleBanner() {
 
   const latest = articles[0];
 
-  // Check if user already dismissed (stored for 24h)
+  // Check if user already dismissed (stored for 7 days)
+  const BANNER_DISMISS_DURATION_MS = 7 * 24 * 60 * 60 * 1000;
   const dismissedUntil = parseInt(localStorage.getItem('articleBannerDismissed') || '0', 10);
   if (Date.now() < dismissedUntil) return;
 
   titleEl.textContent = latest.title;
+  if (descEl && latest.excerpt) {
+    descEl.textContent = latest.excerpt;
+  }
+
   if (ctaEl) {
     ctaEl.addEventListener('click', (e) => {
       e.preventDefault();
@@ -691,8 +709,7 @@ function initArticleBanner() {
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
       banner.hidden = true;
-      // Dismiss for 24 hours
-      localStorage.setItem('articleBannerDismissed', String(Date.now() + 86400000));
+      localStorage.setItem('articleBannerDismissed', String(Date.now() + BANNER_DISMISS_DURATION_MS));
     });
   }
 

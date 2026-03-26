@@ -214,3 +214,36 @@
 ---
 
 *Журнал сформирован на основе анализа 200+ сайтов по категориям: High-craft, Healthcare, Editorial, Mobile-first.*
+
+---
+
+## ТОП-10 SHORTLISTED САЙТОВ
+
+| # | Сайт | Почему выбран |
+|---|---|---|
+| 1 | **stripe.com** | CTA отделён бордером от nav → стало нашей реализацией `.nav__cta { border-left }` |
+| 2 | **nhs.uk** | Healthcare navigation: крупные tap-targets (44px+), высокий контраст, доступность |
+| 3 | **parsleyhealth.com** | Hero с фото специалиста + тёплые тона → trust-first подход |
+| 4 | **spruce health** | Success state после формы с конкретикой про следующий шаг |
+| 5 | **function health** | Numbered steps (01/02/03) вместо списка слотов → наш booking-info grid |
+| 6 | **theguardian.com** | Breaking news inline banner без агрессии → наш article-banner strip |
+| 7 | **dispatch health** | Процесс записи как 3 последовательных шага |
+| 8 | **carbon health** | Mobile navigation: min-width 44px на всём интерактиве |
+| 9 | **brightside.com** | Блок "Почему регулярно" с подзаголовками + абзацами вместо списка |
+| 10 | **gov.uk** | WCAG-образцовые focus styles, aria-live, skip links → наша a11y-основа |
+
+---
+
+## ОТБРОШЕННЫЕ ПАТТЕРНЫ (REJECTED)
+
+| Паттерн | Источник | Причина отказа |
+|---|---|---|
+| WebGL / Three.js в hero | Lusion, award sites | Performance на mobile, снижает доверие в медицинском контексте |
+| Scroll-triggered агрессивные поп-апы | Большинство шаблонов | Enshittification — снижает конверсию и доверие |
+| Тёмная тема как основная | Многие SaaS | В healthcare снижает читабельность и доверие |
+| Слайдеры как основной layout отзывов | Шаблонные сайты | Плохо на mobile, ограничивает доступность |
+| Mega-menu с 10+ ссылками | Корпоративные сайты | Когнитивная перегрузка для простого сайта |
+| "Доступные слоты" без синхронизации | Текущий сайт | Вводит пользователя в заблуждение → заменено на шаги |
+| 3D стоп / медицинские иллюстрации | Med-tech sites | Неуместно, может пугать |
+| Sticky floating CTA поверх контента | E-commerce шаблоны | Перекрывает контент, создаёт visual clutter |
+

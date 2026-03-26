@@ -1039,6 +1039,10 @@ iframe {
     font-size: var(--font-size-xs);
   }
 
+  .article-banner__desc {
+    display: none;
+  }
+
   .article-banner__label {
     display: none;
   }
