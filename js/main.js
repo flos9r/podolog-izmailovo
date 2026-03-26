@@ -177,11 +177,9 @@ function renderReviews() {
       <div class="review-card__footer">
         <div>
           <div class="review-card__name">${r.name}</div>
-          <div class="review-card__service">${r.service}</div>
         </div>
         <div class="review-card__meta">
           <div class="review-card__date">${r.date}</div>
-          ${r.source ? `<div class="review-card__source">${r.source}</div>` : ''}
         </div>
       </div>
     </article>
@@ -483,68 +481,13 @@ function initGallery() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   REVIEWS SLIDER
+   REVIEWS GRID — simple grid, no slider
 ═══════════════════════════════════════════════════════ */
 
 function initReviewsSlider() {
-  const track = document.getElementById('reviews-track');
-  const dotsContainer = document.getElementById('reviews-dots');
-  const prevBtn = document.getElementById('reviews-prev');
-  const nextBtn = document.getElementById('reviews-next');
-
-  if (!track) return;
-
-  let current = 0;
-  const cards = () => track.querySelectorAll('.review-card');
-  const getVisible = () => window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
-
-  const getMax = () => Math.max(0, cards().length - getVisible());
-
-  const renderDots = () => {
-    if (!dotsContainer) return;
-    const max = getMax() + 1;
-    dotsContainer.innerHTML = Array.from({ length: max }, (_, i) => `
-      <button class="reviews__dot ${i === current ? 'is-active' : ''}" data-index="${i}" aria-label="Отзыв ${i + 1}"></button>
-    `).join('');
-  };
-
-  const goTo = (index) => {
-    const max = getMax();
-    current = Math.max(0, Math.min(index, max));
-
-    // Используем offsetLeft карточки для точного позиционирования
-    const targetCard = track.querySelectorAll('.review-card')[current];
-    const offset = targetCard ? targetCard.offsetLeft : 0;
-    track.style.transform = `translateX(-${offset}px)`;
-
-    dotsContainer?.querySelectorAll('.reviews__dot').forEach((dot, i) => {
-      dot.classList.toggle('is-active', i === current);
-    });
-  };
-
-  renderDots();
-
-  if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
-  if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
-
-  dotsContainer?.addEventListener('click', (e) => {
-    const dot = e.target.closest('.reviews__dot');
-    if (dot) goTo(parseInt(dot.dataset.index, 10));
-  });
-
-  // Touch/swipe
-  let startX = 0;
-  track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend', (e) => {
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
-  }, { passive: true });
-
-  // Re-render on resize
-  window.addEventListener('resize', () => {
-    renderDots();
-    goTo(Math.min(current, getMax()));
-  });
+  // Reviews now use a CSS grid layout — no JS slider needed.
+  // The track div already has grid styles applied via CSS.
+  // This function is kept as a no-op for compatibility.
 }
 
 /* ═══════════════════════════════════════════════════════

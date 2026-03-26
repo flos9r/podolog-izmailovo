@@ -30,6 +30,9 @@ body {
   line-height: var(--line-height-normal);
   color: var(--color-text);
   background-color: var(--color-bg);
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(180, 123, 82, 0.07) 0%, transparent 36%),
+    radial-gradient(circle at 100% 80%, rgba(45, 90, 74, 0.05) 0%, transparent 40%);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -85,22 +88,25 @@ input, textarea, select {
 }
 
 .section-label {
-  display: inline-block;
-  font-size: var(--font-size-sm);
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semi);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-primary);
-  margin-bottom: var(--space-3);
-  padding-bottom: var(--space-2);
-  border-bottom: 2px solid var(--color-accent-light);
+  color: var(--color-accent);
+  background-color: var(--color-accent-light);
+  margin-bottom: var(--space-4);
 }
 
 .section-title {
   font-family: 'Playfair Display', var(--font-heading);
-  font-size: var(--font-size-3xl);
+  font-size: clamp(1.75rem, 4vw, var(--font-size-3xl));
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: var(--color-text);
   margin-bottom: var(--space-4);
 }
@@ -108,6 +114,7 @@ input, textarea, select {
 .section-desc {
   font-size: var(--font-size-md);
   color: var(--color-text-muted);
+  line-height: 1.65;
   max-width: 600px;
   margin-inline: auto;
 }
@@ -308,156 +315,23 @@ input, textarea, select {
    HERO
 ═══════════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════════════
+   HERO — editorial, light, warm
+═══════════════════════════════════════════════════════ */
+
 .hero {
   position: relative;
-  min-height: 100vh;
   display: flex;
   align-items: center;
   padding-top: var(--header-height);
-  background-color: var(--color-bg-dark);
+  background-color: var(--color-bg);
   overflow: hidden;
 }
 
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    var(--color-bg-dark) 0%,
-    #4a3d55 50%,
-    #3d3540 100%
-  );
-}
-
+/* remove old dark overlays - hero is now light */
+.hero__bg,
 .hero__overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 70% 50%, rgba(201, 168, 124, 0.15) 0%, transparent 70%);
-}
-
-.hero__content {
-  position: relative;
-  z-index: var(--z-raised);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-16);
-  align-items: center;
-  width: 100%;
-  padding-block: var(--space-20);
-}
-
-.hero__text {
-  max-width: 560px;
-}
-
-.hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  background-color: rgba(201, 168, 124, 0.2);
-  border: 1px solid rgba(201, 168, 124, 0.4);
-  border-radius: var(--radius-full);
-  padding: var(--space-2) var(--space-4);
-  font-size: var(--font-size-sm);
-  color: var(--color-accent-light);
-  letter-spacing: 0.05em;
-  margin-bottom: var(--space-6);
-}
-
-.hero__title {
-  font-family: 'Playfair Display', var(--font-heading);
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  color: var(--color-text-light);
-  margin-bottom: var(--space-6);
-}
-
-.hero__title span {
-  color: var(--color-accent-light);
-}
-
-.hero__subtitle {
-  font-size: var(--font-size-md);
-  color: rgba(245, 243, 240, 0.75);
-  line-height: var(--line-height-loose);
-  margin-bottom: var(--space-10);
-}
-
-.hero__actions {
-  display: flex;
-  gap: var(--space-4);
-  flex-wrap: wrap;
-}
-
-.hero__stats {
-  display: flex;
-  gap: var(--space-8);
-  margin-top: var(--space-12);
-  padding-top: var(--space-10);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.hero__stat-value {
-  font-family: 'Playfair Display', var(--font-heading);
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-accent-light);
-  display: block;
-}
-
-.hero__stat-label {
-  font-size: var(--font-size-sm);
-  color: rgba(245, 243, 240, 0.6);
-}
-
-.hero__image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero__photo-wrap {
-  position: relative;
-  width: 400px;
-  max-width: 100%;
-}
-
-.hero__photo-wrap::before {
-  content: '';
-  position: absolute;
-  inset: -16px;
-  border: 2px solid rgba(201, 168, 124, 0.3);
-  border-radius: var(--radius-xl);
-  z-index: 0;
-}
-
-.hero__photo {
-  width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  border-radius: var(--radius-xl);
-  position: relative;
-  z-index: var(--z-raised);
-}
-
-.hero__photo-placeholder {
-  width: 100%;
-  aspect-ratio: 3/4;
-  border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, rgba(201, 168, 124, 0.15) 0%, rgba(123, 110, 138, 0.2) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-  border: 2px dashed rgba(201, 168, 124, 0.4);
-  position: relative;
-  z-index: var(--z-raised);
-  font-size: var(--font-size-sm);
-  color: rgba(245, 243, 240, 0.5);
-  text-align: center;
-  padding-inline: var(--space-4);
+  display: none;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -579,14 +453,15 @@ input, textarea, select {
 }
 
 .service-card {
-  background-color: #fff;
-  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
   padding: var(--space-8);
   border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
 .service-card::before {
@@ -879,16 +754,18 @@ input, textarea, select {
 
 .advantage-card {
   padding: var(--space-6);
-  background-color: #fff;
-  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
   border: 1px solid var(--color-border);
-  border-left: 4px solid var(--color-primary);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-base);
+  border-left: 4px solid var(--color-accent);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(8px);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
 }
 
 .advantage-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 .advantage-card__body {
@@ -912,31 +789,39 @@ input, textarea, select {
    REVIEWS
 ═══════════════════════════════════════════════════════ */
 
+/* Reviews use a simple grid — no carousel */
 .reviews__slider {
-  position: relative;
-  overflow: hidden;
+  /* no overflow hidden needed for grid */
 }
 
 .reviews__track {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-6);
-  transition: transform var(--transition-slow);
 }
 
 .review-card {
-  flex: 0 0 calc(33.333% - var(--space-4));
-  background-color: #fff;
+  background-color: var(--color-surface);
   border-radius: var(--radius-xl);
   padding: var(--space-8);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-md);
-  border-top: 3px solid var(--color-primary-light);
+  border-top: 3px solid var(--color-accent);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
 }
 
 .review-card__rating {
   display: flex;
   gap: 2px;
-  margin-bottom: var(--space-4);
   font-size: var(--font-size-md);
   color: var(--color-accent);
 }
@@ -944,16 +829,15 @@ input, textarea, select {
 .review-card__text {
   font-size: var(--font-size-base);
   color: var(--color-text-muted);
-  line-height: var(--line-height-loose);
-  margin-bottom: var(--space-4);
-  font-style: italic;
+  line-height: 1.65;
+  flex: 1;
 }
 
 .review-card__text::before {
   content: '"';
   font-size: var(--font-size-3xl);
   font-family: 'Playfair Display', var(--font-heading);
-  color: var(--color-accent-light);
+  color: rgba(180, 123, 82, 0.25);
   line-height: 0.5;
   display: block;
   margin-bottom: var(--space-3);
@@ -963,11 +847,14 @@ input, textarea, select {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
 }
 
 .review-card__name {
   font-weight: var(--font-weight-semi);
   color: var(--color-text);
+  font-size: var(--font-size-sm);
 }
 
 .review-card__service {
@@ -981,53 +868,17 @@ input, textarea, select {
   color: var(--color-text-muted);
 }
 
+/* Hide slider controls — we use grid layout */
 .reviews__controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-4);
-  margin-top: var(--space-8);
-}
-
-.reviews__btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--color-border);
-  background: #fff;
-  font-size: var(--font-size-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.reviews__btn:hover {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: #fff;
+  display: none;
 }
 
 .reviews__dots {
-  display: flex;
-  gap: var(--space-2);
+  display: none;
 }
 
 .reviews__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--color-border);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  border: none;
-}
-
-.reviews__dot.is-active {
-  background-color: var(--color-primary);
-  width: 24px;
-  border-radius: 4px;
+  display: none;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1546,13 +1397,8 @@ input, textarea, select {
    VISUAL IMPROVEMENTS
 ═══════════════════════════════════════════════════════ */
 
-/* Crisper section labels */
-.section-label {
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+/* Crisper section labels — use the main definition at top of file */
+/* (no override needed — see .section-label at line ~90) */
 
 /* Stronger service card accent line */
 .service-card {
@@ -1728,7 +1574,7 @@ input, textarea, select {
 
 .hero__layout {
   display: grid;
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: 400px 1fr;
   gap: var(--space-16);
   align-items: center;
   min-height: calc(100vh - var(--header-height));
@@ -1738,16 +1584,17 @@ input, textarea, select {
 .hero__quote-block {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-5);
 }
 
 .hero__photo-wrap {
   position: relative;
   width: 100%;
   aspect-ratio: 4/5;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   background-color: var(--color-bg-alt);
+  box-shadow: var(--shadow-lg);
 }
 
 .hero__photo {
@@ -1764,7 +1611,7 @@ input, textarea, select {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-border) 100%);
+  background: linear-gradient(145deg, #e8e1d7 0%, #d4c9bc 100%);
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   text-align: center;
@@ -1773,10 +1620,13 @@ input, textarea, select {
 
 .hero__quote {
   margin: 0;
-  padding: var(--space-6);
-  background-color: var(--color-bg-alt);
+  padding: var(--space-5) var(--space-6);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-left: 3px solid var(--color-accent);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(8px);
 }
 
 .hero__quote-text {
@@ -1784,14 +1634,14 @@ input, textarea, select {
   font-size: var(--font-size-lg);
   font-style: italic;
   color: var(--color-text);
-  line-height: var(--line-height-normal);
+  line-height: 1.5;
   margin-bottom: var(--space-3);
 }
 
 .hero__quote-author {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 2px;
 }
 
 .hero__quote-author span:first-child {
@@ -1810,31 +1660,38 @@ input, textarea, select {
 .hero__main {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-5);
 }
 
 .hero__eyebrow {
-  font-size: var(--font-size-sm);
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semi);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-accent);
+  background-color: var(--color-accent-light);
   margin: 0;
+  width: fit-content;
 }
 
 .hero__title {
   font-family: 'Playfair Display', var(--font-heading);
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
   font-weight: var(--font-weight-bold);
-  line-height: 1.15;
-  color: var(--color-text-light);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
   margin: 0;
 }
 
 .hero__subtitle {
   font-size: var(--font-size-md);
-  color: rgba(255,255,255,0.7);
-  line-height: var(--line-height-loose);
+  color: var(--color-text-muted);
+  line-height: 1.65;
   max-width: 480px;
   margin: 0;
 }
@@ -1842,7 +1699,7 @@ input, textarea, select {
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .hero__stats {
@@ -1850,13 +1707,13 @@ input, textarea, select {
   gap: var(--space-8);
   flex-wrap: wrap;
   padding-top: var(--space-6);
-  border-top: 1px solid rgba(255,255,255,0.12);
+  border-top: 1px solid var(--color-border);
 }
 
 .hero__stat {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 2px;
 }
 
 .hero__stat-value {
@@ -1869,21 +1726,21 @@ input, textarea, select {
 
 .hero__stat-label {
   font-size: var(--font-size-xs);
-  color: rgba(255,255,255,0.6);
+  color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
 }
 
-/* Hero outline-light button */
+/* Hero outline-dark button (on light bg) */
 .btn--outline-light {
   background: transparent;
-  border: 1.5px solid rgba(255,255,255,0.35);
-  color: rgba(255,255,255,0.85);
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-muted);
 }
 .btn--outline-light:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.6);
-  color: #fff;
+  background: var(--color-bg-alt);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -2293,19 +2150,192 @@ input, textarea, select {
   position: relative;
 }
 
-/* Stronger section label for new design */
-.section-label {
-  border-radius: var(--radius-full);
-  background: rgba(45, 90, 74, 0.08);
-  padding: var(--space-1) var(--space-4);
-}
+/* Stronger section label for new design — use main definition above */
 
 /* ═══════════════════════════════════════════════════════
    ABOUT SECTION — "О специалисте" label fix
 ═══════════════════════════════════════════════════════ */
 
-/* Keep section label in about consistent */
-#about .section-label {
-  background: rgba(45, 90, 74, 0.08);
-  color: var(--color-primary);
+/* Keep section label in about consistent — uses global definition */
+
+/* ═══════════════════════════════════════════════════════
+   IMAGE SHELL — адаптивные контейнеры для изображений
+═══════════════════════════════════════════════════════ */
+
+.image-shell {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: #f0ebe4;
+}
+
+.image-shell__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.hero-image-shell {
+  aspect-ratio: 4 / 5;
+  min-height: 320px;
+}
+
+.feature-image-shell {
+  aspect-ratio: 16 / 10;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PODOLOGY SECTION — warm card style
+═══════════════════════════════════════════════════════ */
+
+.podology__card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(8px);
+}
+
+.podology__card--accent {
+  border-left: 4px solid var(--color-accent);
+}
+
+/* ═══════════════════════════════════════════════════════
+   TOOLS SECTION — warm card style
+═══════════════════════════════════════════════════════ */
+
+.tool-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(8px);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.tool-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ═══════════════════════════════════════════════════════
+   ARTICLES — card style
+═══════════════════════════════════════════════════════ */
+
+.article-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(8px);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  cursor: pointer;
+}
+
+.article-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(180, 123, 82, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════
+   REVIEW GRID LAYOUT FIX (override any duplicates)
+═══════════════════════════════════════════════════════ */
+
+#reviews .reviews__track {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+  overflow: visible;
+  transform: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SLOTS — time chip style
+═══════════════════════════════════════════════════════ */
+
+.slot-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+}
+
+/* ═══════════════════════════════════════════════════════
+   HEADER NAV — cleaner look
+═══════════════════════════════════════════════════════ */
+
+.nav__link {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.nav__link:hover,
+.nav__link.is-active {
+  color: var(--color-accent);
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOOKING NOTICE — clean info block
+═══════════════════════════════════════════════════════ */
+
+.booking-notice {
+  background: var(--color-accent-light);
+  border: 1px solid rgba(180, 123, 82, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.booking-notice__text {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER — warm dark
+═══════════════════════════════════════════════════════ */
+
+.footer {
+  background-color: var(--color-bg-dark);
+}
+
+/* ═══════════════════════════════════════════════════════
+   REVIEW SOURCE NOTE
+═══════════════════════════════════════════════════════ */
+
+.reviews__source-note {
+  text-align: center;
+  margin-top: var(--space-8);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.reviews__source-note a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.reviews__yandex-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-accent-light);
+  border: 1px solid rgba(180, 123, 82, 0.25);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-xs);
+  color: var(--color-accent);
+  margin-top: var(--space-3);
 }

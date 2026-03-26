@@ -793,3 +793,169 @@ iframe {
     text-align: center;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   REVIEWS GRID — mobile overrides
+   Reviews are a 2-col grid on desktop, 1-col on mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .reviews__track,
+  #reviews .reviews__track {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: var(--space-5) !important;
+    transform: none !important;
+    overflow: visible !important;
+  }
+
+  .review-card {
+    flex: none !important;
+    width: 100% !important;
+    padding: var(--space-5);
+  }
+
+  .review-card__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .review-card__text {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   IMAGE SHELL — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .image-shell {
+    border-radius: var(--radius-lg);
+  }
+
+  .hero-image-shell {
+    aspect-ratio: 4 / 4.8;
+    min-height: 280px;
+  }
+
+  .feature-image-shell {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-image-shell {
+    min-height: 240px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PREVENT HORIZONTAL OVERFLOW — strong reset
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  .container {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    padding-inline: 16px;
+  }
+
+  /* All grid/flex containers */
+  .hero__layout,
+  .about__grid,
+  .services__grid,
+  .advantages__grid,
+  .contacts__grid,
+  .footer__grid,
+  .podology__grid,
+  .tools__grid,
+  .articles__grid {
+    overflow: visible;
+    min-width: 0;
+  }
+
+  /* All cards */
+  .service-card,
+  .advantage-card,
+  .review-card,
+  .slot-card,
+  .tool-card,
+  .article-card,
+  .podology__card {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Typography on small screens */
+  h1 {
+    font-size: clamp(1.75rem, 8vw, 2.5rem) !important;
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 6vw, 2rem) !important;
+    line-height: 1.2;
+  }
+
+  p, li, span {
+    line-height: 1.6;
+  }
+
+  /* Buttons always full-width in stacked CTA rows */
+  .hero__actions .btn {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   EXTRA SMALL SCREENS (320px–360px)
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 360px) {
+  .container {
+    padding-inline: 12px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+
+  .hero__title {
+    font-size: 1.6rem !important;
+  }
+
+  .hero__stats {
+    gap: var(--space-4);
+  }
+
+  .hero__stat-value {
+    font-size: var(--font-size-xl);
+  }
+
+  .service-card,
+  .advantage-card,
+  .review-card {
+    padding: var(--space-4);
+  }
+
+  .btn--lg {
+    padding: var(--space-3) var(--space-4);
+    font-size: 15px;
+  }
+}

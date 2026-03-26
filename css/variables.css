@@ -9,27 +9,28 @@
   --color-primary-light:  #4a7c6a;   /* светлый вариант основного */
   --color-primary-dark:   #1e3d31;   /* тёмный вариант основного */
 
-  --color-accent:         #d4a574;   /* второй акцент (тёплый бежевый) */
-  --color-accent-light:   #e8c9a0;   /* светлый акцент */
-  --color-accent-dark:    #b8895a;   /* тёмный акцент */
+  --color-accent:         #b47b52;   /* терракота / янтарный акцент */
+  --color-accent-light:   rgba(180, 123, 82, 0.12); /* мягкая подложка акцента */
+  --color-accent-dark:    #8e5e38;   /* тёмный акцент */
 
-  --color-bg:             #f8f6f3;   /* фон страницы */
-  --color-bg-alt:         #f0ede8;   /* альтернативный фон секций */
-  --color-bg-dark:        #1e2d28;   /* тёмный фон (footer, hero) */
+  --color-bg:             #f7f3ee;   /* фон страницы — тёплый кремовый */
+  --color-bg-alt:         #f0ebe4;   /* альтернативный фон секций */
+  --color-bg-dark:        #1f1a17;   /* тёмный фон (footer) */
+  --color-surface:        rgba(255, 255, 255, 0.82); /* стеклянная поверхность карточек */
 
-  --color-text:           #1e2820;   /* основной текст */
-  --color-text-muted:     #4a5e50;   /* приглушённый текст */
+  --color-text:           #1f1a17;   /* основной текст — тёплый почти чёрный */
+  --color-text-muted:     #6f655e;   /* приглушённый текст */
   --color-text-light:     #f5f3f0;   /* светлый текст на тёмном фоне */
 
-  --color-border:         #e0dbd6;   /* границы */
-  --color-shadow:         rgba(45, 90, 74, 0.12);
+  --color-border:         rgba(62, 44, 30, 0.12);   /* тонкие границы */
+  --color-shadow:         rgba(43, 29, 18, 0.09);
 
   --color-success:        #5a9e6f;   /* успех/зелёный */
   --color-error:          #c05a5a;   /* ошибка/красный */
 
   /* ── Шрифты ─────────────────────────────────────────── */
-  --font-heading:   'Georgia', 'Times New Roman', serif;
-  --font-body:      'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-heading:   'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  --font-body:      'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --font-mono:      'Courier New', monospace;
 
   --font-size-xs:   0.75rem;    /* 12px */
@@ -71,17 +72,17 @@
   --container-padding:  var(--space-6);
 
   /* ── Скругления ──────────────────────────────────────── */
-  --radius-sm:   4px;
-  --radius-md:   8px;
-  --radius-lg:   16px;
-  --radius-xl:   24px;
+  --radius-sm:   6px;
+  --radius-md:   14px;
+  --radius-lg:   22px;
+  --radius-xl:   28px;
   --radius-full: 9999px;
 
   /* ── Тени ────────────────────────────────────────────── */
-  --shadow-sm:  0 1px 3px var(--color-shadow);
-  --shadow-md:  0 4px 12px var(--color-shadow);
-  --shadow-lg:  0 8px 24px var(--color-shadow);
-  --shadow-xl:  0 16px 40px var(--color-shadow);
+  --shadow-sm:  0 2px 8px var(--color-shadow);
+  --shadow-md:  0 6px 18px var(--color-shadow);
+  --shadow-lg:  0 14px 40px rgba(43, 29, 18, 0.10);
+  --shadow-xl:  0 24px 60px rgba(43, 29, 18, 0.12);
 
   /* ── Переходы ────────────────────────────────────────── */
   --transition-fast:   150ms ease;
