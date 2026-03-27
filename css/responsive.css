@@ -494,8 +494,9 @@ iframe {
   }
 
   /* На мобильных устройствах badge всегда виден для подсказки */
-  .gallery__item .gallery__badge {
-    opacity: 1 !important;
+  .gallery__item[data-state="before"] .gallery__badge,
+  .gallery__item[data-state="after"] .gallery__badge {
+    opacity: 1;
   }
 
   .gallery__item .gallery__item-overlay {

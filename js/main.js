@@ -359,6 +359,7 @@ function initGallery() {
 
   // ── Before/After: hover (desktop) + tap (mobile) toggle ──
   const isTouchDevice = () => 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  let longPressOpened = false; // flag to prevent tap toggle after long-press
 
   function setCardState(item, state) {
     const before = item.querySelector('.gallery__img--before');
@@ -388,18 +389,19 @@ function initGallery() {
     if (item) setCardState(item, 'before');
   }, true);
 
-  // Mobile: tap toggles between before/after
+  // Mobile: tap toggles between before/after (skip if long-press just opened lightbox)
   grid.addEventListener('click', (e) => {
     const item = e.target.closest('.gallery__item');
     if (!item) return;
 
     if (isTouchDevice()) {
-      // If it's just a state toggle, prevent lightbox opening
+      if (longPressOpened) {
+        longPressOpened = false;
+        return;
+      }
       const currentState = item.dataset.state || 'before';
       const newState = currentState === 'before' ? 'after' : 'before';
       setCardState(item, newState);
-      e.stopPropagation();
-      // On double tap, open lightbox (handled separately below)
     }
   });
 
@@ -473,7 +475,7 @@ function initGallery() {
     }
 
     // Desktop: double-click card to open lightbox
-    // Mobile: long-press (>400ms) or dedicated "open" button
+    // Mobile: long-press (>500ms) opens lightbox
     let touchTimer = null;
     let touchMoved = false;
 
@@ -488,10 +490,12 @@ function initGallery() {
     // Mobile long press to open lightbox
     grid.addEventListener('touchstart', (e) => {
       touchMoved = false;
+      longPressOpened = false;
       const item = e.target.closest('.gallery__item');
       if (!item) return;
       touchTimer = setTimeout(() => {
         if (!touchMoved) {
+          longPressOpened = true;
           const idx = parseInt(item.dataset.index, 10);
           openLightbox(idx);
         }
