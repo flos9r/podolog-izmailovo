@@ -493,6 +493,16 @@ iframe {
     grid-template-columns: 1fr;
   }
 
+  /* На мобильных устройствах badge всегда виден для подсказки */
+  .gallery__item .gallery__badge {
+    opacity: 1 !important;
+  }
+
+  .gallery__item .gallery__item-overlay {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(61, 53, 64, 0.7) 0%, transparent 40%);
+  }
+
   /* Кнопки */
   .btn--lg {
     padding: var(--space-3) var(--space-5);

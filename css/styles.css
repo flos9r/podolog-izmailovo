@@ -814,13 +814,22 @@ input, textarea, select {
 }
 
 .gallery__img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-slow);
+  opacity: 0;
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.gallery__img.is-visible {
+  opacity: 1;
 }
 
 .gallery__placeholder {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -838,6 +847,36 @@ input, textarea, select {
   text-align: center;
   padding-inline: var(--space-4);
 }
+
+/* Before/After badges */
+.gallery__badge {
+  position: absolute;
+  top: var(--space-3);
+  z-index: 2;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semi);
+  color: #fff;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.gallery__badge--before {
+  left: var(--space-3);
+  background-color: var(--color-accent);
+}
+
+.gallery__badge--after {
+  right: var(--space-3);
+  background-color: var(--color-primary);
+}
+
+/* Show/hide badges based on current state */
+.gallery__item[data-state="before"] .gallery__badge--before { opacity: 1; }
+.gallery__item[data-state="before"] .gallery__badge--after  { opacity: 0.4; }
+.gallery__item[data-state="after"]  .gallery__badge--before { opacity: 0.4; }
+.gallery__item[data-state="after"]  .gallery__badge--after  { opacity: 1; }
 
 .gallery__item:hover .gallery__img,
 .gallery__item:hover .gallery__placeholder {
@@ -915,6 +954,33 @@ input, textarea, select {
   color: rgba(255, 255, 255, 0.7);
   font-size: var(--font-size-sm);
   margin-top: var(--space-3);
+}
+
+.lightbox__toggle {
+  display: block;
+  margin: var(--space-3) auto 0;
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: #fff;
+  background-color: var(--color-primary);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.lightbox__toggle:hover {
+  background-color: var(--color-primary-light);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.lightbox__toggle[data-state="after"] {
+  background-color: var(--color-accent);
+}
+
+.lightbox__toggle[data-state="after"]:hover {
+  background-color: var(--color-accent-dark);
 }
 
 /* ═══════════════════════════════════════════════════════
