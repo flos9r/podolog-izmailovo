@@ -32,6 +32,12 @@
  */
 
 const siteData = {
+  /**
+   * Личный кабинет подолога (Base44).
+   * Чтобы изменить адрес кабинета, отредактируйте только это поле.
+   */
+  cabinetUrl: "https://podolog-pro-flow.base44.app/bookings",
+
   specialist: {
     name: "Наталья Сунцова",
     title: "Подолог",

@@ -29,6 +29,7 @@ function renderAll() {
   renderReviews();
   renderContacts();
   renderFooter();
+  renderCabinetLinks();
   populateFormServiceSelect();
   renderTools();
   renderArticles();
@@ -241,6 +242,16 @@ function renderFooter() {
 
   const nameEls = document.querySelectorAll('[data-footer="name"]');
   nameEls.forEach(el => { el.textContent = siteData.specialist.name; });
+}
+
+function renderCabinetLinks() {
+  const url = siteData.cabinetUrl;
+  if (!url) return;
+  const ids = ['header-cabinet-link', 'footer-cabinet-link', 'mobile-cabinet-link'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.href = url;
+  });
 }
 
 function populateFormServiceSelect() {
