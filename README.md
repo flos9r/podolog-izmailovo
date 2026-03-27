@@ -23,6 +23,12 @@
 │   └── gallery/
 │       ├── work-1.jpg      # (добавить) Фотографии работ (до 6 штук)
 │       └── ...
+├── docs/
+│   ├── migration.md        # Полная инструкция по переносу сайта
+│   ├── photos-guide.md     # Как добавить фото (подробная версия)
+│   └── content-guide.md    # Как редактировать контент
+├── .env.example            # Справочник переменных (контакты, endpoint, домен)
+├── .gitignore
 └── README.md
 ```
 
@@ -171,3 +177,21 @@ availableSlots: [
 2. Source: Deploy from a branch.
 3. Branch: main (или ваша ветка), папка / (root).
 4. Сохраните — сайт появится по адресу `https://flos9r.github.io/podolog-izmailovo/`.
+
+---
+
+## Перенос на другой домен / хостинг
+
+Подробная инструкция: **[docs/migration.md](docs/migration.md)**
+
+Краткий чек-лист:
+
+1. Склонируйте репозиторий
+2. Скопируйте `.env.example` → `.env` и заполните новые значения
+3. Обновите контакты в `js/data.js` → объект `contacts`
+4. Обновите Formspree endpoint в `js/form.js` (если нужно)
+5. Обновите SEO-мета в `index.html` (строки 6–11)
+6. Обновите адрес и ссылку на карту в `index.html`
+7. Задеплойте на хостинг (GitHub Pages / Netlify / VPS / Docker)
+
+Сайт не требует сборки, backend-а или базы данных — его можно разместить на любом статическом хостинге.
