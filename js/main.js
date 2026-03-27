@@ -121,7 +121,7 @@ function renderGallery() {
         src="${item.beforeSrc}"
         alt="${item.beforeAlt}"
         loading="lazy"
-        onerror="this.style.display='none';"
+        onerror="this.style.display='none'; this.closest('.gallery__item').querySelector('.gallery__placeholder').style.display='flex';"
       />
       <!-- Изображение ПОСЛЕ -->
       <img
@@ -382,13 +382,6 @@ function initGallery() {
     });
   }
 
-  // Touch/mobile: toggle before→after on tap (mouseenter/mouseleave handles desktop via CSS)
-  grid.addEventListener('touchstart', (e) => {
-    const item = e.target.closest('.gallery__item--before-after');
-    if (!item) return;
-    // Toggle will be handled in the click listener below (touchstart just marks intent)
-  }, { passive: true });
-
   // Lightbox
   if (lightbox) {
     const lightboxImg = lightbox.querySelector('.lightbox__img');
@@ -396,29 +389,34 @@ function initGallery() {
     const lightboxClose = lightbox.querySelector('.lightbox__close');
 
     grid.addEventListener('click', (e) => {
-      // On touch/mobile: toggle before/after state first; open lightbox only on second tap or explicit label tap
+      // On touch/mobile: toggle before/after state first; open lightbox only on second tap
       const item = e.target.closest('.gallery__item');
       if (!item) return;
 
-      // On pointer devices with hover (non-touch), open lightbox directly
-      // On touch devices, we toggle state on first tap and open lightbox on second tap
-      const isTouchDevice = window.matchMedia('(hover: none)').matches;
+      // Detects absence of hover capability (touch-first devices)
+      const hasNoHover = window.matchMedia('(hover: none)').matches;
       const idx = parseInt(item.dataset.index, 10);
       const galleryItem = siteData.gallery[idx];
       if (!galleryItem) return;
 
-      if (isTouchDevice) {
+      if (hasNoHover) {
         // First tap: toggle state; second tap (already "after"): open lightbox
         const currentState = item.dataset.state || 'before';
         if (currentState === 'before') {
           item.dataset.state = 'after';
           return; // don't open lightbox yet
         }
-        // Second tap (state === 'after'): open lightbox with "after" image, then reset
+        // Second tap (state === 'after'): open lightbox with "after" image, then reset state
         item.dataset.state = 'before';
+        lightboxImg.src = galleryItem.afterSrc;
+        lightboxImg.alt = galleryItem.afterAlt;
+        if (lightboxCaption) lightboxCaption.textContent = `После: ${galleryItem.alt}`;
+        lightbox.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        return;
       }
 
-      // Determine which image to show in lightbox based on current state
+      // Desktop (hover available): open lightbox showing whichever state is currently visible
       const currentState = item.dataset.state || 'before';
       const src = currentState === 'after' ? galleryItem.afterSrc : galleryItem.beforeSrc;
       const alt = currentState === 'after' ? galleryItem.afterAlt : galleryItem.beforeAlt;
