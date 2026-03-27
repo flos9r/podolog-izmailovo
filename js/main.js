@@ -114,20 +114,36 @@ function renderGallery() {
   if (!grid) return;
 
   grid.innerHTML = siteData.gallery.map((item, idx) => `
-    <div class="gallery__item" data-index="${idx}" data-category="${item.category}">
+    <div class="gallery__item gallery__item--before-after" data-index="${idx}" data-category="${item.category}" data-state="before">
+      <!-- Изображение ДО -->
       <img
-        class="gallery__img"
-        src="${item.src}"
-        alt="${item.alt}"
+        class="gallery__img gallery__img--before"
+        src="${item.beforeSrc}"
+        alt="${item.beforeAlt}"
         loading="lazy"
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        onerror="this.style.display='none';"
       />
+      <!-- Изображение ПОСЛЕ -->
+      <img
+        class="gallery__img gallery__img--after"
+        src="${item.afterSrc}"
+        alt="${item.afterAlt}"
+        loading="lazy"
+        onerror="this.style.display='none';"
+      />
+      <!-- Плейсхолдер (если оба изображения не загрузились) -->
       <div class="gallery__placeholder" style="display:none;">
         <span>${item.alt}</span>
       </div>
+      <!-- Оверлей с категорией -->
       <div class="gallery__item-overlay">
         <span class="gallery__item-label">${item.category}</span>
       </div>
+      <!-- Бейджи ДО / ПОСЛЕ -->
+      <span class="gallery__badge gallery__badge--before" aria-hidden="true">До</span>
+      <span class="gallery__badge gallery__badge--after" aria-hidden="true">После</span>
+      <!-- Подсказка для мобильных -->
+      <span class="gallery__tap-hint" aria-hidden="true">Нажмите</span>
     </div>
   `).join('');
 
@@ -366,6 +382,13 @@ function initGallery() {
     });
   }
 
+  // Touch/mobile: toggle before→after on tap (mouseenter/mouseleave handles desktop via CSS)
+  grid.addEventListener('touchstart', (e) => {
+    const item = e.target.closest('.gallery__item--before-after');
+    if (!item) return;
+    // Toggle will be handled in the click listener below (touchstart just marks intent)
+  }, { passive: true });
+
   // Lightbox
   if (lightbox) {
     const lightboxImg = lightbox.querySelector('.lightbox__img');
@@ -373,16 +396,37 @@ function initGallery() {
     const lightboxClose = lightbox.querySelector('.lightbox__close');
 
     grid.addEventListener('click', (e) => {
+      // On touch/mobile: toggle before/after state first; open lightbox only on second tap or explicit label tap
       const item = e.target.closest('.gallery__item');
       if (!item) return;
 
+      // On pointer devices with hover (non-touch), open lightbox directly
+      // On touch devices, we toggle state on first tap and open lightbox on second tap
+      const isTouchDevice = window.matchMedia('(hover: none)').matches;
       const idx = parseInt(item.dataset.index, 10);
       const galleryItem = siteData.gallery[idx];
       if (!galleryItem) return;
 
-      lightboxImg.src = galleryItem.src;
-      lightboxImg.alt = galleryItem.alt;
-      if (lightboxCaption) lightboxCaption.textContent = galleryItem.alt;
+      if (isTouchDevice) {
+        // First tap: toggle state; second tap (already "after"): open lightbox
+        const currentState = item.dataset.state || 'before';
+        if (currentState === 'before') {
+          item.dataset.state = 'after';
+          return; // don't open lightbox yet
+        }
+        // Second tap (state === 'after'): open lightbox with "after" image, then reset
+        item.dataset.state = 'before';
+      }
+
+      // Determine which image to show in lightbox based on current state
+      const currentState = item.dataset.state || 'before';
+      const src = currentState === 'after' ? galleryItem.afterSrc : galleryItem.beforeSrc;
+      const alt = currentState === 'after' ? galleryItem.afterAlt : galleryItem.beforeAlt;
+      const stateLabel = currentState === 'after' ? 'После' : 'До';
+
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      if (lightboxCaption) lightboxCaption.textContent = `${stateLabel}: ${galleryItem.alt}`;
       lightbox.classList.add('is-open');
       document.body.style.overflow = 'hidden';
     });

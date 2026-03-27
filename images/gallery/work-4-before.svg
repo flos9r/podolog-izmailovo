@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <rect width="600" height="600" fill="#f5e8e8"/>
+  <rect x="0" y="0" width="600" height="8" fill="#c0392b"/>
+  <text x="300" y="100" font-family="Arial, sans-serif" font-size="52" font-weight="bold" fill="#c0392b" text-anchor="middle">ДО</text>
+  <text x="300" y="155" font-family="Arial, sans-serif" font-size="20" fill="#7f3030" text-anchor="middle">Педикюр</text>
+  <circle cx="300" cy="310" r="120" fill="#e8c5c5" stroke="#c0392b" stroke-width="4"/>
+  <text x="300" y="290" font-family="Arial, sans-serif" font-size="15" fill="#7f3030" text-anchor="middle">Трещины на пятке</text>
+  <text x="300" y="320" font-family="Arial, sans-serif" font-size="13" fill="#a05050" text-anchor="middle">Карточка 4</text>
+  <text x="300" y="520" font-family="Arial, sans-serif" font-size="14" fill="#999" text-anchor="middle">Наведите курсор для результата</text>
+</svg>

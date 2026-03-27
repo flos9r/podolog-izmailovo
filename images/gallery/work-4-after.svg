@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <rect width="600" height="600" fill="#e8f5eb"/>
+  <rect x="0" y="0" width="600" height="8" fill="#27ae60"/>
+  <text x="300" y="100" font-family="Arial, sans-serif" font-size="52" font-weight="bold" fill="#27ae60" text-anchor="middle">ПОСЛЕ</text>
+  <text x="300" y="155" font-family="Arial, sans-serif" font-size="20" fill="#1e6b3b" text-anchor="middle">Педикюр</text>
+  <circle cx="300" cy="310" r="120" fill="#b7e2c3" stroke="#27ae60" stroke-width="4"/>
+  <text x="300" y="295" font-family="Arial, sans-serif" font-size="15" fill="#1e6b3b" text-anchor="middle">Пятка после обработки</text>
+  <text x="300" y="325" font-family="Arial, sans-serif" font-size="13" fill="#2e8b50" text-anchor="middle">Карточка 4</text>
+  <text x="300" y="360" font-family="Arial, sans-serif" font-size="30" fill="#27ae60" text-anchor="middle">✓</text>
+  <text x="300" y="520" font-family="Arial, sans-serif" font-size="14" fill="#999" text-anchor="middle">Результат после процедуры</text>
+</svg>

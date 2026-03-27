@@ -110,36 +110,63 @@ const siteData = {
     { service: "Взятие материала на анализ", price: "1 000 ₽", duration: "10–15 мин" },
   ],
 
+  // Галерея «до и после» — 6 карточек в строгом порядке
+  // Файлы: images/gallery/work-N-before.svg / work-N-after.svg
+  // (замените .svg на .jpg/.webp когда будут реальные фото)
   gallery: [
     {
-      src: "images/gallery/work-1.jpg",
-      alt: "Результат медицинского педикюра — до и после",
-      category: "Педикюр",
+      // Карточка 1: медицинский педикюр, несколько ногтей на стопе
+      beforeSrc: "images/gallery/work-1-before.svg",
+      afterSrc:  "images/gallery/work-1-after.svg",
+      beforeAlt: "Ногти до медицинского педикюра",
+      afterAlt:  "Ногти после медицинского педикюра",
+      alt:       "Результат медицинского педикюра — до и после",
+      category:  "Педикюр",
     },
     {
-      src: "images/gallery/work-2.jpg",
-      alt: "Обработка вросшего ногтя — результат",
-      category: "Вросший ноготь",
+      // Карточка 2: вросший ноготь большого пальца, покраснение/воспаление
+      beforeSrc: "images/gallery/work-2-before.svg",
+      afterSrc:  "images/gallery/work-2-after.svg",
+      beforeAlt: "Вросший ноготь — воспаление до обработки",
+      afterAlt:  "Вросший ноготь — после обработки, воспаление убрано",
+      alt:       "Обработка вросшего ногтя — результат",
+      category:  "Вросший ноготь",
     },
     {
-      src: "images/gallery/work-3.jpg",
-      alt: "Работа с мозолями — до и после",
-      category: "Мозоли",
+      // Карточка 3: мозоль/натоптыш на пятке
+      beforeSrc: "images/gallery/work-3-before.svg",
+      afterSrc:  "images/gallery/work-3-after.svg",
+      beforeAlt: "Мозоль на пятке до обработки",
+      afterAlt:  "Пятка после удаления мозоли",
+      alt:       "Работа с мозолями — до и после",
+      category:  "Мозоли",
     },
     {
-      src: "images/gallery/work-4.jpg",
-      alt: "Медицинский педикюр — обработка стоп",
-      category: "Педикюр",
+      // Карточка 4: трещины на пятке
+      beforeSrc: "images/gallery/work-4-before.svg",
+      afterSrc:  "images/gallery/work-4-after.svg",
+      beforeAlt: "Трещины на пятке до обработки",
+      afterAlt:  "Пятка после обработки — кожа стала гладкой",
+      alt:       "Медицинский педикюр — обработка стоп",
+      category:  "Педикюр",
     },
     {
-      src: "images/gallery/work-5.jpg",
-      alt: "Коррекция вросшего ногтя скобой",
-      category: "Коррекция",
+      // Карточка 5: большой ноготь, коррекция скобой
+      beforeSrc: "images/gallery/work-5-before.svg",
+      afterSrc:  "images/gallery/work-5-after.svg",
+      beforeAlt: "Вросший ноготь до коррекции скобой",
+      afterAlt:  "Ноготь после коррекции скобой",
+      alt:       "Коррекция вросшего ногтя скобой",
+      category:  "Коррекция",
     },
     {
-      src: "images/gallery/work-6.jpg",
-      alt: "Аппаратная обработка стоп — результат",
-      category: "Обработка",
+      // Карточка 6: один ноготь, желтизна/деформация → чистый вид
+      beforeSrc: "images/gallery/work-6-before.svg",
+      afterSrc:  "images/gallery/work-6-after.svg",
+      beforeAlt: "Ноготь с деформацией/желтизной до обработки",
+      afterAlt:  "Ноготь после аппаратной обработки",
+      alt:       "Аппаратная обработка стоп — результат",
+      category:  "Обработка",
     },
   ],
 
