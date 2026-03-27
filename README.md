@@ -43,12 +43,15 @@ python3 -m http.server 8080
 
 ### Шаг 5. Включите GitHub Pages (публикация сайта)
 
+> ⚠️ **Важно:** в Source нужно выбрать именно **GitHub Actions**, а не «Deploy from a branch».
+> Если выбрать «Deploy from a branch» с папкой `/docs`, сайт **не откроется** —
+> в `/docs` лежит только документация, а не сам сайт.
+
 1. Перейдите в **Settings** репозитория (⚙️ иконка шестерёнки).
 2. В боковом меню выберите **Pages**.
-3. В разделе **Source** выберите: **Deploy from a branch**.
-4. Ветка: **main**, папка: **/ (root)**.
-5. Нажмите **Save**.
-6. Через 1–2 минуты сайт будет доступен по адресу:
+3. В разделе **Build and deployment → Source** выберите: **GitHub Actions**.
+4. Больше ничего настраивать не нужно — деплой запускается автоматически при push в `main`.
+5. Через 1–2 минуты сайт будет доступен по адресу:
    👉 **https://flos9r.github.io/podolog-izmailovo/**
 
 ---
@@ -262,10 +265,12 @@ const siteData = {
 
 ## Деплой на GitHub Pages
 
-1. Зайдите в Settings вашего репозитория → Pages.
-2. Source: Deploy from a branch.
-3. Branch: main (или ваша ветка), папка / (root).
-4. Сохраните — сайт появится по адресу `https://flos9r.github.io/podolog-izmailovo/`.
+1. Зайдите в **Settings** вашего репозитория → **Pages**.
+2. В разделе **Build and deployment → Source** выберите: **GitHub Actions**.
+3. Сохраните — при каждом push в `main` сайт будет автоматически разворачиваться.
+4. Сайт появится по адресу `https://flos9r.github.io/podolog-izmailovo/`.
+
+> ⚠️ Не выбирайте «Deploy from a branch» с папкой `/docs` — в ней лежит документация, а не сайт.
 
 ---
 
