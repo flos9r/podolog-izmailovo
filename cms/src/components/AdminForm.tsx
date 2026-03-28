@@ -2,11 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import ArticleSectionsEditor from "@/components/ArticleSectionsEditor";
+import ArticleSourcesEditor from "@/components/ArticleSourcesEditor";
+import ImagePickerField from "@/components/ImagePickerField";
+import StringListEditor from "@/components/StringListEditor";
 
 interface Field {
   name: string;
   label: string;
-  type?: "text" | "textarea" | "number" | "select" | "checkbox";
+  type?: "text" | "textarea" | "number" | "select" | "checkbox" | "image-picker" | "article-sections" | "article-sources" | "string-list";
   options?: { value: string; label: string }[];
   required?: boolean;
   placeholder?: string;
@@ -86,7 +90,27 @@ export default function AdminForm({ title, fields, initialData = {}, apiUrl, met
         {fields.map(f => (
           <div key={f.name}>
             <label className="block text-sm font-medium text-gray-700 mb-1">{f.label}</label>
-            {f.type === "textarea" ? (
+            {f.type === "article-sections" ? (
+              <ArticleSectionsEditor
+                value={String(form[f.name] ?? "[]")}
+                onChange={v => handleChange(f.name, v)}
+              />
+            ) : f.type === "article-sources" ? (
+              <ArticleSourcesEditor
+                value={String(form[f.name] ?? "[]")}
+                onChange={v => handleChange(f.name, v)}
+              />
+            ) : f.type === "image-picker" ? (
+              <ImagePickerField
+                value={String(form[f.name] ?? "")}
+                onChange={v => handleChange(f.name, v)}
+              />
+            ) : f.type === "string-list" ? (
+              <StringListEditor
+                value={String(form[f.name] ?? "[]")}
+                onChange={v => handleChange(f.name, v)}
+              />
+            ) : f.type === "textarea" ? (
               <textarea
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows={4}

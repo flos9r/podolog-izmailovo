@@ -10,7 +10,7 @@ const fields = [
   { name: "specialistName", label: "Имя специалиста" },
   { name: "specialistTitle", label: "Должность" },
   { name: "specialistBio", label: "Биография", type: "textarea" as const },
-  { name: "specialistPhoto", label: "Фото специалиста (URL/путь)" },
+  { name: "specialistPhoto", label: "Фото специалиста", type: "image-picker" as const },
   { name: "specialistExp", label: "Опыт" },
   { name: "phone", label: "Телефон" },
   { name: "phoneDisplay", label: "Телефон (отображение)" },

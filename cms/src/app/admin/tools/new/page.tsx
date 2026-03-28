@@ -4,7 +4,7 @@ const fields = [
   { name: "name", label: "Название", required: true },
   { name: "purpose", label: "Назначение" },
   { name: "description", label: "Описание", type: "textarea" as const, required: true },
-  { name: "benefits", label: "Преимущества (JSON)", type: "textarea" as const, placeholder: '["Пункт 1","Пункт 2"]' },
+  { name: "benefits", label: "Преимущества (по одному)", type: "string-list" as const },
   { name: "order", label: "Порядок", type: "number" as const },
   { name: "isPublished", label: "Опубликовано", type: "checkbox" as const },
 ];
