@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
+import LogoutButton from "@/components/LogoutButton";
 
 export default async function AdminLayout({
   children,
@@ -52,15 +53,7 @@ export default async function AdminLayout({
             <span>👤</span>
             <span>{session.email}</span>
           </div>
-          <form action="/api/auth/logout" method="POST">
-            <button
-              type="submit"
-              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 rounded-lg hover:bg-red-50 transition-colors"
-            >
-              <span>🚪</span>
-              <span>Выйти</span>
-            </button>
-          </form>
+          <LogoutButton />
         </div>
       </aside>
 

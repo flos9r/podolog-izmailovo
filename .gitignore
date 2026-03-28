@@ -16,3 +16,12 @@ Desktop.ini
 # ─── Temp / build artefacts ───────────────────
 *.log
 tmp/
+
+# ─── CMS ──────────────────────────────────────
+cms/node_modules/
+cms/.next/
+cms/prisma/dev.db
+cms/prisma/dev.db-journal
+cms/.env
+cms/.env.local
+*.db

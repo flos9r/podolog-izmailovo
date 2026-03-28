@@ -8,9 +8,12 @@ export interface SessionData {
 }
 
 export const sessionOptions: SessionOptions = {
-  password:
-    process.env.AUTH_SECRET ||
-    "dev-secret-change-in-production-minimum-32-chars",
+  password: process.env.AUTH_SECRET || (() => {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("AUTH_SECRET environment variable is required in production");
+    }
+    return "dev-secret-change-in-production-minimum-32-chars";
+  })(),
   cookieName: "podolog-admin-session",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",
