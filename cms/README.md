@@ -1,30 +1,22 @@
 # Подолог CMS
 
-Система управления контентом для сайта подолога. Встроенная админ-панель для редактирования статей, галереи, услуг, цен, отзывов и настроек сайта.
+Полноценная система управления контентом сайта подолога. Публичный сайт + встроенная админ-панель.
 
 ## Стек
 
-- **Next.js 16** + TypeScript + Tailwind CSS
-- **Prisma 5** + SQLite (для production — PostgreSQL)
-- **iron-session** — сессии для авторизации
-- **bcryptjs** — хеширование паролей
+- **Next.js 16** (App Router) + TypeScript + Tailwind CSS v4
+- **Prisma 5** + SQLite (миграция на PostgreSQL для production)
+- **iron-session** для авторизации
+- **bcryptjs** для хеширования паролей
 
 ## Быстрый старт
 
 ```bash
-# 1. Установить зависимости
+cd cms
 npm install
-
-# 2. Скопировать и настроить .env
 cp .env.example .env
-
-# 3. Применить миграции
 npx prisma migrate dev
-
-# 4. Заполнить БД начальными данными
 npx tsx prisma/seed.ts
-
-# 5. Запустить dev-сервер
 npm run dev
 ```
 
@@ -36,47 +28,76 @@ npm run dev
 - Email: `admin@podolog.ru`
 - Пароль: `admin123`
 
-После входа вы попадёте на http://localhost:3000/admin
+## Маршруты
 
-## Структура проекта
+### Публичные
+| Маршрут | Описание |
+|---------|----------|
+| `/` | Главная страница (все данные из БД) |
+| `/articles/[slug]` | Страница статьи |
+| `/login` | Страница входа |
 
-```
-cms/
-├── prisma/
-│   ├── schema.prisma       # Модели данных
-│   ├── migrations/         # Миграции БД
-│   └── seed.ts             # Seed: перенос данных из data.js в БД
-├── src/
-│   ├── app/
-│   │   ├── admin/          # Админ-панель (защищённая)
-│   │   │   ├── layout.tsx  # Sidebar + проверка авторизации
-│   │   │   ├── page.tsx    # Dashboard
-│   │   │   ├── articles/   # Управление статьями
-│   │   │   ├── gallery/    # Управление галереей до/после
-│   │   │   ├── services/   # Управление услугами
-│   │   │   ├── prices/     # Управление прайсом
-│   │   │   ├── reviews/    # Управление отзывами
-│   │   │   ├── advantages/ # Управление преимуществами
-│   │   │   ├── tools/      # Управление инструментами
-│   │   │   ├── media/      # Медиа-файлы
-│   │   │   └── settings/   # Настройки сайта
-│   │   ├── login/          # Страница входа
-│   │   └── api/            # API endpoints
-│   └── lib/
-│       ├── prisma.ts       # Prisma client singleton
-│       └── auth.ts         # Сессии и авторизация
-├── public/
-│   └── uploads/            # Загруженные изображения
-└── docs/
-    └── migration-strategy.md  # Стратегия миграции
-```
+### Админ-панель (`/admin/*`)
+| Маршрут | Описание |
+|---------|----------|
+| `/admin` | Dashboard со статистикой |
+| `/admin/settings` | Просмотр настроек сайта |
+| `/admin/settings/edit` | Редактирование настроек |
+| `/admin/articles` | Список статей |
+| `/admin/articles/new` | Создание статьи |
+| `/admin/articles/[id]` | Редактирование статьи |
+| `/admin/gallery` | Галерея до/после |
+| `/admin/gallery/new` | Новый кейс галереи |
+| `/admin/gallery/[id]` | Редактирование кейса |
+| `/admin/services` | Услуги |
+| `/admin/services/new` | Новая услуга |
+| `/admin/services/[id]` | Редактирование услуги |
+| `/admin/prices` | Прайс-лист |
+| `/admin/prices/new` | Новая позиция |
+| `/admin/prices/[id]` | Редактирование позиции |
+| `/admin/reviews` | Отзывы |
+| `/admin/reviews/new` | Новый отзыв |
+| `/admin/reviews/[id]` | Редактирование отзыва |
+| `/admin/advantages` | Преимущества |
+| `/admin/advantages/new` | Новое преимущество |
+| `/admin/advantages/[id]` | Редактирование |
+| `/admin/tools` | Инструменты |
+| `/admin/tools/new` | Новый инструмент |
+| `/admin/tools/[id]` | Редактирование |
+| `/admin/media` | Медиа-библиотека |
+
+### API (`/api/*`)
+| Метод | Маршрут | Описание |
+|-------|---------|----------|
+| GET | `/api/settings` | Настройки сайта |
+| PUT | `/api/settings` | Обновить настройки (auth) |
+| GET | `/api/articles` | Все статьи |
+| POST | `/api/articles` | Создать статью (auth) |
+| PUT | `/api/articles/[id]` | Обновить статью (auth) |
+| DELETE | `/api/articles/[id]` | Удалить статью (auth) |
+| GET/POST | `/api/gallery` | Галерея |
+| PUT/DELETE | `/api/gallery/[id]` | Управление кейсом |
+| GET/POST | `/api/services` | Услуги |
+| PUT/DELETE | `/api/services/[id]` | Управление услугой |
+| GET/POST | `/api/prices` | Прайс-лист |
+| PUT/DELETE | `/api/prices/[id]` | Управление позицией |
+| GET/POST | `/api/reviews` | Отзывы |
+| PUT/DELETE | `/api/reviews/[id]` | Управление отзывом |
+| GET/POST | `/api/advantages` | Преимущества |
+| PUT/DELETE | `/api/advantages/[id]` | Управление |
+| GET/POST | `/api/tools` | Инструменты |
+| PUT/DELETE | `/api/tools/[id]` | Управление |
+| GET/POST | `/api/media` | Медиа-файлы (upload) |
+| DELETE | `/api/media/[id]` | Удалить файл |
+| POST | `/api/auth/login` | Вход |
+| POST | `/api/auth/logout` | Выход |
 
 ## Модели данных
 
 | Модель | Описание |
 |--------|----------|
-| `User` | Администратор (email, хеш пароля) |
-| `SiteSettings` | Настройки сайта (герой, контакты, SEO) |
+| `User` | Администратор |
+| `SiteSettings` | Настройки сайта (hero, контакты, SEO) |
 | `Service` | Карточки услуг |
 | `Price` | Прайс-лист |
 | `GalleryCase` | Кейсы до/после |
@@ -86,6 +107,22 @@ cms/
 | `Tool` | Инструменты |
 | `Media` | Медиа-библиотека |
 
-## Текущий статус
+## Что можно делать через админку
 
-Это **фундамент** CMS. См. [стратегию миграции](docs/migration-strategy.md) для полного плана.
+- ✅ Редактировать/создавать/удалять статьи
+- ✅ Публиковать/снимать с публикации статьи (draft/published)
+- ✅ Управлять галереей до/после
+- ✅ Загружать и удалять изображения
+- ✅ Редактировать настройки сайта (hero, специалист, контакты, SEO)
+- ✅ Управлять услугами, ценами, отзывами, преимуществами, инструментами
+- ✅ Менять порядок отображения всех элементов
+- ✅ Публиковать/скрывать любые элементы
+
+## Production
+
+Для production замените `DATABASE_URL` на PostgreSQL и установите `AUTH_SECRET`:
+
+```env
+DATABASE_URL="postgresql://user:password@host:5432/podolog"
+AUTH_SECRET="your-random-32-char-secret"
+```
