@@ -1,0 +1,1080 @@
+/**
+ * responsive.css — адаптивность сайта (mobile-first)
+ *
+ * ──────────────────────────────────────────────────────
+ * Брейкпоинты:
+ *   ≤ 480px   — маленькие телефоны
+ *   ≤ 768px   — телефоны и небольшие планшеты
+ *   ≤ 1024px  — планшеты / ноутбуки
+ *   ≥ 1400px  — широкие экраны
+ * ──────────────────────────────────────────────────────
+ */
+
+/* ═══════════════════════════════════════════════════════
+   БАЗОВЫЕ СБРОСЫ ПЕРЕПОЛНЕНИЯ (для всех экранов)
+═══════════════════════════════════════════════════════ */
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  min-width: 0;       /* предотвращает переполнение flex/grid потомков */
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ПЛАНШЕТЫ (≤ 1024px)
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  :root {
+    --section-padding-y: 4rem;
+    --font-size-4xl: 2.5rem;
+    --font-size-3xl: 2rem;
+  }
+
+  .hero__content {
+    gap: var(--space-10);
+  }
+
+  .hero__photo-wrap {
+    width: 300px;
+  }
+
+  .about__grid {
+    gap: var(--space-10);
+  }
+
+  .about__badge {
+    right: calc(-1 * var(--space-4));
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   МОБИЛЬНЫЕ (≤ 768px)
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  /* Корневые переменные */
+  :root {
+    --section-padding-y: 3rem;
+    --font-size-4xl: 1.875rem;
+    --font-size-3xl: 1.625rem;
+    --font-size-2xl: 1.375rem;
+    --container-padding: var(--space-4);   /* 16px — безопасный отступ от краёв */
+    --header-height: 60px;
+  }
+
+  /* ── Контейнер ──────────────────────────────────────── */
+  .container {
+    width: 100%;
+    padding-inline: var(--container-padding);
+  }
+
+  /* ── Header / Nav ───────────────────────────────────── */
+  .burger {
+    display: flex;
+  }
+
+  /* Hide desktop CTA on mobile — use bottom sheet CTA instead */
+  .header__cta {
+    display: none;
+  }
+
+  .header__inner {
+    gap: var(--space-4);
+  }
+
+  /* Desktop nav hides on mobile — replaced by bottom sheet */
+  .nav {
+    display: none;
+  }
+
+  /* Keep nav visible if JS hasn't loaded (progressive enhancement) */
+  .nav.is-open {
+    display: none;
+  }
+
+  /* ── Hero ───────────────────────────────────────────── */
+  .hero {
+    min-height: auto;
+    padding-top: var(--header-height);
+    padding-bottom: var(--space-12);
+  }
+
+  .hero__content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: var(--space-8);
+    padding-block: var(--space-10);
+  }
+
+  .hero__image {
+    order: -1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__text {
+    max-width: 100%;
+  }
+
+  .hero__photo-wrap {
+    width: 200px;
+    margin-inline: auto;
+  }
+
+  .hero__photo-wrap::before {
+    inset: -6px;
+  }
+
+  .hero__title {
+    font-size: 1.875rem;
+    line-height: 1.25;
+    word-break: break-word;
+  }
+
+  .hero__subtitle {
+    font-size: var(--font-size-base);
+    margin-inline: auto;
+  }
+
+  .hero__actions {
+    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    min-height: 48px;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .hero__stats {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .hero__stat {
+    min-width: 0;
+    flex: 0 0 auto;
+  }
+
+  /* ── Buttons (mobile) ───────────────────────────────── */
+  .btn {
+    white-space: normal;
+  }
+
+  /* ── Section headers ────────────────────────────────── */
+  .section-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .section-title {
+    font-size: 1.625rem;
+    line-height: 1.3;
+  }
+
+  .section-desc {
+    font-size: var(--font-size-base);
+  }
+
+  /* ── About ──────────────────────────────────────────── */
+  .about__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .about__image {
+    max-width: 300px;
+    margin-inline: auto;
+  }
+
+  .about__badge {
+    right: 0;
+    font-size: var(--font-size-xs);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .about__desc {
+    font-size: var(--font-size-base);
+  }
+
+  .about__voice {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .about__voice-text {
+    font-size: var(--font-size-base);
+  }
+
+  .about__trust-item {
+    font-size: var(--font-size-sm);
+  }
+
+  /* ── Social CTA ─────────────────────────────────────── */
+  .social-cta__inner {
+    flex-direction: column;
+    gap: var(--space-8);
+    align-items: flex-start;
+  }
+
+  .social-cta__desc {
+    max-width: 100%;
+  }
+
+  .social-cta__link {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* ── Services ───────────────────────────────────────── */
+  .services__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .service-card {
+    padding: var(--space-5);
+  }
+
+  /* ── Prices ─────────────────────────────────────────── */
+  .prices__table {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .price-row {
+    grid-template-columns: 1fr auto;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .price-row__service {
+    font-size: var(--font-size-sm);
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .price-row__price {
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .prices__note {
+    font-size: var(--font-size-sm);
+    padding-inline: var(--space-2);
+  }
+
+  /* ── Gallery ────────────────────────────────────────── */
+  .gallery__filter {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+  }
+
+  .gallery__filter-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-xs);
+  }
+
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  /* ── Advantages ─────────────────────────────────────── */
+  .advantages__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .advantage-card {
+    padding: var(--space-5);
+  }
+
+
+  /* ── Reviews ────────────────────────────────────────── */
+  .reviews__slider {
+    /* Legacy — no longer a slider */
+  }
+
+  .reviews__grid,
+  .reviews__track {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .review-card {
+    padding: var(--space-5);
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .review-card__text {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+  }
+
+  .review-card__footer {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .reviews__yandex-badge {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .reviews__source-note {
+    padding-inline: var(--space-2);
+    font-size: var(--font-size-xs);
+  }
+
+  /* ── Booking form ───────────────────────────────────── */
+  .booking__form {
+    padding: var(--space-5);
+  }
+
+  .form__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .form__input,
+  .form__select,
+  .form__textarea {
+    font-size: 16px;   /* предотвращает авто-зум в Safari */
+  }
+
+  .form__submit {
+    width: 100%;
+    min-height: 48px;
+    font-size: var(--font-size-base);
+    white-space: normal;
+  }
+
+  /* ── Contacts ───────────────────────────────────────── */
+  .contacts__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .contact-item__value {
+    font-size: var(--font-size-base);
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .contacts__messengers {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .messenger-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+  }
+
+  /* ── Map ────────────────────────────────────────────── */
+  .map__container {
+    height: 260px;
+  }
+
+  /* ── Footer ─────────────────────────────────────────── */
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+  }
+
+  .footer__brand-desc {
+    font-size: var(--font-size-sm);
+  }
+
+  /* ── Scroll-top button ──────────────────────────────── */
+  .scroll-top {
+    bottom: var(--space-4);
+    right: var(--space-4);
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   МАЛЕНЬКИЕ ТЕЛЕФОНЫ (≤ 480px)
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  :root {
+    --section-padding-y: 2.5rem;
+    --font-size-4xl: 1.625rem;
+    --font-size-3xl: 1.5rem;
+    --container-padding: var(--space-4);
+  }
+
+  .hero__title {
+    font-size: 1.625rem;
+  }
+
+  .hero__photo-wrap {
+    width: 170px;
+  }
+
+  .hero__stat {
+    flex: 0 0 auto;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  /* Карточки услуг */
+  .service-card {
+    padding: var(--space-4);
+  }
+
+  /* Прайс */
+  .price-row {
+    padding: var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .price-row__service {
+    font-size: var(--font-size-xs);
+  }
+
+  .price-row__price {
+    font-size: var(--font-size-xs);
+  }
+
+  /* Галерея */
+  .gallery__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Кнопки */
+  .btn--lg {
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--font-size-base);
+  }
+
+  /* Карточка отзыва */
+  .review-card {
+    padding: var(--space-4);
+  }
+
+  /* Форма бронирования */
+  .booking__form {
+    padding: var(--space-4);
+  }
+
+  /* О специалисте */
+  .about__image {
+    max-width: 240px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ШИРОКИЕ ЭКРАНЫ (≥ 1400px)
+═══════════════════════════════════════════════════════ */
+
+@media (min-width: 1400px) {
+  :root {
+    --container-max: 1320px;
+    --font-size-4xl: 3.5rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ДОСТУПНЫЕ СЛОТЫ — мобильная адаптация
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .slots__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .slot-card {
+    padding: var(--space-4);
+  }
+
+  .slot-btn {
+    font-size: var(--font-size-xs);
+    padding: var(--space-2) var(--space-3);
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slots__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .slot-card__times {
+    gap: var(--space-2);
+  }
+
+  .slot-btn {
+    flex: 1 0 calc(50% - var(--space-2));
+    justify-content: center;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   NAV — улучшение мобильного меню
+═══════════════════════════════════════════════════════ */
+
+/* На планшетах nav-список может не помещаться — добавляем
+   горизонтальный скролл на случай если меню ещё не бургер */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .nav__list {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    gap: var(--space-5);
+  }
+
+  .nav__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav__link {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ИНТЕРАКТИВНЫЕ ЭЛЕМЕНТЫ — минимальный tap-target 44px
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .nav__link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .reviews__btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .gallery__filter-btn {
+    min-height: 40px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   HERO — mobile layout
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .hero__layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding-block: var(--space-10);
+    min-height: auto;
+  }
+
+  /* Visual column: photo stacks first, full width */
+  .hero__visual {
+    order: -1;
+  }
+
+  .hero__photo-wrap {
+    aspect-ratio: 4 / 4.2;
+    min-height: 240px;
+    border-radius: var(--radius-lg);
+  }
+
+  .hero__quote {
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .hero__quote-text {
+    font-size: var(--font-size-base);
+  }
+
+  /* Text column: centred on mobile */
+  .hero__main {
+    gap: var(--space-5);
+    text-align: left;
+    padding-left: var(--space-5);
+  }
+
+  .hero__main::before {
+    height: 60%;
+  }
+
+  .hero__title {
+    font-size: clamp(1.85rem, 7.5vw, 2.5rem);
+  }
+
+  .hero__subtitle {
+    max-width: 100%;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__stats {
+    justify-content: flex-start;
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__layout {
+    padding-block: var(--space-8);
+  }
+
+  .hero__photo-wrap {
+    aspect-ratio: 4 / 3.5;
+    min-height: 200px;
+  }
+
+  .hero__main {
+    padding-left: var(--space-4);
+  }
+
+  .hero__title {
+    font-size: clamp(1.7rem, 8vw, 2.2rem);
+  }
+
+  .hero__stats {
+    gap: var(--space-5);
+  }
+
+  .hero__stat-value {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (max-width: 360px) {
+  .hero__photo-wrap {
+    min-height: 180px;
+  }
+
+  .hero__main {
+    padding-left: var(--space-3);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PODOLOGY / TOOLS / ARTICLES — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .podology__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .podology__card {
+    padding: var(--space-6);
+  }
+
+  .tools__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .tool-card {
+    padding: var(--space-6);
+  }
+
+  .articles__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .pub-float {
+    padding: var(--space-6);
+  }
+
+  /* Featured card: revert to column layout on mobile */
+  .article-card--featured {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .article-card--featured .article-card__title {
+    font-size: var(--font-size-lg);
+  }
+
+  .article-modal__content {
+    padding: var(--space-6) var(--space-5);
+    border-radius: var(--radius-lg);
+  }
+
+  .disclaimer-bar__text {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOOKING NOTICE — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .booking-notice {
+    padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-6);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   GENERAL MOBILE SPACING IMPROVEMENTS
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  /* More breathing room between sections */
+  .section {
+    padding-block: var(--space-12);
+  }
+
+  /* Service cards on mobile */
+  .services__grid {
+    gap: var(--space-5);
+  }
+
+  /* Advantages cards */
+  .advantages__grid {
+    gap: var(--space-5);
+  }
+
+  /* Better spacing in about section */
+  .about__text {
+    gap: var(--space-5);
+  }
+
+  /* Nav links bigger tap targets */
+  .nav__link {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-2);
+  }
+
+  /* Footer nav spacing */
+  .footer__nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small screens */
+  .section {
+    padding-block: var(--space-10);
+  }
+
+  /* Slots grid */
+  .slots__grid {
+    gap: var(--space-4);
+  }
+
+  /* Section labels wrap correctly */
+  .section-label {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   REVIEWS GRID — mobile overrides
+   Reviews are a 2-col grid on desktop, 1-col on mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .reviews__grid,
+  .reviews__track {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .review-card {
+    padding: var(--space-5);
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .review-card__footer {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .review-card__text {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   IMAGE SHELL — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .image-shell {
+    border-radius: var(--radius-lg);
+  }
+
+  .hero-image-shell {
+    aspect-ratio: 4 / 4.8;
+    min-height: 280px;
+  }
+
+  .feature-image-shell {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-image-shell {
+    min-height: 240px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PREVENT HORIZONTAL OVERFLOW — strong reset
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  .container {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    padding-inline: 16px;
+  }
+
+  /* All grid/flex containers */
+  .hero__layout,
+  .about__grid,
+  .services__grid,
+  .advantages__grid,
+  .contacts__grid,
+  .footer__grid,
+  .podology__grid,
+  .tools__grid,
+  .articles__grid {
+    overflow: visible;
+    min-width: 0;
+  }
+
+  /* All cards */
+  .service-card,
+  .advantage-card,
+  .review-card,
+  .slot-card,
+  .tool-card,
+  .article-card,
+  .podology__card {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Typography on small screens */
+  h1 {
+    font-size: clamp(1.75rem, 8vw, 2.5rem) !important;
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 6vw, 2rem) !important;
+    line-height: 1.2;
+  }
+
+  p, li, span {
+    line-height: 1.6;
+  }
+
+  /* Buttons always full-width in stacked CTA rows */
+  .hero__actions .btn {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   EXTRA SMALL SCREENS (320px–360px)
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 360px) {
+  .container {
+    padding-inline: 12px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+
+  .hero__title {
+    font-size: 1.6rem !important;
+  }
+
+  .hero__stats {
+    gap: var(--space-4);
+  }
+
+  .hero__stat-value {
+    font-size: var(--font-size-xl);
+  }
+
+  .service-card,
+  .advantage-card,
+  .review-card {
+    padding: var(--space-4);
+  }
+
+  .btn--lg {
+    padding: var(--space-3) var(--space-4);
+    font-size: 15px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   FLOATING ARTICLE CARD — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 375px) {
+  .pub-float {
+    right: 10px;
+    bottom: 10px;
+    width: calc(100vw - 20px);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOOKING INFO GRID — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .booking-info__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .booking-info__card {
+    padding: var(--space-5);
+  }
+
+  .booking-info__num {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PODOLOGY WHY LIST — mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .podology__why-list {
+    gap: var(--space-3);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   BURGER — improved tap target mobile
+═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .burger {
+    display: flex;
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+  }
+
+  .burger__line {
+    width: 22px;
+    height: 2px;
+    background-color: var(--color-text);
+    border-radius: 2px;
+    display: block;
+    transition: all var(--transition-base);
+  }
+
+  .burger.is-open .burger__line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .burger.is-open .burger__line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger.is-open .burger__line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+

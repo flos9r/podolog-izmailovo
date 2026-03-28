@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Наталья Сунцова — профессиональный подолог в Измайлово, Москва. Аппаратный педикюр, коррекция вросшего ногтя, работа с мозолями и натоптышами. Запись онлайн." />
+  <meta name="keywords" content="подолог, Измайлово, медицинский педикюр, вросший ноготь, мозоли, Москва" />
+  <meta property="og:title" content="Наталья Сунцова — Подолог в Измайлово" />
+  <meta property="og:description" content="Профессиональный подолог в Измайлово. Аппаратный педикюр, работа с вросшим ногтём и натоптышами. Запись онлайн." />
+  <meta property="og:type" content="website" />
+  <title>Наталья Сунцова — Подолог в Измайлово</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237b6e8a'/><text y='.9em' font-size='60' x='20' fill='white'>П</text></svg>" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════════ -->
+  <header class="header" id="header" role="banner">
+    <div class="container header__inner">
+
+      <a href="#" class="header__logo" aria-label="На главную">
+        <span class="header__logo-name" data-specialist="name">Наталья Сунцова</span>
+        <span class="header__logo-title" data-specialist="title">Подолог</span>
+      </a>
+
+      <nav class="nav" id="main-nav" role="navigation" aria-label="Основная навигация">
+        <ul class="nav__list" role="list">
+          <li><a class="nav__link" href="#about">Специалист</a></li>
+          <li><a class="nav__link" href="#services">Услуги</a></li>
+          <li><a class="nav__link" href="#podology">Подология</a></li>
+          <li><a class="nav__link" href="#tools">Инструменты</a></li>
+          <li><a class="nav__link" href="#articles">Статьи</a></li>
+          <li><a class="nav__link" href="#reviews">Отзывы</a></li>
+          <li><a class="nav__link" href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__cta">
+        <a href="#booking" class="btn btn--primary header__cta-btn">Записаться</a>
+      </div>
+
+      <button
+        class="burger"
+        id="burger"
+        aria-label="Открыть меню"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        <span class="burger__line"></span>
+        <span class="burger__line"></span>
+        <span class="burger__line"></span>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════
+       FLOATING ARTICLE CARD — editorial accent, bottom-right
+  ═══════════════════════════════════════════════ -->
+  <div class="pub-float" id="article-banner" role="complementary" aria-live="polite" aria-label="Новая статья" hidden>
+    <div class="pub-float__inner">
+      <div class="pub-float__meta">
+        <span class="pub-float__pill">Новая статья</span>
+        <button class="pub-float__close" id="article-banner-close" aria-label="Закрыть">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><line x1="1" y1="1" x2="13" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="13" y1="1" x2="1" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <a class="pub-float__link" id="article-banner-cta" href="#articles">
+        <span class="pub-float__title" id="article-banner-title"></span>
+        <span class="pub-float__excerpt" id="article-banner-desc"></span>
+        <span class="pub-float__read">Читать статью →</span>
+      </a>
+    </div>
+  </div>
+
+  <main role="main">
+
+    <!-- ═══════════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════════ -->
+    <section class="hero" id="home" aria-label="Главный экран">
+      <div class="container">
+        <div class="hero__layout">
+
+          <!-- Photo + Quote block (left column) -->
+          <div class="hero__visual">
+            <!--
+              ФОТО СПЕЦИАЛИСТА:
+              Замените hero__photo-placeholder на:
+              <img class="hero__photo image-shell__img" id="specialist-photo"
+                   src="images/specialist.jpg" alt="Наталья Сунцова — подолог" />
+            -->
+            <div class="hero__photo-wrap image-shell hero-image-shell">
+              <div class="hero__photo-placeholder" aria-hidden="true">
+                <span>Фото специалиста</span>
+              </div>
+            </div>
+            <!-- Quote floats at bottom of photo -->
+            <blockquote class="hero__quote">
+              <p class="hero__quote-text">«Занимаюсь любимым делом&nbsp;— подологией»</p>
+              <footer class="hero__quote-author">
+                <span id="hero-specialist-name">Наталья Сунцова</span>
+                <span class="hero__quote-role">Подолог · Измайлово</span>
+              </footer>
+            </blockquote>
+          </div>
+
+          <!-- Text + CTA block (right column) -->
+          <div class="hero__main">
+            <p class="hero__eyebrow">Подологический кабинет · Измайлово</p>
+            <h1 class="hero__title">
+              Профессиональный<br>уход за стопами
+            </h1>
+            <p class="hero__subtitle">
+              Вросшие ногти, натоптыши, трещины, деформации. Работаю со всеми — от детей до пожилых. Строго по записи, без очередей.
+            </p>
+
+            <div class="hero__actions">
+              <a href="#booking" class="btn btn--accent btn--lg">Записаться</a>
+              <a href="#services" class="btn btn--outline-light btn--lg">Услуги и цены</a>
+            </div>
+
+            <div class="hero__stats" aria-label="Ключевые показатели">
+              <div class="hero__stat">
+                <span class="hero__stat-value">8+</span>
+                <span class="hero__stat-label">лет опыта</span>
+              </div>
+              <div class="hero__stat">
+                <span class="hero__stat-value">1000+</span>
+                <span class="hero__stat-label">довольных клиентов</span>
+              </div>
+              <div class="hero__stat">
+                <span class="hero__stat-value">5.0</span>
+                <span class="hero__stat-label">Яндекс Карты</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Legal disclaimer -->
+    <div class="disclaimer-bar">
+      <div class="container">
+        <p class="disclaimer-bar__text">Подолог — специалист в области профессионального ухода за стопами и ногтями. Услуги носят косметический и профилактический характер. При наличии заболеваний необходима консультация врача.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         ABOUT
+    ═══════════════════════════════════════════════ -->
+    <section class="section" id="about" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="about__grid">
+
+          <div class="about__image">
+            <!--
+              Замените about__photo-placeholder на img когда будет реальное фото:
+              <img class="about__photo" src="images/about.jpg" alt="Наталья Сунцова — подолог в рабочем кабинете" />
+            -->
+            <div class="about__photo-placeholder" aria-hidden="true">
+              <span>Фото будет добавлено</span>
+            </div>
+
+            <div class="about__badge">
+              <span class="about__badge-value">8+</span>
+              <span class="about__badge-label">лет опыта</span>
+            </div>
+          </div>
+
+          <div class="about__text">
+            <span class="section-label">Специалист</span>
+            <h2 class="about__title" id="about-heading"><span id="about-name">Наталья Сунцова</span></h2>
+
+            <!-- Specialist's own voice — not overridden by JS -->
+            <blockquote class="about__voice">
+              <p class="about__voice-text">Я занимаюсь стопами — вросшими и деформированными ногтями, натоптышами, трещинами, кожными наростами. Принимаю всех: и детей, и пожилых людей, и тех, кто обращается впервые.</p>
+            </blockquote>
+
+            <p class="about__desc" id="about-desc">
+              Меня зовут Наталья, я подолог с многолетним опытом работы. За восемь лет практики через кабинет прошли сотни посетителей — и я рада каждому, кто доверяет мне свои стопы.
+            </p>
+
+            <!-- Trust signals — from the specialist's own words -->
+            <div class="about__trust">
+              <h3 class="about__trust-title">Почему доверяют</h3>
+              <ul class="about__trust-list" aria-label="Основания для доверия">
+                <li class="about__trust-item">Медицинское образование</li>
+                <li class="about__trust-item">Стерильный инструментарий и одноразовые расходники</li>
+                <li class="about__trust-item">Регулярно углубляю знания в области подологии</li>
+                <li class="about__trust-item"><strong id="about-experience">Более 8 лет</strong> практики</li>
+              </ul>
+            </div>
+
+            <div class="about__certs">
+              <h3 class="about__certs-title">Образование и сертификаты</h3>
+              <ul id="about-certs" aria-label="Список сертификатов">
+                <li class="about__cert-item">Медицинское образование</li>
+                <li class="about__cert-item">Регулярное повышение квалификации в области подологии</li>
+              </ul>
+            </div>
+
+            <a href="#booking" class="btn btn--primary">Записаться на приём</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SERVICES
+    ═══════════════════════════════════════════════ -->
+    <section class="section section--alt" id="services" aria-labelledby="services-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Что я делаю</span>
+          <h2 class="section-title" id="services-heading">Услуги подолога</h2>
+          <p class="section-desc">
+            Профессиональный уход за стопами, ногтями и кожей с использованием специализированного оборудования
+          </p>
+        </header>
+
+        <div class="services__grid" id="services-grid" role="list" aria-label="Список услуг">
+          <!-- Карточки услуг генерируются из data.js -->
+        </div>
+
+        <div style="text-align: center; margin-top: 2.5rem;">
+          <a href="#booking" class="btn btn--primary btn--lg">Записаться на услугу</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         PRICES
+    ═══════════════════════════════════════════════ -->
+    <section class="section" id="prices" aria-labelledby="prices-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Прайс-лист</span>
+          <h2 class="section-title" id="prices-heading">Стоимость услуг</h2>
+          <p class="section-desc">
+            Стоимость зависит от сложности случая. Оплата производится по факту оказания услуги.
+          </p>
+        </header>
+
+        <div class="prices__table" id="prices-table" role="table" aria-label="Прайс-лист услуг подолога">
+          <!-- Строки генерируются из data.js -->
+        </div>
+
+        <p class="prices__note">
+          Точная стоимость определяется на консультации. Оплата по факту оказания услуги.
+        </p>
+
+        <div class="prices__cta">
+          <a href="#booking" class="btn btn--primary btn--lg">Записаться на приём</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         GALLERY
+    ═══════════════════════════════════════════════ -->
+    <section class="section section--alt" id="gallery" aria-labelledby="gallery-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Мои работы</span>
+          <h2 class="section-title" id="gallery-heading">Галерея</h2>
+          <p class="section-desc">
+            Результаты работ — до и после.
+          </p>
+        </header>
+
+        <div class="gallery__filter" id="gallery-filter" role="group" aria-label="Фильтр галереи">
+          <!-- Фильтр-кнопки генерируются из data.js -->
+        </div>
+
+        <div class="gallery__grid" id="gallery-grid" role="list" aria-label="Галерея работ">
+          <!-- Элементы галереи генерируются из data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-label="Просмотр фото" aria-modal="true">
+      <div class="lightbox__inner">
+        <button class="lightbox__close" aria-label="Закрыть просмотр">✕</button>
+        <img class="lightbox__img" src="" alt="" />
+        <p class="lightbox__caption"></p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         ADVANTAGES
+    ═══════════════════════════════════════════════ -->
+    <section class="section" id="advantages" aria-labelledby="advantages-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Почему выбирают меня</span>
+          <h2 class="section-title" id="advantages-heading">Мои преимущества</h2>
+          <p class="section-desc">
+            Стерильность, профессиональные стандарты, работа строго по записи
+          </p>
+        </header>
+
+        <div class="advantages__grid" id="advantages-grid" role="list" aria-label="Преимущества специалиста">
+          <!-- Карточки преимуществ генерируются из data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         REVIEWS
+    ═══════════════════════════════════════════════ -->
+    <section class="section section--alt" id="reviews" aria-labelledby="reviews-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Отзывы клиентов</span>
+          <h2 class="section-title" id="reviews-heading">Что говорят клиенты</h2>
+          <div class="reviews__yandex-badge" aria-label="Статус на Яндекс Картах">
+            <span class="reviews__yandex-badge-text">«Хорошее место 2026» на Яндекс Картах</span>
+          </div>
+        </header>
+
+        <div class="reviews__grid" id="reviews-track" aria-label="Отзывы клиентов" role="list">
+          <!-- Карточки отзывов генерируются из data.js -->
+        </div>
+
+        <p class="reviews__source-note">
+          Отзывы взяты с <a href="https://yandex.ru/maps/org/podolog_nata" target="_blank" rel="noopener noreferrer">Яндекс Карт</a>. Новые отзывы можно оставить там же.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         CONTACTS
+    ═══════════════════════════════════════════════ -->
+    <section class="section" id="contacts" aria-labelledby="contacts-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Как связаться</span>
+          <h2 class="section-title" id="contacts-heading">Контакты</h2>
+        </header>
+
+        <div class="contacts__grid">
+          <div class="contacts__info">
+            <h3 class="contacts__info-title">Свяжитесь со мной</h3>
+
+            <address style="font-style: normal;">
+              <div class="contact-item">
+                <div class="contact-item__icon contact-item__icon--phone" aria-hidden="true">Тел</div>
+                <div>
+                  <div class="contact-item__label">Телефон</div>
+                  <div class="contact-item__value">
+                    <a href="tel:+79197616401" id="contact-phone-link"><span id="contact-phone-display">+7 (919) 761-64-01</span></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-item__icon contact-item__icon--email" aria-hidden="true">Email</div>
+                <div>
+                  <div class="contact-item__label">Email</div>
+                  <div class="contact-item__value">
+                    <a href="mailto:" id="contact-email-link"><span id="contact-email-display">info@podolog-izmailovo.ru</span></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-item__icon contact-item__icon--address" aria-hidden="true">Адр</div>
+                <div>
+                  <div class="contact-item__label">Адрес</div>
+                  <div class="contact-item__value" id="contact-address">
+                    г. Москва, ул. 5-ая Парковая, д 62Б
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-item__icon contact-item__icon--hours" aria-hidden="true">Пн–Сб</div>
+                <div>
+                  <div class="contact-item__label">График работы</div>
+                  <div class="contact-item__value">
+                    <div id="contact-hours">Пн–Сб: 09:00–19:00</div>
+                    <div id="contact-hours-note" style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 4px;">Воскресенье — выходной</div>
+                  </div>
+                </div>
+              </div>
+            </address>
+
+            <div class="contacts__messengers" id="contact-messengers" aria-label="Мессенджеры">
+              <!-- Кнопки мессенджеров генерируются из data.js -->
+            </div>
+          </div>
+
+          <div class="contacts__map">
+            <h3 class="contacts__info-title">Как добраться</h3>
+            <!--
+              Замените map__placeholder на iframe с реальной картой:
+              <iframe
+                src="https://www.google.com/maps/embed?pb=..."
+                width="100%" height="400" style="border:0;"
+                allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Карта расположения кабинета подолога"
+              ></iframe>
+            -->
+              <div class="map__container">
+              <div class="map__placeholder">
+                <p>г. Москва, ул. 5-ая Парковая, д 62Б</p>
+                <a
+                  href="https://yandex.ru/maps/?text=5-ая+Парковая+62Б+Москва"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Открыть карту в Яндекс.Картах"
+                >
+                  Открыть карту
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         BOOKING INFO (replaces "Available Slots")
+    ═══════════════════════════════════════════════ -->
+    <section class="section section--alt" id="slots" aria-labelledby="booking-info-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Как проходит запись</span>
+          <h2 class="section-title" id="booking-info-heading">Запись на приём</h2>
+          <p class="section-desc">
+            Подолог подбирает время индивидуально под каждую ситуацию. Точное время и дата согласуются напрямую.
+          </p>
+        </header>
+
+        <div class="booking-info__grid">
+          <div class="booking-info__card">
+            <div class="booking-info__num">01</div>
+            <h3 class="booking-info__title">Оставьте заявку</h3>
+            <p class="booking-info__text">Заполните форму ниже или напишите в мессенджер. Укажите, что вас беспокоит.</p>
+          </div>
+          <div class="booking-info__card">
+            <div class="booking-info__num">02</div>
+            <h3 class="booking-info__title">Наталья свяжется с вами</h3>
+            <p class="booking-info__text">После получения заявки специалист свяжется и предложит удобное время, исходя из ситуации.</p>
+          </div>
+          <div class="booking-info__card">
+            <div class="booking-info__num">03</div>
+            <h3 class="booking-info__title">Приходите на приём</h3>
+            <p class="booking-info__text">Продолжительность каждой процедуры разная — подолог оценивает это индивидуально. Несколько услуг можно совместить за один визит.</p>
+          </div>
+        </div>
+
+        <div class="booking-notice">
+          <p class="booking-notice__text">
+            Подолог индивидуально оценивает каждый случай, длительность может варьироваться. Дату и время согласуем напрямую после заявки.
+          </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+          <a href="#booking" class="btn btn--primary btn--lg">Записаться на приём</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         BOOKING FORM
+    ═══════════════════════════════════════════════ -->
+    <section class="section booking" id="booking" aria-labelledby="booking-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Онлайн запись</span>
+          <h2 class="section-title" id="booking-heading">Записаться на приём</h2>
+          <p class="section-desc">
+            Заполните форму — я свяжусь с вами в течение дня. Стараюсь ответить как можно быстрее, но иногда это занимает время — каждую ситуацию оцениваю лично.
+          </p>
+        </header>
+
+        <div class="booking__form">
+          <form id="booking-form" novalidate aria-label="Форма записи к подологу">
+            <div class="form__grid">
+
+              <!-- Имя -->
+              <div class="form__group">
+                <label class="form__label form__label--required" for="form-name">Ваше имя</label>
+                <input
+                  class="form__input"
+                  type="text"
+                  id="form-name"
+                  name="name"
+                  placeholder="Например: Елена"
+                  autocomplete="given-name"
+                  data-validate="name"
+                  required
+                  aria-required="true"
+                  aria-describedby="form-name-error"
+                />
+                <span class="form__error" id="form-name-error" role="alert" aria-live="polite"></span>
+              </div>
+
+              <!-- Телефон -->
+              <div class="form__group">
+                <label class="form__label form__label--required" for="form-phone">Телефон</label>
+                <input
+                  class="form__input"
+                  type="tel"
+                  id="form-phone"
+                  name="phone"
+                  placeholder="+7 (___) ___-__-__"
+                  autocomplete="tel"
+                  data-validate="phone"
+                  required
+                  aria-required="true"
+                  aria-describedby="form-phone-error"
+                />
+                <span class="form__error" id="form-phone-error" role="alert" aria-live="polite"></span>
+              </div>
+
+              <!-- Email -->
+              <div class="form__group">
+                <label class="form__label" for="form-email">Email (необязательно)</label>
+                <input
+                  class="form__input"
+                  type="email"
+                  id="form-email"
+                  name="email"
+                  placeholder="your@email.com"
+                  autocomplete="email"
+                  data-validate="email"
+                  aria-describedby="form-email-error"
+                />
+                <span class="form__error" id="form-email-error" role="alert" aria-live="polite"></span>
+              </div>
+
+              <!-- Услуга -->
+              <div class="form__group">
+                <label class="form__label form__label--required" for="form-service">Услуга</label>
+                <select
+                  class="form__select"
+                  id="form-service"
+                  name="service"
+                  data-validate="service"
+                  required
+                  aria-required="true"
+                  aria-describedby="form-service-error"
+                >
+                  <option value="">Выберите услугу</option>
+                  <!-- Опции генерируются из data.js -->
+                </select>
+                <span class="form__error" id="form-service-error" role="alert" aria-live="polite"></span>
+              </div>
+
+              <!-- Комментарий -->
+              <div class="form__group form__group--full">
+                <label class="form__label" for="form-comment">Комментарий</label>
+                <textarea
+                  class="form__textarea"
+                  id="form-comment"
+                  name="comment"
+                  placeholder="Опишите проблему или вопрос (необязательно)"
+                  rows="3"
+                ></textarea>
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--lg form__submit">
+              Записаться на приём
+            </button>
+
+            <p style="text-align:center; margin-top: 1rem; font-size: 0.8125rem; color: var(--color-text-muted);">
+              Нажимая кнопку, вы соглашаетесь на обработку персональных данных
+            </p>
+          </form>
+
+          <div class="form__success" id="form-success" role="status" aria-live="polite">
+            <div class="form__success-icon">&#10003;</div>
+            <h3 class="form__success-title">Заявка получена</h3>
+            <p class="form__success-text">
+              В ближайшее время Наталья свяжется с вами и согласует удобную дату, время и стоимость. Ожидайте звонка или сообщения.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         PODOLOGY INFO
+    ═══════════════════════════════════════════════ -->
+    <section class="section" id="podology" aria-labelledby="podology-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">О профессии</span>
+          <h2 class="section-title" id="podology-heading">Что такое подология</h2>
+          <p class="section-desc">
+            Подология — это профессия, которая занимается состоянием стоп: кожей, ногтями, их строением и уходом за ними.
+          </p>
+        </header>
+
+        <div class="podology__grid">
+          <div class="podology__card">
+            <div class="podology__card-label">История</div>
+            <h3 class="podology__card-title">Как появилась профессия</h3>
+            <p class="podology__card-text">
+              Уход за стопами существует столько же, сколько человечество носит обувь. Первые упоминания о специалистах по стопам появились в Европе в XIX веке. В XX веке профессия оформилась официально — появились профессиональные ассоциации, стандарты обучения и сертификации.
+            </p>
+            <p class="podology__card-text">
+              Сегодня подология — признанная специальность в Великобритании, Германии, Австрии, Канаде и других странах. Международная федерация подологов (FIP) объединяет специалистов из более чем 30 государств.
+            </p>
+          </div>
+
+          <div class="podology__card">
+            <div class="podology__card-label">Суть профессии</div>
+            <h3 class="podology__card-title">Чем занимается подолог</h3>
+            <p class="podology__card-text">
+              Подолог работает с состоянием стоп: огрубевшей кожей, натоптышами, мозолями, вросшими и деформированными ногтями. Это не медицина в клиническом смысле — скорее специализированный уход, требующий знаний анатомии, владения профессиональным оборудованием и опыта работы.
+            </p>
+            <p class="podology__card-text">
+              Хороший подолог работает на пересечении эстетики и функции: после процедуры стопам должно быть комфортно — и выглядеть они должны соответствующе.
+            </p>
+          </div>
+
+          <div class="podology__card">
+            <div class="podology__card-label">Зачем это нужно</div>
+            <h3 class="podology__card-title">Как это влияет на повседневную жизнь</h3>
+            <p class="podology__card-text">
+              Стопы работают весь день — они несут вес тела при каждом шаге. Когда с ними всё в порядке, вы об этом не думаете. Когда появляется дискомфорт: мозоль натирает, ноготь врастает, пятка трескается — это начинает влиять на походку, настроение и привычный ритм жизни.
+            </p>
+            <p class="podology__card-text">
+              Большинство проблем со стопами решаются проще, если к ним обратиться вовремя. Вросший ноготь на ранней стадии требует одной процедуры. Запущенный — нескольких визитов и большего дискомфорта. То же касается натоптышей, трещин и деформаций ногтей.
+            </p>
+            <ul class="podology__why-list">
+              <li class="podology__why-item">Профессиональная обработка устраняет причину дискомфорта, а не маскирует его</li>
+              <li class="podology__why-item">Регулярный уход предотвращает рецидивы и поддерживает результат</li>
+              <li class="podology__why-item">Здоровые стопы — это нормальная нагрузка на суставы и позвоночник</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="podology__source-note">
+          Источники: <a href="https://www.ifpodiatrists.org" target="_blank" rel="noopener noreferrer">Международная федерация подологов (FIP)</a>, <a href="https://www.apma.org" target="_blank" rel="noopener noreferrer">American Podiatric Medical Association (APMA)</a>, <a href="https://www.nhs.uk/conditions/foot-problems/" target="_blank" rel="noopener noreferrer">NHS UK</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         TOOLS
+    ═══════════════════════════════════════════════ -->
+    <section class="section section--alt" id="tools" aria-labelledby="tools-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Рабочий кабинет</span>
+          <h2 class="section-title" id="tools-heading">Инструменты и оборудование</h2>
+          <p class="section-desc">
+            То, чем я работаю, напрямую влияет на результат и ваш комфорт. Коротко о каждом инструменте.
+          </p>
+        </header>
+
+        <div class="tools__grid" id="tools-grid" aria-label="Список инструментов">
+          <!-- Генерируется из data.js → tools -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         ARTICLES
+    ═══════════════════════════════════════════════ -->
+    <section class="section" id="articles" aria-labelledby="articles-heading">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Экспертный контент</span>
+          <h2 class="section-title" id="articles-heading">Новые публикации</h2>
+          <p class="section-desc">
+            Пишу о том, с чем работаю каждый день. Практика, наблюдения, советы по уходу за стопами.
+          </p>
+        </header>
+
+        <div class="articles__grid" id="articles-grid" aria-label="Список статей">
+          <!-- Генерируется из data.js → articles -->
+        </div>
+
+        <p class="articles__note">
+          Контент обновляется. Следите за новыми публикациями в <a href="https://t.me/podolog_nata" target="_blank" rel="noopener noreferrer">Telegram</a> и <a href="https://www.instagram.com/podolog_izmaylovo" target="_blank" rel="noopener noreferrer">Instagram</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Article modal -->
+    <div class="article-modal" id="article-modal" role="dialog" aria-modal="true" aria-labelledby="article-modal-title" hidden>
+      <div class="article-modal__backdrop"></div>
+      <div class="article-modal__content">
+        <button class="article-modal__close" id="article-modal-close" aria-label="Закрыть статью">&times;</button>
+        <article class="article-modal__body" id="article-modal-body">
+          <!-- Filled by JS -->
+        </article>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SOCIAL MEDIA
+    ═══════════════════════════════════════════════ -->
+    <section class="section social-cta" id="social" aria-labelledby="social-heading">
+      <div class="container">
+        <div class="social-cta__inner">
+          <div class="social-cta__text">
+            <span class="section-label">Подписывайтесь</span>
+            <h2 class="social-cta__title" id="social-heading">Следите за работой</h2>
+            <p class="social-cta__desc">Реальные случаи из практики, советы по уходу за стопами и новые публикации — в Instagram и Telegram.</p>
+          </div>
+          <div class="social-cta__links">
+            <a
+              href="https://www.instagram.com/podolog_izmaylovo"
+              class="social-cta__link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Подписаться в Instagram"
+            >
+              <span class="social-cta__link-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </span>
+              <span class="social-cta__link-body">
+                <span class="social-cta__link-platform">Instagram</span>
+                <span class="social-cta__link-handle">@podolog_izmaylovo</span>
+              </span>
+            </a>
+            <a
+              href="https://t.me/podolog_nata"
+              class="social-cta__link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Подписаться в Telegram"
+            >
+              <span class="social-cta__link-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+              </span>
+              <span class="social-cta__link-body">
+                <span class="social-cta__link-platform">Telegram</span>
+                <span class="social-cta__link-handle">@podolog_nata</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+
+        <div class="footer__brand">
+          <div class="footer__brand-name" data-footer="name">Наталья Сунцова</div>
+          <div class="footer__brand-title">Подолог · Москва, Измайлово</div>
+          <p class="footer__brand-desc">
+            Вросшие ногти, натоптыши, трещины, деформации. Работаю со всеми — строго по записи.
+          </p>
+        </div>
+
+        <div class="footer__nav-col">
+          <h3 class="footer__heading">Навигация</h3>
+          <nav class="footer__nav" aria-label="Навигация в footer">
+            <a href="#about" class="footer__nav-link">Специалист</a>
+            <a href="#services" class="footer__nav-link">Услуги</a>
+            <a href="#prices" class="footer__nav-link">Цены</a>
+            <a href="#articles" class="footer__nav-link">Статьи</a>
+            <a href="#reviews" class="footer__nav-link">Отзывы</a>
+            <a href="#contacts" class="footer__nav-link">Контакты</a>
+            <a href="#social" class="footer__nav-link">Соцсети</a>
+            <a href="#booking" class="footer__nav-link">Записаться</a>
+          </nav>
+        </div>
+
+        <div class="footer__contacts-col">
+          <h3 class="footer__heading">Контакты</h3>
+          <address style="font-style: normal;">
+            <div class="footer__contacts">
+              <div class="footer__contact-item">
+                <a href="tel:+79197616401" id="footer-phone-link"><span id="footer-phone">+7 (919) 761-64-01</span></a>
+              </div>
+              <div class="footer__contact-item">
+                <a href="mailto:" id="footer-email-link"><span id="footer-email">info@podolog-izmailovo.ru</span></a>
+              </div>
+              <div class="footer__contact-item">
+                <span id="footer-address">ул. 5-ая Парковая, д 62Б, Москва</span>
+              </div>
+              <div class="footer__contact-item">
+                <span id="footer-hours">Пн–Сб: 09:00–19:00</span>
+              </div>
+            </div>
+          </address>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">
+          © <span id="footer-year">2025</span> <span data-footer="name">Наталья Сунцова</span>. Все права защищены.
+        </p>
+        <a href="#booking" class="btn btn--outline" style="border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); font-size: 0.875rem;">
+          Записаться →
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button class="scroll-top" id="scroll-top" aria-label="Наверх">↑</button>
+
+  <!-- ═══════════════════════════════════════════════
+       MOBILE BOTTOM SHEET NAV
+  ═══════════════════════════════════════════════ -->
+  <div class="mobile-overlay" id="mobile-overlay" aria-hidden="true"></div>
+  <div class="mobile-sheet" id="mobile-sheet" role="dialog" aria-modal="true" aria-label="Навигация" aria-hidden="true">
+    <div class="mobile-sheet__handle" aria-hidden="true"></div>
+    <button class="mobile-sheet__close" id="mobile-sheet-close" aria-label="Закрыть меню">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <nav class="mobile-sheet__nav" aria-label="Мобильная навигация">
+      <a class="mobile-sheet__link" href="#about">Специалист</a>
+      <a class="mobile-sheet__link" href="#services">Услуги</a>
+      <a class="mobile-sheet__link" href="#podology">Подология</a>
+      <a class="mobile-sheet__link" href="#tools">Инструменты</a>
+      <a class="mobile-sheet__link" href="#articles">Статьи</a>
+      <a class="mobile-sheet__link" href="#reviews">Отзывы</a>
+      <a class="mobile-sheet__link" href="#contacts">Контакты</a>
+    </nav>
+    <a href="#booking" class="btn btn--primary mobile-sheet__cta">Записаться</a>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/form.js"></script>
+
+</body>
+</html>
