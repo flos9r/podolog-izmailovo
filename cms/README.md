@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Подолог CMS
 
-## Getting Started
+Система управления контентом для сайта подолога. Встроенная админ-панель для редактирования статей, галереи, услуг, цен, отзывов и настроек сайта.
 
-First, run the development server:
+## Стек
+
+- **Next.js 16** + TypeScript + Tailwind CSS
+- **Prisma 5** + SQLite (для production — PostgreSQL)
+- **iron-session** — сессии для авторизации
+- **bcryptjs** — хеширование паролей
+
+## Быстрый старт
 
 ```bash
+# 1. Установить зависимости
+npm install
+
+# 2. Скопировать и настроить .env
+cp .env.example .env
+
+# 3. Применить миграции
+npx prisma migrate dev
+
+# 4. Заполнить БД начальными данными
+npx tsx prisma/seed.ts
+
+# 5. Запустить dev-сервер
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Вход в админку
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- URL: http://localhost:3000/login
+- Email: `admin@podolog.ru`
+- Пароль: `admin123`
 
-## Learn More
+После входа вы попадёте на http://localhost:3000/admin
 
-To learn more about Next.js, take a look at the following resources:
+## Структура проекта
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+cms/
+├── prisma/
+│   ├── schema.prisma       # Модели данных
+│   ├── migrations/         # Миграции БД
+│   └── seed.ts             # Seed: перенос данных из data.js в БД
+├── src/
+│   ├── app/
+│   │   ├── admin/          # Админ-панель (защищённая)
+│   │   │   ├── layout.tsx  # Sidebar + проверка авторизации
+│   │   │   ├── page.tsx    # Dashboard
+│   │   │   ├── articles/   # Управление статьями
+│   │   │   ├── gallery/    # Управление галереей до/после
+│   │   │   ├── services/   # Управление услугами
+│   │   │   ├── prices/     # Управление прайсом
+│   │   │   ├── reviews/    # Управление отзывами
+│   │   │   ├── advantages/ # Управление преимуществами
+│   │   │   ├── tools/      # Управление инструментами
+│   │   │   ├── media/      # Медиа-файлы
+│   │   │   └── settings/   # Настройки сайта
+│   │   ├── login/          # Страница входа
+│   │   └── api/            # API endpoints
+│   └── lib/
+│       ├── prisma.ts       # Prisma client singleton
+│       └── auth.ts         # Сессии и авторизация
+├── public/
+│   └── uploads/            # Загруженные изображения
+└── docs/
+    └── migration-strategy.md  # Стратегия миграции
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Модели данных
 
-## Deploy on Vercel
+| Модель | Описание |
+|--------|----------|
+| `User` | Администратор (email, хеш пароля) |
+| `SiteSettings` | Настройки сайта (герой, контакты, SEO) |
+| `Service` | Карточки услуг |
+| `Price` | Прайс-лист |
+| `GalleryCase` | Кейсы до/после |
+| `Review` | Отзывы |
+| `Advantage` | Преимущества |
+| `Article` | Статьи блога |
+| `Tool` | Инструменты |
+| `Media` | Медиа-библиотека |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Текущий статус
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Это **фундамент** CMS. См. [стратегию миграции](docs/migration-strategy.md) для полного плана.
