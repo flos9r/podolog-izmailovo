@@ -114,19 +114,27 @@ function renderGallery() {
   if (!grid) return;
 
   grid.innerHTML = siteData.gallery.map((item, idx) => `
-    <div class="gallery__item" data-index="${idx}" data-category="${item.category}">
+    <div class="gallery__item" data-index="${idx}" data-category="${item.category}" data-state="before" role="listitem">
       <img
-        class="gallery__img"
-        src="${item.src}"
-        alt="${item.alt}"
+        class="gallery__img gallery__img--before is-visible"
+        src="${item.beforeSrc}"
+        alt="${item.beforeAlt}"
         loading="lazy"
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        onerror="this.style.display='none'; this.closest('.gallery__item').querySelector('.gallery__placeholder').style.display='flex';"
+      />
+      <img
+        class="gallery__img gallery__img--after"
+        src="${item.afterSrc}"
+        alt="${item.afterAlt}"
+        loading="lazy"
       />
       <div class="gallery__placeholder" style="display:none;">
-        <span>${item.alt}</span>
+        <span>${item.title}</span>
       </div>
+      <span class="gallery__badge gallery__badge--before">До</span>
+      <span class="gallery__badge gallery__badge--after">После</span>
       <div class="gallery__item-overlay">
-        <span class="gallery__item-label">${item.category}</span>
+        <span class="gallery__item-label">${item.title}</span>
       </div>
     </div>
   `).join('');
@@ -349,6 +357,54 @@ function initGallery() {
 
   if (!grid) return;
 
+  // ── Before/After: hover (desktop) + tap (mobile) toggle ──
+  const isTouchDevice = () => 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  let longPressOpened = false; // flag to prevent tap toggle after long-press
+
+  function setCardState(item, state) {
+    const before = item.querySelector('.gallery__img--before');
+    const after  = item.querySelector('.gallery__img--after');
+    if (!before || !after) return;
+
+    item.dataset.state = state;
+    if (state === 'after') {
+      before.classList.remove('is-visible');
+      after.classList.add('is-visible');
+    } else {
+      after.classList.remove('is-visible');
+      before.classList.add('is-visible');
+    }
+  }
+
+  // Desktop: hover to show "after", revert on leave
+  grid.addEventListener('mouseenter', (e) => {
+    if (isTouchDevice()) return;
+    const item = e.target.closest('.gallery__item');
+    if (item) setCardState(item, 'after');
+  }, true);
+
+  grid.addEventListener('mouseleave', (e) => {
+    if (isTouchDevice()) return;
+    const item = e.target.closest('.gallery__item');
+    if (item) setCardState(item, 'before');
+  }, true);
+
+  // Mobile: tap toggles between before/after (skip if long-press just opened lightbox)
+  grid.addEventListener('click', (e) => {
+    const item = e.target.closest('.gallery__item');
+    if (!item) return;
+
+    if (isTouchDevice()) {
+      if (longPressOpened) {
+        longPressOpened = false;
+        return;
+      }
+      const currentState = item.dataset.state || 'before';
+      const newState = currentState === 'before' ? 'after' : 'before';
+      setCardState(item, newState);
+    }
+  });
+
   // Filter
   if (filterBar) {
     filterBar.addEventListener('click', (e) => {
@@ -366,30 +422,110 @@ function initGallery() {
     });
   }
 
-  // Lightbox
+  // Lightbox with before/after support
   if (lightbox) {
     const lightboxImg = lightbox.querySelector('.lightbox__img');
     const lightboxCaption = lightbox.querySelector('.lightbox__caption');
     const lightboxClose = lightbox.querySelector('.lightbox__close');
+    const lightboxToggle = lightbox.querySelector('.lightbox__toggle');
+    let lightboxState = 'before';
+    let lightboxIndex = -1;
 
-    grid.addEventListener('click', (e) => {
-      const item = e.target.closest('.gallery__item');
-      if (!item) return;
-
-      const idx = parseInt(item.dataset.index, 10);
+    function openLightbox(idx) {
       const galleryItem = siteData.gallery[idx];
       if (!galleryItem) return;
 
-      lightboxImg.src = galleryItem.src;
-      lightboxImg.alt = galleryItem.alt;
-      if (lightboxCaption) lightboxCaption.textContent = galleryItem.alt;
+      lightboxIndex = idx;
+      lightboxState = 'before';
+      lightboxImg.src = galleryItem.beforeSrc;
+      lightboxImg.alt = galleryItem.beforeAlt;
+      if (lightboxCaption) lightboxCaption.textContent = galleryItem.title + ' — До';
+      if (lightboxToggle) {
+        lightboxToggle.textContent = 'Показать «После»';
+        lightboxToggle.dataset.state = 'before';
+      }
       lightbox.classList.add('is-open');
       document.body.style.overflow = 'hidden';
+    }
+
+    function toggleLightboxState() {
+      if (lightboxIndex < 0) return;
+      const galleryItem = siteData.gallery[lightboxIndex];
+      if (!galleryItem) return;
+
+      if (lightboxState === 'before') {
+        lightboxState = 'after';
+        lightboxImg.src = galleryItem.afterSrc;
+        lightboxImg.alt = galleryItem.afterAlt;
+        if (lightboxCaption) lightboxCaption.textContent = galleryItem.title + ' — После';
+        if (lightboxToggle) {
+          lightboxToggle.textContent = 'Показать «До»';
+          lightboxToggle.dataset.state = 'after';
+        }
+      } else {
+        lightboxState = 'before';
+        lightboxImg.src = galleryItem.beforeSrc;
+        lightboxImg.alt = galleryItem.beforeAlt;
+        if (lightboxCaption) lightboxCaption.textContent = galleryItem.title + ' — До';
+        if (lightboxToggle) {
+          lightboxToggle.textContent = 'Показать «После»';
+          lightboxToggle.dataset.state = 'before';
+        }
+      }
+    }
+
+    // Desktop: double-click card to open lightbox
+    // Mobile: long-press (>500ms) opens lightbox
+    let touchTimer = null;
+    let touchMoved = false;
+
+    grid.addEventListener('dblclick', (e) => {
+      if (isTouchDevice()) return;
+      const item = e.target.closest('.gallery__item');
+      if (!item) return;
+      const idx = parseInt(item.dataset.index, 10);
+      openLightbox(idx);
     });
+
+    // Mobile long press to open lightbox
+    grid.addEventListener('touchstart', (e) => {
+      touchMoved = false;
+      longPressOpened = false;
+      const item = e.target.closest('.gallery__item');
+      if (!item) return;
+      touchTimer = setTimeout(() => {
+        if (!touchMoved) {
+          longPressOpened = true;
+          const idx = parseInt(item.dataset.index, 10);
+          openLightbox(idx);
+        }
+      }, 500);
+    }, { passive: true });
+
+    grid.addEventListener('touchmove', () => { touchMoved = true; }, { passive: true });
+    grid.addEventListener('touchend', () => { clearTimeout(touchTimer); }, { passive: true });
+
+    // Lightbox toggle button
+    if (lightboxToggle) {
+      lightboxToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleLightboxState();
+      });
+    }
+
+    // Lightbox image click also toggles
+    if (lightboxImg) {
+      lightboxImg.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleLightboxState();
+      });
+      lightboxImg.style.cursor = 'pointer';
+    }
 
     const closeLightbox = () => {
       lightbox.classList.remove('is-open');
       document.body.style.overflow = '';
+      lightboxIndex = -1;
     };
 
     if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);

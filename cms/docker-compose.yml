@@ -1,0 +1,19 @@
+services:
+  cms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    volumes:
+      # Persistent SQLite database
+      - cms-data:/app/data
+      # Persistent uploaded media
+      - cms-uploads:/app/public/uploads
+    restart: unless-stopped
+
+volumes:
+  cms-data:
+  cms-uploads:

@@ -1,0 +1,162 @@
+// Prisma schema for Podolog CMS
+// SQLite for development — can migrate to PostgreSQL for production
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Admin user ─────────────────────────────────────────
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         String   @default("admin")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─── Site-wide settings (singleton row) ─────────────────
+model SiteSettings {
+  id              String  @id @default("default")
+  siteName        String  @default("Наталья Сунцова — Подолог в Измайлово")
+  heroTitle       String  @default("Профессиональный уход за стопами")
+  heroSubtitle    String  @default("")
+  heroCtaText     String  @default("Записаться")
+  heroCtaUrl      String  @default("#booking")
+  specialistName  String  @default("Наталья Сунцова")
+  specialistTitle String  @default("Подолог")
+  specialistBio   String  @default("")
+  specialistPhoto String?
+  specialistExp   String  @default("Более 8 лет в подологии")
+  phone           String  @default("+79197616401")
+  phoneDisplay    String  @default("+7 (919) 761-64-01")
+  email           String  @default("natalyapodolog@yandex.ru")
+  address         String  @default("ул. 5-ая Парковая, д 62Б, Москва")
+  addressFull     String  @default("г. Москва, ул. 5-ая Парковая, д 62Б")
+  workingHours    String  @default("Пн–Сб: 09:00–19:00")
+  workingHoursNote String @default("Воскресенье — выходной")
+  whatsapp        String  @default("79197616401")
+  telegram        String  @default("podolog_nata")
+  instagram       String  @default("podolog_izmaylovo")
+  seoTitle        String  @default("Наталья Сунцова — Подолог в Измайлово")
+  seoDescription  String  @default("")
+  mapQuery        String  @default("5-ая+Парковая+62Б+Москва")
+
+  updatedAt       DateTime @updatedAt
+}
+
+// ─── Services (cards on homepage) ───────────────────────
+model Service {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String
+  duration    String
+  order       Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Price list ─────────────────────────────────────────
+model Price {
+  id          String   @id @default(cuid())
+  serviceName String
+  price       String
+  duration    String
+  order       Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Gallery cases (before/after) ───────────────────────
+model GalleryCase {
+  id          String   @id @default(cuid())
+  title       String
+  category    String
+  beforeImage String?
+  afterImage  String?
+  beforeAlt   String   @default("")
+  afterAlt    String   @default("")
+  description String   @default("")
+  order       Int      @default(0)
+  status      String   @default("published") // draft | published
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Reviews ────────────────────────────────────────────
+model Review {
+  id          String   @id @default(cuid())
+  author      String
+  text        String
+  rating      Int      @default(5)
+  date        String
+  service     String   @default("")
+  source      String   @default("Яндекс Карты")
+  order       Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Advantages ─────────────────────────────────────────
+model Advantage {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  order       Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Articles (blog posts) ──────────────────────────────
+model Article {
+  id             String   @id @default(cuid())
+  title          String
+  slug           String   @unique
+  tag            String   @default("")
+  excerpt        String   @default("")
+  content        String   @default("[]") // JSON array of {heading, text} sections
+  sources        String   @default("[]") // JSON array of {text, url}
+  coverImage     String?
+  seoTitle       String   @default("")
+  seoDescription String   @default("")
+  status         String   @default("draft") // draft | published
+  publishedAt    DateTime?
+  order          Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ─── Tools / Equipment ──────────────────────────────────
+model Tool {
+  id          String   @id @default(cuid())
+  name        String
+  purpose     String   @default("")
+  description String
+  benefits    String   @default("[]") // JSON array of strings
+  order       Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Media library ──────────────────────────────────────
+model Media {
+  id        String   @id @default(cuid())
+  filename  String
+  path      String
+  alt       String   @default("")
+  mimeType  String   @default("")
+  size      Int      @default(0)
+  createdAt DateTime @default(now())
+}
