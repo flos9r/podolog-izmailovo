@@ -2,6 +2,9 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
+// Always fetch fresh data from DB so admin edits are reflected immediately
+export const dynamic = "force-dynamic";
+
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const article = await prisma.article.findFirst({

@@ -4,6 +4,9 @@ import MobileMenu from "@/components/MobileMenu";
 import GalleryCard from "@/components/GalleryCard";
 import ReviewsSlider from "@/components/ReviewsSlider";
 
+// Always fetch fresh data from DB so admin edits are reflected immediately
+export const dynamic = "force-dynamic";
+
 /* ─── Advantage icons by index ───────────────────── */
 const advantageIcons = [
   // shield
