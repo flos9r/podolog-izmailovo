@@ -32,8 +32,15 @@ model SiteSettings {
   specialistName  String  @default("Наталья Сунцова")
   specialistTitle String  @default("Подолог")
   specialistBio   String  @default("")
-  specialistPhoto String?
-  specialistExp   String  @default("Более 8 лет в подологии")
+  specialistPhoto          String?
+  heroSpecialistPhoto      String?
+  secondarySpecialistPhoto String?
+  specialistExp            String  @default("Более 8 лет в подологии")
+
+  podologyTitle    String  @default("Что такое подология")
+  podologySubtitle String  @default("Подология — это раздел медицины, посвящённый профессиональному уходу за стопами и ногтями. Подолог помогает избавиться от вросших ногтей, натоптышей, трещин, деформаций — без боли и хирургии.")
+  podologyCtaText  String  @default("Записаться на консультацию")
+  podologyCtaUrl   String  @default("#booking")
   phone           String  @default("+79197616401")
   phoneDisplay    String  @default("+7 (919) 761-64-01")
   email           String  @default("natalyapodolog@yandex.ru")

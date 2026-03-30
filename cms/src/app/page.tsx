@@ -31,7 +31,7 @@ export default async function Home() {
       prisma.price.findMany({ where: { isPublished: true }, orderBy: { order: "asc" } }),
       prisma.review.findMany({ where: { isPublished: true }, orderBy: { order: "asc" } }),
       prisma.advantage.findMany({ where: { isPublished: true }, orderBy: { order: "asc" } }),
-      prisma.article.findMany({ where: { status: "published" }, orderBy: { order: "asc" } }),
+      prisma.article.findMany({ where: { status: "published" }, orderBy: { publishedAt: "desc" } }),
       prisma.galleryCase.findMany({ where: { status: "published" }, orderBy: { order: "asc" } }),
       prisma.tool.findMany({ where: { isPublished: true }, orderBy: { order: "asc" } }),
     ]);
@@ -41,12 +41,18 @@ export default async function Home() {
     heroTitle: "Профессиональный уход за стопами",
     heroSubtitle: "",
     heroCtaText: "Записаться",
-    heroCtaUrl: "#contacts",
+    heroCtaUrl: "#booking",
     specialistName: "Наталья Сунцова",
     specialistTitle: "Подолог",
     specialistBio: "",
     specialistPhoto: null,
+    heroSpecialistPhoto: null,
+    secondarySpecialistPhoto: null,
     specialistExp: "Более 8 лет в подологии",
+    podologyTitle: "Что такое подология",
+    podologySubtitle: "Подология — это раздел медицины, посвящённый профессиональному уходу за стопами и ногтями.",
+    podologyCtaText: "Записаться на консультацию",
+    podologyCtaUrl: "#booking",
     phone: "+79197616401",
     phoneDisplay: "+7 (919) 761-64-01",
     email: "natalyapodolog@yandex.ru",
@@ -60,21 +66,64 @@ export default async function Home() {
     mapQuery: "5-ая+Парковая+62Б+Москва",
   };
 
+  // Latest published article for the promo banner
+  const latestArticle = articles[0] ?? null;
+  // All articles shown in the grid (promo banner highlights the latest; grid shows all for discoverability)
+  const articlesForGrid = articles;
+
+  // New fields (present when settings row exists, have schema defaults otherwise)
+  const heroPhoto = settings?.heroSpecialistPhoto ?? null;
+  const aboutPhoto = settings?.secondarySpecialistPhoto ?? null;
+  const podologyTitle = settings?.podologyTitle ?? "Что такое подология";
+  const podologySubtitle = settings?.podologySubtitle ?? "";
+  const podologyCtaText = settings?.podologyCtaText ?? "Записаться на консультацию";
+  const podologyCtaUrl = settings?.podologyCtaUrl ?? "#booking";
+
   return (
     <>
+      {/* ═══════════ NEW ARTICLE PROMO BANNER ═══════════ */}
+      {latestArticle && (
+        <div className="bg-[#6b5b7b] text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white border border-white/30">
+                Новая статья
+              </span>
+              <span className="font-semibold text-sm truncate">{latestArticle.title}</span>
+              {latestArticle.excerpt && (
+                <span className="hidden md:inline text-white/75 text-sm truncate">
+                  — {latestArticle.excerpt}
+                </span>
+              )}
+            </div>
+            <Link
+              href={`/articles/${latestArticle.slug}`}
+              className="shrink-0 inline-flex items-center gap-1.5 text-sm font-semibold text-white/90 hover:text-white transition-colors underline-offset-2 hover:underline"
+            >
+              Читать статью
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* ═══════════ HEADER ═══════════ */}
       <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <a href="#" className="text-lg font-bold text-[#6b5b7b] truncate">
-            {s.specialistName}
+          <a href="#" className="flex flex-col leading-tight">
+            <span className="text-base font-bold text-[#6b5b7b]">{s.specialistName}</span>
+            <span className="text-xs text-gray-500 font-medium">{s.specialistTitle} · Измайлово</span>
           </a>
 
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-5">
             {[
               ["#about", "Специалист"],
               ["#services", "Услуги"],
               ["#prices", "Цены"],
               ["#gallery", "Галерея"],
+              ["#podology", "Подология"],
               ["#reviews", "Отзывы"],
               ["#articles", "Статьи"],
               ["#contacts", "Контакты"],
@@ -97,7 +146,7 @@ export default async function Home() {
               {s.phoneDisplay}
             </a>
             <a
-              href={s.heroCtaUrl || "#contacts"}
+              href={s.heroCtaUrl || "#booking"}
               className="hidden sm:inline-block px-5 py-2 bg-[#6b5b7b] text-white text-sm font-medium rounded-lg hover:bg-[#5a4a6a] transition-colors"
             >
               {s.heroCtaText}
@@ -110,34 +159,85 @@ export default async function Home() {
       <main>
         {/* ═══════════ HERO ═══════════ */}
         <section className="relative bg-gradient-to-br from-[#f5f0f8] via-white to-[#f0eff5] overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-              {s.heroTitle}
-            </h1>
-            {s.heroSubtitle && (
-              <p className="mt-6 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                {s.heroSubtitle}
-              </p>
-            )}
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href={s.heroCtaUrl || "#contacts"}
-                className="inline-flex items-center px-8 py-4 bg-[#6b5b7b] text-white font-semibold rounded-xl hover:bg-[#5a4a6a] shadow-lg hover:shadow-xl transition-all text-lg"
-              >
-                {s.heroCtaText}
-                <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-              <a
-                href={`tel:${s.phone}`}
-                className="inline-flex items-center px-8 py-4 border-2 border-[#6b5b7b] text-[#6b5b7b] font-semibold rounded-xl hover:bg-[#6b5b7b] hover:text-white transition-all text-lg"
-              >
-                <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                Позвонить
-              </a>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              {/* Hero text */}
+              <div className="order-2 md:order-1">
+                <p className="text-sm font-semibold text-[#7b6e8a] tracking-wider uppercase mb-4">
+                  Подологический кабинет · Измайлово
+                </p>
+                <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
+                  {s.heroTitle}
+                </h1>
+                {s.heroSubtitle && (
+                  <p className="mt-5 text-lg text-gray-600 leading-relaxed">
+                    {s.heroSubtitle}
+                  </p>
+                )}
+                <div className="mt-8 flex flex-col sm:flex-row items-start gap-4">
+                  <a
+                    href={s.heroCtaUrl || "#booking"}
+                    className="inline-flex items-center px-7 py-3.5 bg-[#6b5b7b] text-white font-semibold rounded-xl hover:bg-[#5a4a6a] shadow-md hover:shadow-lg transition-all text-base"
+                  >
+                    {s.heroCtaText}
+                    <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                  <a
+                    href={`tel:${s.phone}`}
+                    className="inline-flex items-center px-7 py-3.5 border-2 border-[#6b5b7b] text-[#6b5b7b] font-semibold rounded-xl hover:bg-[#6b5b7b] hover:text-white transition-all text-base"
+                  >
+                    <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    Позвонить
+                  </a>
+                </div>
+                {/* Stats */}
+                <div className="mt-10 flex items-center gap-8">
+                  <div>
+                    <p className="text-3xl font-bold text-[#6b5b7b]">8+</p>
+                    <p className="text-sm text-gray-500 mt-0.5">лет опыта</p>
+                  </div>
+                  <div className="w-px h-10 bg-gray-200" />
+                  <div>
+                    <p className="text-3xl font-bold text-[#6b5b7b]">1000+</p>
+                    <p className="text-sm text-gray-500 mt-0.5">довольных клиентов</p>
+                  </div>
+                  <div className="w-px h-10 bg-gray-200" />
+                  <div>
+                    <p className="text-3xl font-bold text-[#6b5b7b]">5.0</p>
+                    <p className="text-sm text-gray-500 mt-0.5">Яндекс Карты</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Hero photo */}
+              <div className="order-1 md:order-2 flex justify-center">
+                <div className="relative w-72 h-96 md:w-80 md:h-[420px]">
+                  {heroPhoto ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={heroPhoto}
+                      alt={`${s.specialistName} — ${s.specialistTitle}`}
+                      className="w-full h-full object-cover rounded-3xl shadow-2xl"
+                    />
+                  ) : (
+                    <div className="w-full h-full rounded-3xl bg-gradient-to-br from-[#6b5b7b]/15 to-[#6b5b7b]/5 border-2 border-dashed border-[#6b5b7b]/20 flex flex-col items-center justify-center gap-3 shadow-inner">
+                      <svg className="w-14 h-14 text-[#6b5b7b]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <p className="text-[#6b5b7b]/40 text-sm text-center px-4">Фото специалиста<br />(добавьте в настройках)</p>
+                    </div>
+                  )}
+                  {/* Decorative badge */}
+                  <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-lg px-5 py-3 border border-gray-100">
+                    <p className="text-xs text-gray-500">Опыт</p>
+                    <p className="text-base font-bold text-[#6b5b7b]">{s.specialistExp}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           {/* Decorative circles */}
@@ -145,25 +245,90 @@ export default async function Home() {
           <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-[#6b5b7b]/5 rounded-full" />
         </section>
 
+        {/* ═══════════ DISCLAIMER BAR ═══════════ */}
+        <div className="bg-gray-50 border-b border-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <p className="text-xs text-gray-500 text-center">
+              Подолог — специалист в области профессионального ухода за стопами и ногтями. Услуги носят косметический и профилактический характер. При наличии заболеваний необходима консультация врача.
+            </p>
+          </div>
+        </div>
+
         {/* ═══════════ ABOUT ═══════════ */}
         <section id="about" className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto text-center">
-              <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
-                О специалисте
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                {s.specialistName}
-              </h2>
-              <p className="mt-2 text-xl text-[#7b6e8a] font-medium">
-                {s.specialistTitle}
-              </p>
-              <p className="mt-2 text-gray-500">{s.specialistExp}</p>
-              {s.specialistBio && (
-                <p className="mt-6 text-gray-600 leading-relaxed text-lg whitespace-pre-line">
-                  {s.specialistBio}
-                </p>
-              )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              {/* About photo */}
+              <div className="flex justify-center">
+                <div className="relative w-72 h-80 md:w-80 md:h-96">
+                  {aboutPhoto ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={aboutPhoto}
+                      alt={`${s.specialistName} — в рабочем кабинете`}
+                      className="w-full h-full object-cover rounded-3xl shadow-xl"
+                    />
+                  ) : (
+                    <div className="w-full h-80 md:h-96 rounded-3xl bg-gradient-to-br from-[#6b5b7b]/10 to-[#6b5b7b]/5 border-2 border-dashed border-[#6b5b7b]/20 flex flex-col items-center justify-center gap-3">
+                      <svg className="w-14 h-14 text-[#6b5b7b]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <p className="text-[#6b5b7b]/40 text-sm text-center px-4">Фото специалиста<br />(добавьте в настройках)</p>
+                    </div>
+                  )}
+                  {/* Experience badge */}
+                  <div className="absolute -bottom-4 -right-4 bg-[#6b5b7b] text-white rounded-2xl shadow-lg px-5 py-3">
+                    <p className="text-2xl font-bold">8+</p>
+                    <p className="text-xs text-white/80">лет опыта</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* About text */}
+              <div>
+                <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+                  О специалисте
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                  {s.specialistName}
+                </h2>
+                <p className="mt-1 text-xl text-[#7b6e8a] font-medium">{s.specialistTitle}</p>
+
+                {s.specialistBio && (
+                  <blockquote className="mt-5 pl-4 border-l-4 border-[#6b5b7b]/30">
+                    <p className="text-gray-700 leading-relaxed italic whitespace-pre-line">
+                      {s.specialistBio}
+                    </p>
+                  </blockquote>
+                )}
+
+                {/* Trust signals */}
+                <div className="mt-6">
+                  <p className="text-sm font-semibold text-gray-700 mb-3">Почему доверяют</p>
+                  <ul className="space-y-2.5">
+                    {[
+                      "Медицинское образование",
+                      "Стерильный инструментарий и одноразовые расходники",
+                      "Регулярное повышение квалификации в области подологии",
+                      `${s.specialistExp} практики`,
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-gray-700">
+                        <svg className="w-5 h-5 text-[#6b5b7b] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <a
+                  href={s.heroCtaUrl || "#booking"}
+                  className="inline-flex items-center mt-8 px-7 py-3.5 bg-[#6b5b7b] text-white font-semibold rounded-xl hover:bg-[#5a4a6a] shadow-md hover:shadow-lg transition-all"
+                >
+                  Записаться на приём
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -204,11 +369,14 @@ export default async function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-14">
                 <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
-                  Услуги
+                  Что я делаю
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                  Наши услуги
+                  Услуги подолога
                 </h2>
+                <p className="mt-3 text-gray-500 max-w-xl mx-auto">
+                  Профессиональный подход к каждой проблеме — от вросшего ногтя до комплексного педикюра.
+                </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {services.map((svc) => (
@@ -229,6 +397,14 @@ export default async function Home() {
                   </div>
                 ))}
               </div>
+              <div className="text-center mt-10">
+                <a
+                  href={s.heroCtaUrl || "#booking"}
+                  className="inline-flex items-center px-7 py-3.5 bg-[#6b5b7b] text-white font-semibold rounded-xl hover:bg-[#5a4a6a] shadow-md hover:shadow-lg transition-all"
+                >
+                  Записаться на услугу
+                </a>
+              </div>
             </div>
           </section>
         )}
@@ -239,11 +415,12 @@ export default async function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-14">
                 <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
-                  Цены
+                  Прайс-лист
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
                   Стоимость услуг
                 </h2>
+                <p className="mt-3 text-gray-500">Точная стоимость определяется после осмотра. Запишитесь на консультацию.</p>
               </div>
               <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
                 <table className="w-full">
@@ -265,9 +442,6 @@ export default async function Home() {
                   </tbody>
                 </table>
               </div>
-              <p className="text-center mt-6 text-sm text-gray-500">
-                Точная стоимость определяется после осмотра. Запишитесь на консультацию.
-              </p>
             </div>
           </section>
         )}
@@ -278,10 +452,10 @@ export default async function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-14">
                 <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
-                  Галерея
+                  Мои работы
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                  Результаты работ
+                  Галерея результатов
                 </h2>
                 <p className="mt-3 text-gray-500">
                   Наведите курсор или нажмите для просмотра результата
@@ -304,17 +478,94 @@ export default async function Home() {
           </section>
         )}
 
+        {/* ═══════════ PODOLOGY ═══════════ */}
+        <section id="podology" className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+                О профессии
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                {podologyTitle}
+              </h2>
+              {podologySubtitle && (
+                <p className="mt-4 text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg">
+                  {podologySubtitle}
+                </p>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <div className="text-xs font-semibold text-[#7b6e8a] uppercase tracking-wider mb-2">История</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Как появилась профессия</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  Подология выделилась в самостоятельную дисциплину в Европе и США в XX веке. Первоначально специалисты занимались исключительно лечением заболеваний стоп, затем профиль расширился до профессионального ухода.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  Сегодня подолог — это специалист на пересечении медицины и косметологии, который работает как с косметическими, так и с функциональными проблемами стоп.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <div className="text-xs font-semibold text-[#7b6e8a] uppercase tracking-wider mb-2">Суть профессии</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Чем занимается подолог</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  Подолог помогает с проблемами, которые мешают нормально ходить и жить: вросшие ногти, натоптыши, трещины пяток, мозоли, деформации ногтевых пластин, грибковые поражения.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  В отличие от обычного педикюра, подологические процедуры направлены на устранение причины проблемы, а не только её косметических проявлений.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <div className="text-xs font-semibold text-[#7b6e8a] uppercase tracking-wider mb-2">Зачем это нужно</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Как это влияет на жизнь</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  Проблемы со стопами напрямую влияют на осанку, нагрузку на суставы и общее самочувствие.
+                </p>
+                <ul className="space-y-2">
+                  {[
+                    "Профессиональная обработка устраняет причину дискомфорта, а не маскирует его",
+                    "Регулярный уход предотвращает рецидивы и поддерживает результат",
+                    "Здоровые стопы — это нормальная нагрузка на суставы и позвоночник",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+                      <svg className="w-4 h-4 text-[#6b5b7b] mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="text-center mt-10">
+              <a
+                href={podologyCtaUrl}
+                className="inline-flex items-center px-7 py-3.5 bg-[#6b5b7b] text-white font-semibold rounded-xl hover:bg-[#5a4a6a] shadow-md hover:shadow-lg transition-all"
+              >
+                {podologyCtaText}
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* ═══════════ REVIEWS ═══════════ */}
         {reviews.length > 0 && (
-          <section id="reviews" className="py-20 bg-gray-50">
+          <section id="reviews" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-14">
                 <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
-                  Отзывы
+                  Отзывы клиентов
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
                   Что говорят пациенты
                 </h2>
+                <p className="mt-3 text-sm text-gray-500">
+                  Отзывы взяты с Яндекс Карт. Новые отзывы можно оставить там же.
+                </p>
               </div>
               <ReviewsSlider
                 reviews={reviews.map((r) => ({
@@ -332,8 +583,8 @@ export default async function Home() {
         )}
 
         {/* ═══════════ ARTICLES ═══════════ */}
-        {articles.length > 0 && (
-          <section id="articles" className="py-20 bg-white">
+        {articlesForGrid.length > 0 && (
+          <section id="articles" className="py-20 bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-14">
                 <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
@@ -344,12 +595,22 @@ export default async function Home() {
                 </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {articles.map((article) => (
+                {articlesForGrid.map((article) => (
                   <Link
                     key={article.id}
                     href={`/articles/${article.slug}`}
                     className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#6b5b7b]/30 shadow-sm hover:shadow-lg transition-all"
                   >
+                    {article.coverImage && (
+                      <div className="h-48 overflow-hidden">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={article.coverImage}
+                          alt={article.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
                     <div className="p-7">
                       {article.tag && (
                         <span className="inline-block px-3 py-1 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-xs font-semibold mb-3">
@@ -380,7 +641,7 @@ export default async function Home() {
 
         {/* ═══════════ TOOLS ═══════════ */}
         {tools.length > 0 && (
-          <section className="py-20 bg-gray-50">
+          <section className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-14">
                 <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
@@ -441,14 +702,14 @@ export default async function Home() {
         )}
 
         {/* ═══════════ CONTACTS ═══════════ */}
-        <section id="contacts" className="py-20 bg-white">
+        <section id="contacts" className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14">
               <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
-                Контакты
+                Как связаться
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                Свяжитесь с нами
+                Контакты
               </h2>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
@@ -600,7 +861,7 @@ export default async function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {/* Brand */}
             <div>
-              <p className="text-white text-xl font-bold mb-3">{s.specialistName}</p>
+              <p className="text-white text-xl font-bold mb-1">{s.specialistName}</p>
               <p className="text-gray-400">{s.specialistTitle}</p>
               <p className="text-gray-400 text-sm mt-1">{s.specialistExp}</p>
             </div>
@@ -613,6 +874,7 @@ export default async function Home() {
                   ["#services", "Услуги"],
                   ["#prices", "Цены"],
                   ["#gallery", "Галерея"],
+                  ["#podology", "Подология"],
                   ["#reviews", "Отзывы"],
                   ["#articles", "Статьи"],
                 ].map(([href, label]) => (
