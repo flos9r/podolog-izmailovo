@@ -76,7 +76,7 @@ export default function ActiveHeader({
     return () => io.disconnect();
   }, []);
 
-  const ctaHref = heroCtaUrl === "#booking" ? "#contacts" : heroCtaUrl;
+  const ctaHref = heroCtaUrl;
 
   return (
     <header

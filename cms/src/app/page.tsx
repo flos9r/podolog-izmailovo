@@ -77,7 +77,12 @@ export default async function Home() {
   const podologyTitle = settings?.podologyTitle ?? "Что такое подология";
   const podologySubtitle = settings?.podologySubtitle ?? "";
   const podologyCtaText = settings?.podologyCtaText ?? "Записаться на консультацию";
-  const podologyCtaUrl = settings?.podologyCtaUrl ?? "#booking";
+  const podologyCtaUrl = settings?.podologyCtaUrl ?? "#contacts";
+
+  // Normalize any legacy "#booking" anchors to "#contacts"
+  const fixCtaUrl = (url: string) => (url === "#booking" ? "#contacts" : url);
+  const heroCtaUrlFixed = fixCtaUrl(s.heroCtaUrl || "#contacts");
+  const podologyCtaUrlFixed = fixCtaUrl(podologyCtaUrl);
 
   return (
     <>
@@ -116,7 +121,7 @@ export default async function Home() {
         phone={s.phone}
         phoneDisplay={s.phoneDisplay}
         heroCtaText={s.heroCtaText}
-        heroCtaUrl={s.heroCtaUrl || "#contacts"}
+        heroCtaUrl={heroCtaUrlFixed}
       />
 
       <main>
@@ -145,13 +150,13 @@ export default async function Home() {
                     )}
                   </div>
                   {/* Quote card overlay */}
-                  <div className="absolute -bottom-6 -left-4 md:-left-6 bg-white rounded-2xl shadow-lg px-6 py-4 border border-[#E8E0D4] max-w-[280px]">
+                  <div className="absolute -bottom-6 -left-4 md:-left-6 bg-white rounded-2xl shadow-lg px-6 py-4 border border-[var(--color-warm-border)] max-w-[280px]">
                     <p className="text-sm font-bold italic text-gray-800 leading-snug">
                       «Занимаюсь любимым делом — подологией»
                     </p>
                     <div className="mt-2">
-                      <p className="text-sm font-bold text-[#7B6B54]">{s.specialistName}</p>
-                      <p className="text-xs text-[#9A8B74] uppercase tracking-wider">подолог · Измайлово</p>
+                      <p className="text-sm font-bold text-[var(--color-primary)]">{s.specialistName}</p>
+                      <p className="text-xs text-[var(--color-primary-muted)] uppercase tracking-wider">подолог · Измайлово</p>
                     </div>
                   </div>
                 </div>
@@ -510,7 +515,7 @@ export default async function Home() {
 
             <div className="text-center mt-10">
               <a
-                href={podologyCtaUrl === "#booking" ? "#contacts" : podologyCtaUrl}
+                href={podologyCtaUrlFixed}
                 className="inline-flex items-center px-7 py-3.5 bg-[#5B7B5E] text-white font-semibold rounded-full hover:bg-[#4A6A4D] shadow-md hover:shadow-lg transition-all"
               >
                 {podologyCtaText}
