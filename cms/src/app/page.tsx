@@ -86,7 +86,11 @@ export default async function Home() {
 
   return (
     <>
-      {/* ═══════════ NEW ARTICLE PROMO BANNER ═══════════ */}
+      {/* ═══════════ NEW ARTICLE PROMO BANNER ═══════════
+          Intentionally hidden when there are no published articles.
+          This banner is not a navigation target — no nav link points here —
+          so its absence does not break any anchor links.
+          It reappears automatically when an article is published via admin. */}
       {latestArticle && (
         <div className="bg-[#7B6B54] text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4 flex-wrap">
@@ -415,21 +419,25 @@ export default async function Home() {
           </section>
         )}
 
-        {/* ═══════════ GALLERY ═══════════ */}
-        {gallery.length > 0 && (
-          <section id="gallery" className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-14 reveal">
-                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
-                  Мои работы
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                  Галерея результатов
-                </h2>
+        {/* ═══════════ GALLERY ═══════════
+            Always rendered so the #gallery nav anchor is never broken.
+            Shows an empty-state fallback when there are no published gallery items. */}
+        <section id="gallery" className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14 reveal">
+              <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
+                Мои работы
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                Галерея результатов
+              </h2>
+              {gallery.length > 0 && (
                 <p className="mt-3 text-gray-500">
                   Наведите курсор или нажмите для просмотра результата
                 </p>
-              </div>
+              )}
+            </div>
+            {gallery.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {gallery.map((gc) => (
                   <GalleryCard
@@ -443,9 +451,16 @@ export default async function Home() {
                   />
                 ))}
               </div>
-            </div>
-          </section>
-        )}
+            ) : (
+              <div className="text-center py-12 reveal">
+                <svg className="w-16 h-16 mx-auto text-[#7B6B54]/20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <p className="text-gray-400 text-lg">Скоро здесь появятся примеры работ</p>
+              </div>
+            )}
+          </div>
+        </section>
 
         {/* ═══════════ PODOLOGY ═══════════ */}
         <section id="podology" className="py-20 bg-[#FAF7F2]">
@@ -554,18 +569,20 @@ export default async function Home() {
           </section>
         )}
 
-        {/* ═══════════ ARTICLES ═══════════ */}
-        {articlesForGrid.length > 0 && (
-          <section id="articles" className="py-20 bg-[#FAF7F2]">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-14 reveal">
-                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
-                  Блог
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                  Полезные статьи
-                </h2>
-              </div>
+        {/* ═══════════ ARTICLES ═══════════
+            Always rendered so the #articles nav anchor is never broken.
+            Shows an empty-state fallback when there are no published articles. */}
+        <section id="articles" className="py-20 bg-[#FAF7F2]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14 reveal">
+              <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
+                Блог
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                Полезные статьи
+              </h2>
+            </div>
+            {articlesForGrid.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {articlesForGrid.map((article) => (
                   <Link
@@ -607,9 +624,16 @@ export default async function Home() {
                   </Link>
                 ))}
               </div>
-            </div>
-          </section>
-        )}
+            ) : (
+              <div className="text-center py-12 reveal">
+                <svg className="w-16 h-16 mx-auto text-[#7B6B54]/20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
+                <p className="text-gray-400 text-lg">Скоро здесь появятся полезные статьи</p>
+              </div>
+            )}
+          </div>
+        </section>
 
         {/* ═══════════ TOOLS ═══════════ */}
         {tools.length > 0 && (
