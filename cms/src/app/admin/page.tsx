@@ -8,6 +8,8 @@ export default async function AdminDashboard() {
     priceCount,
     reviewCount,
     mediaCount,
+    bookingNewCount,
+    bookingTotalCount,
   ] = await Promise.all([
     prisma.article.count(),
     prisma.galleryCase.count(),
@@ -15,9 +17,12 @@ export default async function AdminDashboard() {
     prisma.price.count(),
     prisma.review.count(),
     prisma.media.count(),
+    prisma.booking.count({ where: { status: "new" } }),
+    prisma.booking.count(),
   ]);
 
   const stats = [
+    { label: "Заявки", count: bookingTotalCount, href: "/admin/bookings", icon: "📋", badge: bookingNewCount > 0 ? `${bookingNewCount} новых` : undefined },
     { label: "Статьи", count: articleCount, href: "/admin/articles", icon: "📝" },
     { label: "Галерея", count: galleryCount, href: "/admin/gallery", icon: "🖼️" },
     { label: "Услуги", count: serviceCount, href: "/admin/services", icon: "💼" },
@@ -42,7 +47,14 @@ export default async function AdminDashboard() {
             <div className="flex items-center gap-3">
               <span className="text-2xl">{stat.icon}</span>
               <div>
-                <p className="text-2xl font-bold text-gray-900">{stat.count}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-2xl font-bold text-gray-900">{stat.count}</p>
+                  {"badge" in stat && stat.badge && (
+                    <span className="inline-flex items-center px-2 py-0.5 text-xs font-bold rounded-full bg-yellow-400 text-yellow-900">
+                      {stat.badge}
+                    </span>
+                  )}
+                </div>
                 <p className="text-sm text-gray-500">{stat.label}</p>
               </div>
             </div>
@@ -55,6 +67,13 @@ export default async function AdminDashboard() {
           Быстрые действия
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <a
+            href="/admin/bookings"
+            className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+          >
+            <span className="text-xl">📋</span>
+            <span className="text-sm text-gray-700">Просмотреть заявки</span>
+          </a>
           <a
             href="/admin/articles"
             className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"

@@ -98,23 +98,26 @@ export default function ImagePickerField({ value, onChange }: Props) {
       </div>
 
       {value && (
-        <div className="mt-2 flex items-center gap-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={value}
-            alt="Preview"
-            className="h-16 rounded-lg object-cover border border-gray-200"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-            }}
-          />
-          <button
-            type="button"
-            onClick={() => onChange("")}
-            className="text-xs text-red-500 hover:text-red-700"
-          >
-            Удалить фото
-          </button>
+        <div className="mt-3 space-y-2">
+          <p className="text-xs text-gray-500">Предпросмотр (как на сайте):</p>
+          <div className="relative inline-block">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={value}
+              alt="Preview"
+              className="h-40 w-auto max-w-full rounded-xl object-cover border border-gray-200 shadow-sm"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => onChange("")}
+              className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs flex items-center justify-center hover:bg-red-600 shadow"
+            >
+              ✕
+            </button>
+          </div>
         </div>
       )}
 
