@@ -99,17 +99,21 @@ export default function ImagePickerField({ value, onChange }: Props) {
 
       {value && (
         <div className="mt-3 space-y-2">
-          <p className="text-xs text-gray-500">Предпросмотр (как на сайте):</p>
+          <p className="text-xs text-gray-500">Предпросмотр (пропорции как на сайте, ~3:4 портрет):</p>
           <div className="relative inline-block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={value}
               alt="Preview"
-              className="h-40 w-auto max-w-full rounded-xl object-cover border border-gray-200 shadow-sm"
+              className="rounded-xl border border-gray-200 shadow-sm bg-gray-100"
+              style={{ width: 160, height: 213, objectFit: "cover", objectPosition: "center top" }}
               onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
+                const el = e.target as HTMLImageElement;
+                el.style.display = "none";
+                el.parentElement?.querySelector(".img-error")?.classList.remove("hidden");
               }}
             />
+            <div className="img-error hidden text-xs text-red-500 mt-1">Изображение не загружается. Проверьте путь.</div>
             <button
               type="button"
               onClick={() => onChange("")}

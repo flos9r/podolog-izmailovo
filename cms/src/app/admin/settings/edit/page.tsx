@@ -7,7 +7,7 @@ const fields = [
   { name: "heroSubtitle", label: "Hero — подзаголовок", type: "textarea" as const },
   { name: "heroCtaText", label: "Hero — текст кнопки" },
   { name: "heroCtaUrl", label: "Hero — ссылка кнопки" },
-  { name: "heroSpecialistPhoto", label: "Hero — фото специалиста (первый экран)", type: "image-picker" as const },
+  { name: "heroSpecialistPhoto", label: "Hero — фото специалиста (первый экран, портретный формат ~3:4)", type: "image-picker" as const },
   { name: "heroImageFit", label: "Hero фото — режим заполнения", type: "select" as const, options: [
     { value: "cover", label: "Заполнить (cover)" },
     { value: "contain", label: "Вписать (contain)" },
@@ -25,8 +25,7 @@ const fields = [
   { name: "specialistName", label: "Имя специалиста" },
   { name: "specialistTitle", label: "Должность" },
   { name: "specialistBio", label: "Биография", type: "textarea" as const },
-  { name: "specialistPhoto", label: "Фото специалиста (устарело)", type: "image-picker" as const },
-  { name: "secondarySpecialistPhoto", label: "Фото специалиста — блок «О специалисте»", type: "image-picker" as const },
+  { name: "secondarySpecialistPhoto", label: "Фото специалиста — блок «О специалисте» (портретный формат ~3:4)", type: "image-picker" as const },
   { name: "aboutImageFit", label: "«О специалисте» фото — режим заполнения", type: "select" as const, options: [
     { value: "cover", label: "Заполнить (cover)" },
     { value: "contain", label: "Вписать (contain)" },
@@ -58,7 +57,7 @@ const fields = [
   { name: "instagram", label: "Instagram" },
   { name: "seoTitle", label: "SEO заголовок" },
   { name: "seoDescription", label: "SEO описание", type: "textarea" as const },
-  { name: "mapQuery", label: "Карта запрос" },
+  { name: "mapQuery", label: "Запрос для Яндекс Карт (используется и для карты на сайте, и для ссылки «Открыть в Яндекс Картах»)" },
 ];
 
 export default async function EditSettingsPage() {

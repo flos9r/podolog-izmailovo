@@ -5,11 +5,18 @@ interface YandexMapProps {
   address: string;
 }
 
+/**
+ * Interactive Yandex Maps iframe.
+ * - `query` (from SiteSettings.mapQuery) is used for BOTH the iframe search text
+ *   and the external "Open in Yandex Maps" link — this ensures the pin location
+ *   is identical in both contexts.
+ * - `address` is shown as a human-readable label below the map.
+ */
 export default function YandexMap({ query, address }: YandexMapProps) {
   return (
     <div className="rounded-2xl overflow-hidden shadow-lg border border-[#E8E0D4]">
       <iframe
-        src={`https://yandex.ru/map-widget/v1/?text=${encodeURIComponent(address)}&z=16&l=map`}
+        src={`https://yandex.ru/map-widget/v1/?text=${encodeURIComponent(query)}&z=16&l=map`}
         width="100%"
         height="350"
         style={{ border: 0 }}
@@ -20,7 +27,7 @@ export default function YandexMap({ query, address }: YandexMapProps) {
       <div className="bg-white px-4 py-3 flex items-center justify-between">
         <span className="text-sm text-gray-600">{address}</span>
         <a
-          href={`https://yandex.ru/maps/?text=${query}`}
+          href={`https://yandex.ru/maps/?text=${encodeURIComponent(query)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-[#7B6B54] font-medium hover:underline flex items-center gap-1"

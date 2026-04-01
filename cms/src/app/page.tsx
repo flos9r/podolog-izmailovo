@@ -73,9 +73,25 @@ export default async function Home() {
   // All articles shown in the grid (promo banner highlights the latest; grid shows all for discoverability)
   const articlesForGrid = articles;
 
+  /**
+   * Normalize an image path stored in DB to a valid public URL.
+   * Handles: null, empty string, missing leading slash, double slashes.
+   * Returns null if the path is invalid/empty so callers can show a fallback.
+   */
+  function normalizeImagePath(raw: string | null | undefined): string | null {
+    if (!raw || typeof raw !== "string") return null;
+    let p = raw.trim();
+    if (!p) return null;
+    // Ensure leading slash for relative paths (DB stores "/uploads/...")
+    if (!p.startsWith("/") && !p.startsWith("http")) p = `/${p}`;
+    // Collapse any accidental double slashes (except after http(s):)
+    p = p.replace(/([^:])\/\//g, "$1/");
+    return p;
+  }
+
   // New fields (present when settings row exists, have schema defaults otherwise)
-  const heroPhoto = settings?.heroSpecialistPhoto ?? null;
-  const aboutPhoto = settings?.secondarySpecialistPhoto ?? null;
+  const heroPhoto = normalizeImagePath(settings?.heroSpecialistPhoto);
+  const aboutPhoto = normalizeImagePath(settings?.secondarySpecialistPhoto);
   const podologyTitle = settings?.podologyTitle ?? "Что такое подология";
   const podologySubtitle = settings?.podologySubtitle ?? "";
   const podologyCtaText = settings?.podologyCtaText ?? "Записаться на консультацию";
@@ -465,8 +481,8 @@ export default async function Home() {
                     key={gc.id}
                     title={gc.title}
                     category={gc.category}
-                    beforeImage={gc.beforeImage}
-                    afterImage={gc.afterImage}
+                    beforeImage={normalizeImagePath(gc.beforeImage) ?? ""}
+                    afterImage={normalizeImagePath(gc.afterImage) ?? ""}
                     beforeAlt={gc.beforeAlt}
                     afterAlt={gc.afterAlt}
                   />
@@ -616,11 +632,11 @@ export default async function Home() {
                     href={`/articles/${article.slug}`}
                     className="group bg-white rounded-2xl overflow-hidden border border-[#E8E0D4] hover:border-[#7B6B54]/30 shadow-sm hover:shadow-lg transition-all card-hover reveal"
                   >
-                    {article.coverImage && (
+                    {normalizeImagePath(article.coverImage) && (
                       <div className="h-48 overflow-hidden">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={article.coverImage}
+                          src={normalizeImagePath(article.coverImage)!}
                           alt={article.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
