@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import ActiveHeader from "@/components/ActiveHeader";
 import GalleryCard from "@/components/GalleryCard";
 import ReviewsSlider from "@/components/ReviewsSlider";
+import BookingForm from "@/components/BookingForm";
+import YandexMap from "@/components/YandexMap";
 
 // Always fetch fresh data from DB so admin edits are reflected immediately
 export const dynamic = "force-dynamic";
@@ -71,18 +73,41 @@ export default async function Home() {
   // All articles shown in the grid (promo banner highlights the latest; grid shows all for discoverability)
   const articlesForGrid = articles;
 
+  /**
+   * Normalize an image path stored in DB to a valid public URL.
+   * Handles: null, empty string, missing leading slash, double slashes.
+   * Returns null if the path is invalid/empty so callers can show a fallback.
+   */
+  function normalizeImagePath(raw: string | null | undefined): string | null {
+    if (!raw || typeof raw !== "string") return null;
+    let p = raw.trim();
+    if (!p) return null;
+    // Ensure leading slash for relative paths (DB stores "/uploads/...")
+    if (!p.startsWith("/") && !p.startsWith("http")) p = `/${p}`;
+    // Collapse any accidental double slashes (except after http(s):)
+    p = p.replace(/([^:])\/\//g, "$1/");
+    return p;
+  }
+
   // New fields (present when settings row exists, have schema defaults otherwise)
-  const heroPhoto = settings?.heroSpecialistPhoto ?? null;
-  const aboutPhoto = settings?.secondarySpecialistPhoto ?? null;
+  const heroPhoto = normalizeImagePath(settings?.heroSpecialistPhoto);
+  const aboutPhoto = normalizeImagePath(settings?.secondarySpecialistPhoto);
   const podologyTitle = settings?.podologyTitle ?? "Что такое подология";
   const podologySubtitle = settings?.podologySubtitle ?? "";
   const podologyCtaText = settings?.podologyCtaText ?? "Записаться на консультацию";
-  const podologyCtaUrl = settings?.podologyCtaUrl ?? "#contacts";
+  const podologyCtaUrl = settings?.podologyCtaUrl ?? "#booking";
 
-  // Normalize any legacy "#booking" anchors to "#contacts"
-  const fixCtaUrl = (url: string) => (url === "#booking" ? "#contacts" : url);
-  const heroCtaUrlFixed = fixCtaUrl(s.heroCtaUrl || "#contacts");
-  const podologyCtaUrlFixed = fixCtaUrl(podologyCtaUrl);
+  // Image presentation controls (from admin settings)
+  const heroImageFit = settings?.heroImageFit ?? "cover";
+  const heroImagePosition = settings?.heroImagePosition ?? "center center";
+  const heroImageZoom = settings?.heroImageZoom ?? 1.0;
+  const aboutImageFit = settings?.aboutImageFit ?? "cover";
+  const aboutImagePosition = settings?.aboutImagePosition ?? "center center";
+  const aboutImageZoom = settings?.aboutImageZoom ?? 1.0;
+
+  // All CTA links point to #booking (the real booking form section)
+  const heroCtaUrlFixed = "#booking";
+  const podologyCtaUrlFixed = "#booking";
 
   return (
     <>
@@ -136,20 +161,25 @@ export default async function Home() {
               {/* Hero photo - LEFT */}
               <div className="flex justify-center reveal">
                 <div className="relative">
-                  <div className="w-72 h-96 md:w-80 md:h-[440px]">
+                  <div className="w-72 h-96 md:w-80 md:h-[440px] rounded-3xl overflow-hidden shadow-2xl">
                     {heroPhoto ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={heroPhoto}
                         alt={`${s.specialistName} — ${s.specialistTitle}`}
-                        className="w-full h-full object-cover rounded-3xl shadow-2xl"
+                        className="w-full h-full rounded-3xl"
+                        style={{
+                          objectFit: heroImageFit as "cover" | "contain",
+                          objectPosition: heroImagePosition,
+                          transform: `scale(${heroImageZoom})`,
+                        }}
                       />
                     ) : (
-                      <div className="w-full h-full rounded-3xl bg-[#F5F0E8] flex flex-col items-center justify-center gap-3">
+                      <div className="w-full h-full bg-[#F5F0E8] flex flex-col items-center justify-center gap-3">
                         <svg className="w-14 h-14 text-[#7B6B54]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        <p className="text-[#7B6B54]/40 text-sm text-center px-4">Фото специалиста</p>
+                        <p className="text-[#7B6B54]/40 text-sm text-center px-4 whitespace-nowrap">Фото специалиста<br />(добавьте в настройках)</p>
                       </div>
                     )}
                   </div>
@@ -181,7 +211,7 @@ export default async function Home() {
                 )}
                 <div className="mt-8 flex flex-col sm:flex-row items-start gap-4">
                   <a
-                    href="#contacts"
+                    href="#booking"
                     className="inline-flex items-center px-7 py-3.5 bg-[#5B7B5E] text-white font-semibold rounded-full hover:bg-[#4A6A4D] shadow-md hover:shadow-lg transition-all text-base"
                   >
                     {s.heroCtaText}
@@ -234,21 +264,28 @@ export default async function Home() {
               {/* About photo */}
               <div className="flex justify-center reveal">
                 <div className="relative w-72 h-80 md:w-80 md:h-96">
-                  {aboutPhoto ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={aboutPhoto}
-                      alt={`${s.specialistName} — в рабочем кабинете`}
-                      className="w-full h-full object-cover rounded-3xl shadow-xl"
-                    />
-                  ) : (
-                    <div className="w-full h-80 md:h-96 rounded-3xl bg-gradient-to-br from-[#7B6B54]/10 to-[#7B6B54]/5 border-2 border-dashed border-[#7B6B54]/20 flex flex-col items-center justify-center gap-3">
-                      <svg className="w-14 h-14 text-[#7B6B54]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                      <p className="text-[#7B6B54]/40 text-sm text-center px-4">Фото специалиста<br />(добавьте в настройках)</p>
-                    </div>
-                  )}
+                  <div className="w-full h-full rounded-3xl overflow-hidden shadow-xl">
+                    {aboutPhoto ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={aboutPhoto}
+                        alt={`${s.specialistName} — в рабочем кабинете`}
+                        className="w-full h-full"
+                        style={{
+                          objectFit: aboutImageFit as "cover" | "contain",
+                          objectPosition: aboutImagePosition,
+                          transform: `scale(${aboutImageZoom})`,
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-[#7B6B54]/10 to-[#7B6B54]/5 border-2 border-dashed border-[#7B6B54]/20 flex flex-col items-center justify-center gap-3 rounded-3xl">
+                        <svg className="w-14 h-14 text-[#7B6B54]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <p className="text-[#7B6B54]/40 text-sm text-center px-4">Фото специалиста<br />(добавьте в настройках)</p>
+                      </div>
+                    )}
+                  </div>
                   {/* Experience badge */}
                   <div className="absolute -bottom-4 -right-4 bg-[#7B6B54] text-white rounded-2xl shadow-lg px-5 py-3">
                     <p className="text-2xl font-bold">8+</p>
@@ -296,7 +333,7 @@ export default async function Home() {
                 </div>
 
                 <a
-                  href="#contacts"
+                  href="#booking"
                   className="inline-flex items-center mt-8 px-7 py-3.5 bg-[#5B7B5E] text-white font-semibold rounded-full hover:bg-[#4A6A4D] shadow-md hover:shadow-lg transition-all"
                 >
                   Записаться на приём
@@ -372,7 +409,7 @@ export default async function Home() {
               </div>
               <div className="text-center mt-10">
                 <a
-                  href="#contacts"
+                  href="#booking"
                   className="inline-flex items-center px-7 py-3.5 bg-[#5B7B5E] text-white font-semibold rounded-full hover:bg-[#4A6A4D] shadow-md hover:shadow-lg transition-all"
                 >
                   Записаться на услугу
@@ -444,8 +481,8 @@ export default async function Home() {
                     key={gc.id}
                     title={gc.title}
                     category={gc.category}
-                    beforeImage={gc.beforeImage}
-                    afterImage={gc.afterImage}
+                    beforeImage={normalizeImagePath(gc.beforeImage) ?? ""}
+                    afterImage={normalizeImagePath(gc.afterImage) ?? ""}
                     beforeAlt={gc.beforeAlt}
                     afterAlt={gc.afterAlt}
                   />
@@ -539,21 +576,22 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* ═══════════ REVIEWS ═══════════ */}
-        {reviews.length > 0 && (
-          <section id="reviews" className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-14 reveal">
-                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
-                  Отзывы клиентов
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                  Что говорят пациенты
-                </h2>
-                <p className="mt-3 text-sm text-gray-500">
-                  Отзывы взяты с Яндекс Карт. Новые отзывы можно оставить там же.
-                </p>
-              </div>
+        {/* ═══════════ REVIEWS ═══════════
+            Always rendered so the #reviews nav anchor is never broken. */}
+        <section id="reviews" className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14 reveal">
+              <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
+                Отзывы клиентов
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                Что говорят пациенты
+              </h2>
+              <p className="mt-3 text-sm text-gray-500">
+                Отзывы взяты с Яндекс Карт. Новые отзывы можно оставить там же.
+              </p>
+            </div>
+            {reviews.length > 0 ? (
               <ReviewsSlider
                 reviews={reviews.map((r) => ({
                   id: r.id,
@@ -565,9 +603,13 @@ export default async function Home() {
                   source: r.source,
                 }))}
               />
-            </div>
-          </section>
-        )}
+            ) : (
+              <div className="text-center py-12 reveal">
+                <p className="text-gray-400 text-lg">Скоро здесь появятся отзывы</p>
+              </div>
+            )}
+          </div>
+        </section>
 
         {/* ═══════════ ARTICLES ═══════════
             Always rendered so the #articles nav anchor is never broken.
@@ -590,11 +632,11 @@ export default async function Home() {
                     href={`/articles/${article.slug}`}
                     className="group bg-white rounded-2xl overflow-hidden border border-[#E8E0D4] hover:border-[#7B6B54]/30 shadow-sm hover:shadow-lg transition-all card-hover reveal"
                   >
-                    {article.coverImage && (
+                    {normalizeImagePath(article.coverImage) && (
                       <div className="h-48 overflow-hidden">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={article.coverImage}
+                          src={normalizeImagePath(article.coverImage)!}
                           alt={article.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
@@ -697,15 +739,129 @@ export default async function Home() {
           </section>
         )}
 
-        {/* ═══════════ CONTACTS ═══════════ */}
-        <section id="contacts" className="py-20 bg-[#FAF7F2]">
+        {/* ═══════════ BOOKING PROCESS EXPLANATION ═══════════ */}
+        <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14 reveal">
               <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
-                Как связаться
+                Как записаться
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                Контакты
+                Как проходит запись
+              </h2>
+              <p className="mt-3 text-gray-500 max-w-xl mx-auto">
+                Наталья лично рассматривает каждую заявку и связывается с вами для согласования удобного времени.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              {[
+                {
+                  step: "01",
+                  title: "Оставьте заявку",
+                  desc: "Заполните форму ниже или напишите в мессенджер. Укажите, что вас беспокоит — это поможет подготовиться к приёму.",
+                  icon: <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>,
+                },
+                {
+                  step: "02",
+                  title: "Наталья свяжется с вами",
+                  desc: "После получения заявки специалист свяжется и предложит удобное время, исходя из вашей ситуации. Ответ может быть не мгновенным из-за нагрузки.",
+                  icon: <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>,
+                },
+                {
+                  step: "03",
+                  title: "Приходите на приём",
+                  desc: "Продолжительность каждой процедуры разная — подолог оценивает это индивидуально. Несколько услуг можно совместить за один визит.",
+                  icon: <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+                },
+              ].map((item) => (
+                <div key={item.step} className="relative bg-white rounded-2xl p-8 shadow-sm border border-[#E8E0D4] card-hover reveal text-center">
+                  <div className="w-14 h-14 rounded-full bg-[#7B6B54]/10 text-[#7B6B54] flex items-center justify-center mx-auto mb-5">
+                    {item.icon}
+                  </div>
+                  <div className="text-xs font-bold text-[#9A8B74] uppercase tracking-wider mb-2">Шаг {item.step}</div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">{item.title}</h3>
+                  <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════ BOOKING FORM ═══════════ */}
+        <section id="booking" className="py-20 bg-[#FAF7F2]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start max-w-5xl mx-auto">
+              {/* Left — info */}
+              <div className="reveal">
+                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
+                  Запись на приём
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                  Записаться к подологу
+                </h2>
+                <p className="mt-4 text-gray-600 leading-relaxed">
+                  Заполните форму, и Наталья свяжется с вами для уточнения деталей и согласования удобного времени.
+                </p>
+                <p className="mt-3 text-sm text-gray-500 leading-relaxed">
+                  Подолог лично рассматривает каждое обращение. Из-за нагрузки ответ может быть не мгновенным — но вам обязательно перезвонят.
+                </p>
+                <div className="mt-8 space-y-4">
+                  <div className="flex items-center gap-3 text-sm text-gray-600">
+                    <svg className="w-5 h-5 text-[#5B7B5E] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    Индивидуальный подход к каждому случаю
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-gray-600">
+                    <svg className="w-5 h-5 text-[#5B7B5E] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    Строго по записи, без очередей
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-gray-600">
+                    <svg className="w-5 h-5 text-[#5B7B5E] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    Несколько услуг можно совместить за один визит
+                  </div>
+                </div>
+                {/* Quick contact fallback */}
+                <div className="mt-8 p-5 bg-white rounded-xl border border-[#E8E0D4]">
+                  <p className="text-sm text-gray-500 mb-3">Если нужно срочно — свяжитесь напрямую:</p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <a href={`tel:${s.phone}`} className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-lg text-sm font-medium hover:bg-[#7B6B54]/20 transition-colors">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                      {s.phoneDisplay}
+                    </a>
+                    {s.whatsapp && (
+                      <a href={`https://wa.me/${s.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 bg-green-50 text-green-700 rounded-lg text-sm font-medium hover:bg-green-100 transition-colors">
+                        WhatsApp
+                      </a>
+                    )}
+                    {s.telegram && (
+                      <a href={`https://t.me/${s.telegram}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors">
+                        Telegram
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right — form */}
+              <div className="reveal">
+                <BookingForm
+                  services={services.map((svc) => ({ id: svc.id, name: svc.name }))}
+                  phone={s.phone}
+                  phoneDisplay={s.phoneDisplay}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════ CONTACTS + MAP ═══════════ */}
+        <section id="contacts" className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14 reveal">
+              <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
+                Как нас найти
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                Контакты и адрес
               </h2>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
@@ -748,19 +904,8 @@ export default async function Home() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 mb-1">Адрес</p>
+                    <p className="text-sm text-gray-500 mb-1">Адрес кабинета</p>
                     <p className="text-lg font-semibold text-gray-900">{s.addressFull}</p>
-                    <a
-                      href={`https://yandex.ru/maps/?text=${s.mapQuery}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm text-[#7B6B54] hover:underline mt-1"
-                    >
-                      Показать на карте
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
                   </div>
                 </div>
                 {/* Working hours */}
@@ -776,75 +921,32 @@ export default async function Home() {
                     {s.workingHoursNote && <p className="text-sm text-gray-500 mt-0.5">{s.workingHoursNote}</p>}
                   </div>
                 </div>
+                {/* Social links */}
+                <div className="flex gap-3 pt-2">
+                  {s.whatsapp && (
+                    <a href={`https://wa.me/${s.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2.5 bg-green-50 hover:bg-green-100 rounded-xl transition-colors text-sm font-medium text-green-700">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      WhatsApp
+                    </a>
+                  )}
+                  {s.telegram && (
+                    <a href={`https://t.me/${s.telegram}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2.5 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors text-sm font-medium text-blue-700">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                      Telegram
+                    </a>
+                  )}
+                  {s.instagram && (
+                    <a href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2.5 bg-pink-50 hover:bg-pink-100 rounded-xl transition-colors text-sm font-medium text-pink-700">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                      Instagram
+                    </a>
+                  )}
+                </div>
               </div>
 
-              {/* Social + CTA */}
-              <div className="flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">Мы в социальных сетях</h3>
-                  <div className="flex flex-col gap-4">
-                    {s.whatsapp && (
-                      <a
-                        href={`https://wa.me/${s.whatsapp}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-5 py-3.5 bg-green-50 hover:bg-green-100 rounded-xl transition-colors group"
-                      >
-                        <span className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center">
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        </span>
-                        <div>
-                          <p className="font-semibold text-gray-900 group-hover:text-green-700 transition-colors">WhatsApp</p>
-                          <p className="text-sm text-gray-500">Написать в чат</p>
-                        </div>
-                      </a>
-                    )}
-                    {s.telegram && (
-                      <a
-                        href={`https://t.me/${s.telegram}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-5 py-3.5 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors group"
-                      >
-                        <span className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center">
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                        </span>
-                        <div>
-                          <p className="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">Telegram</p>
-                          <p className="text-sm text-gray-500">@{s.telegram}</p>
-                        </div>
-                      </a>
-                    )}
-                    {s.instagram && (
-                      <a
-                        href={`https://instagram.com/${s.instagram}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-5 py-3.5 bg-pink-50 hover:bg-pink-100 rounded-xl transition-colors group"
-                      >
-                        <span className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white flex items-center justify-center">
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                        </span>
-                        <div>
-                          <p className="font-semibold text-gray-900 group-hover:text-pink-700 transition-colors">Instagram</p>
-                          <p className="text-sm text-gray-500">@{s.instagram}</p>
-                        </div>
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <div className="mt-8 p-6 bg-[#7B6B54]/5 rounded-2xl text-center">
-                  <p className="text-gray-700 font-medium mb-4">Запишитесь на приём прямо сейчас</p>
-                  <a
-                    href={`tel:${s.phone}`}
-                    className="inline-flex items-center px-8 py-3.5 bg-[#5B7B5E] text-white font-semibold rounded-full hover:bg-[#4A6A4D] shadow-lg hover:shadow-xl transition-all"
-                  >
-                    <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    {s.phoneDisplay}
-                  </a>
-                </div>
+              {/* Map */}
+              <div className="reveal">
+                <YandexMap query={s.mapQuery} address={s.addressFull} />
               </div>
             </div>
           </div>
@@ -873,6 +975,8 @@ export default async function Home() {
                   ["#podology", "Подология"],
                   ["#reviews", "Отзывы"],
                   ["#articles", "Статьи"],
+                  ["#booking", "Запись"],
+                  ["#contacts", "Контакты"],
                 ].map(([href, label]) => (
                   <li key={href}>
                     <a href={href} className="text-gray-400 hover:text-white transition-colors text-sm">

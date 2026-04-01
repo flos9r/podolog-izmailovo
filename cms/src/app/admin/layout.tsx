@@ -21,6 +21,7 @@ export default async function AdminLayout({
     { href: "/admin/services", label: "Услуги", icon: "💼" },
     { href: "/admin/prices", label: "Прайс-лист", icon: "💰" },
     { href: "/admin/reviews", label: "Отзывы", icon: "⭐" },
+    { href: "/admin/bookings", label: "Заявки на приём", icon: "📋" },
     { href: "/admin/advantages", label: "Преимущества", icon: "✅" },
     { href: "/admin/tools", label: "Инструменты", icon: "🔧" },
     { href: "/admin/media", label: "Медиа-файлы", icon: "📁" },

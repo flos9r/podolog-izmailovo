@@ -110,3 +110,28 @@ html {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* ── Section decorative separator ─────────── */
+.section-divider {
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-primary) 50%, transparent 100%);
+  opacity: 0.15;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+/* ── Gallery card shimmer ─────────────────── */
+.gallery-shimmer {
+  background: linear-gradient(110deg, #f5f0e8 8%, #faf7f2 18%, #f5f0e8 33%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+
+/* ── Focus ring for forms ─────────────────── */
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
