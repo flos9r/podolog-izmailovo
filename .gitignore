@@ -25,3 +25,4 @@ cms/prisma/dev.db-journal
 cms/.env
 cms/.env.local
 *.db
+.next/
