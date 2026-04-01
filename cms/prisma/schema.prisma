@@ -37,6 +37,14 @@ model SiteSettings {
   secondarySpecialistPhoto String?
   specialistExp            String  @default("Более 8 лет в подологии")
 
+  // Image presentation controls
+  heroImageFit       String  @default("cover")       // cover | contain
+  heroImagePosition  String  @default("center center") // CSS object-position
+  heroImageZoom      Float   @default(1.0)            // 0.5 – 2.0
+  aboutImageFit      String  @default("cover")
+  aboutImagePosition String  @default("center center")
+  aboutImageZoom     Float   @default(1.0)
+
   podologyTitle    String  @default("Что такое подология")
   podologySubtitle String  @default("Подология — это раздел медицины, посвящённый профессиональному уходу за стопами и ногтями. Подолог помогает избавиться от вросших ногтей, натоптышей, трещин, деформаций — без боли и хирургии.")
   podologyCtaText  String  @default("Записаться на консультацию")
@@ -155,6 +163,19 @@ model Tool {
   isPublished Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// ─── Booking requests ────────────────────────────────────
+model Booking {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String   @default("")
+  service   String   @default("")
+  comment   String   @default("")
+  status    String   @default("new") // new | confirmed | completed | cancelled
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ─── Media library ──────────────────────────────────────
