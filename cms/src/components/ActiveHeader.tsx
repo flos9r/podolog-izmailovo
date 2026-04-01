@@ -15,10 +15,11 @@ interface ActiveHeaderProps {
 const navLinks = [
   { href: "#about", label: "Специалист" },
   { href: "#services", label: "Услуги" },
-  { href: "#podology", label: "Подология" },
   { href: "#gallery", label: "Галерея" },
+  { href: "#podology", label: "Подология" },
   { href: "#reviews", label: "Отзывы" },
   { href: "#articles", label: "Статьи" },
+  { href: "#booking", label: "Запись" },
   { href: "#contacts", label: "Контакты" },
 ];
 

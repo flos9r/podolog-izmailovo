@@ -10,11 +10,12 @@ interface MobileMenuProps {
 const navLinks = [
   { href: "#about", label: "Специалист" },
   { href: "#services", label: "Услуги" },
-  { href: "#podology", label: "Подология" },
   { href: "#prices", label: "Цены" },
   { href: "#gallery", label: "Галерея" },
+  { href: "#podology", label: "Подология" },
   { href: "#reviews", label: "Отзывы" },
   { href: "#articles", label: "Статьи" },
+  { href: "#booking", label: "Запись" },
   { href: "#contacts", label: "Контакты" },
 ];
 
@@ -83,7 +84,7 @@ export default function MobileMenu({ phone, phoneDisplay }: MobileMenuProps) {
             {phoneDisplay}
           </a>
           <a
-            href="#contacts"
+            href="#booking"
             onClick={() => setOpen(false)}
             className="block mt-2 text-center py-3 px-6 bg-[var(--color-accent)] text-white rounded-full hover:bg-[var(--color-accent-hover)] transition-colors font-medium"
           >
