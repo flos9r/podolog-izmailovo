@@ -163,7 +163,7 @@ export default async function Home() {
                         <svg className="w-14 h-14 text-[#7B6B54]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        <p className="text-[#7B6B54]/40 text-sm text-center px-4">Фото специалиста<br />(добавьте в&nbsp;настройках&nbsp;→&nbsp;Hero)</p>
+                        <p className="text-[#7B6B54]/40 text-sm text-center px-4 whitespace-nowrap">Фото специалиста<br />(добавьте в настройках)</p>
                       </div>
                     )}
                   </div>
