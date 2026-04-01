@@ -61,7 +61,7 @@ export default function ReviewsSlider({ reviews }: ReviewsSliderProps) {
           <div>
             <h3 className="font-bold text-gray-900 text-lg">{review.author}</h3>
             {review.service && (
-              <p className="text-sm text-[#7b6e8a] mt-0.5">{review.service}</p>
+              <p className="text-sm text-[#9A8B74] mt-0.5">{review.service}</p>
             )}
           </div>
           <StarRating rating={review.rating} />
@@ -85,7 +85,7 @@ export default function ReviewsSlider({ reviews }: ReviewsSliderProps) {
         <div className="flex items-center justify-center gap-4 mt-6">
           <button
             onClick={prev}
-            className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-gray-600 hover:text-[#6b5b7b] hover:shadow-lg transition-all"
+            className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-gray-600 hover:text-[#7B6B54] hover:shadow-lg transition-all"
             aria-label="Предыдущий отзыв"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@ export default function ReviewsSlider({ reviews }: ReviewsSliderProps) {
                 onClick={() => setCurrent(idx)}
                 className={`w-2.5 h-2.5 rounded-full transition-all ${
                   idx === current
-                    ? "bg-[#6b5b7b] w-6"
+                    ? "bg-[#7B6B54] w-6"
                     : "bg-gray-300 hover:bg-gray-400"
                 }`}
                 aria-label={`Отзыв ${idx + 1}`}
@@ -108,7 +108,7 @@ export default function ReviewsSlider({ reviews }: ReviewsSliderProps) {
           </div>
           <button
             onClick={next}
-            className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-gray-600 hover:text-[#6b5b7b] hover:shadow-lg transition-all"
+            className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-gray-600 hover:text-[#7B6B54] hover:shadow-lg transition-all"
             aria-label="Следующий отзыв"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

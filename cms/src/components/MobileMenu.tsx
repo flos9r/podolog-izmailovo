@@ -10,6 +10,7 @@ interface MobileMenuProps {
 const navLinks = [
   { href: "#about", label: "Специалист" },
   { href: "#services", label: "Услуги" },
+  { href: "#podology", label: "Подология" },
   { href: "#prices", label: "Цены" },
   { href: "#gallery", label: "Галерея" },
   { href: "#reviews", label: "Отзывы" },
@@ -69,7 +70,7 @@ export default function MobileMenu({ phone, phoneDisplay }: MobileMenuProps) {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="block py-3 px-4 text-gray-700 hover:text-[#6b5b7b] hover:bg-gray-50 rounded-lg transition-colors text-lg"
+              className="block py-3 px-4 text-gray-700 hover:text-[var(--color-primary)] hover:bg-[var(--color-warm-bg)] rounded-lg transition-colors text-lg"
             >
               {link.label}
             </a>
@@ -77,14 +78,14 @@ export default function MobileMenu({ phone, phoneDisplay }: MobileMenuProps) {
           <hr className="my-3 border-gray-200" />
           <a
             href={`tel:${phone}`}
-            className="block py-3 px-4 text-[#6b5b7b] font-semibold"
+            className="block py-3 px-4 text-[var(--color-primary)] font-semibold"
           >
             {phoneDisplay}
           </a>
           <a
             href="#contacts"
             onClick={() => setOpen(false)}
-            className="block mt-2 text-center py-3 px-6 bg-[#6b5b7b] text-white rounded-lg hover:bg-[#5a4a6a] transition-colors font-medium"
+            className="block mt-2 text-center py-3 px-6 bg-[var(--color-accent)] text-white rounded-full hover:bg-[var(--color-accent-hover)] transition-colors font-medium"
           >
             Записаться
           </a>

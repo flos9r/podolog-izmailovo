@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import MobileMenu from "@/components/MobileMenu";
+import ActiveHeader from "@/components/ActiveHeader";
 import GalleryCard from "@/components/GalleryCard";
 import ReviewsSlider from "@/components/ReviewsSlider";
 
@@ -77,13 +77,18 @@ export default async function Home() {
   const podologyTitle = settings?.podologyTitle ?? "Что такое подология";
   const podologySubtitle = settings?.podologySubtitle ?? "";
   const podologyCtaText = settings?.podologyCtaText ?? "Записаться на консультацию";
-  const podologyCtaUrl = settings?.podologyCtaUrl ?? "#booking";
+  const podologyCtaUrl = settings?.podologyCtaUrl ?? "#contacts";
+
+  // Normalize any legacy "#booking" anchors to "#contacts"
+  const fixCtaUrl = (url: string) => (url === "#booking" ? "#contacts" : url);
+  const heroCtaUrlFixed = fixCtaUrl(s.heroCtaUrl || "#contacts");
+  const podologyCtaUrlFixed = fixCtaUrl(podologyCtaUrl);
 
   return (
     <>
       {/* ═══════════ NEW ARTICLE PROMO BANNER ═══════════ */}
       {latestArticle && (
-        <div className="bg-[#6b5b7b] text-white">
+        <div className="bg-[#7B6B54] text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4 flex-wrap">
             <div className="flex items-center gap-3 min-w-0">
               <span className="shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white border border-white/30">
@@ -110,62 +115,58 @@ export default async function Home() {
       )}
 
       {/* ═══════════ HEADER ═══════════ */}
-      <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <a href="#" className="flex flex-col leading-tight">
-            <span className="text-base font-bold text-[#6b5b7b]">{s.specialistName}</span>
-            <span className="text-xs text-gray-500 font-medium">{s.specialistTitle} · Измайлово</span>
-          </a>
-
-          <nav className="hidden lg:flex items-center gap-5">
-            {[
-              ["#about", "Специалист"],
-              ["#services", "Услуги"],
-              ["#prices", "Цены"],
-              ["#gallery", "Галерея"],
-              ["#podology", "Подология"],
-              ["#reviews", "Отзывы"],
-              ["#articles", "Статьи"],
-              ["#contacts", "Контакты"],
-            ].map(([href, label]) => (
-              <a
-                key={href}
-                href={href}
-                className="text-sm text-gray-600 hover:text-[#6b5b7b] transition-colors font-medium"
-              >
-                {label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <a
-              href={`tel:${s.phone}`}
-              className="hidden sm:inline-block text-sm font-semibold text-[#6b5b7b]"
-            >
-              {s.phoneDisplay}
-            </a>
-            <a
-              href={s.heroCtaUrl || "#booking"}
-              className="hidden sm:inline-block px-5 py-2 bg-[#6b5b7b] text-white text-sm font-medium rounded-lg hover:bg-[#5a4a6a] transition-colors"
-            >
-              {s.heroCtaText}
-            </a>
-            <MobileMenu phone={s.phone} phoneDisplay={s.phoneDisplay} />
-          </div>
-        </div>
-      </header>
+      <ActiveHeader
+        specialistName={s.specialistName}
+        specialistTitle={s.specialistTitle}
+        phone={s.phone}
+        phoneDisplay={s.phoneDisplay}
+        heroCtaText={s.heroCtaText}
+        heroCtaUrl={heroCtaUrlFixed}
+      />
 
       <main>
         {/* ═══════════ HERO ═══════════ */}
-        <section className="relative bg-gradient-to-br from-[#f5f0f8] via-white to-[#f0eff5] overflow-hidden">
+        <section className="relative bg-gradient-to-br from-[#FAF7F2] via-white to-[#F5F0E8] overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              {/* Hero text */}
-              <div className="order-2 md:order-1">
-                <p className="text-sm font-semibold text-[#7b6e8a] tracking-wider uppercase mb-4">
+              {/* Hero photo - LEFT */}
+              <div className="flex justify-center reveal">
+                <div className="relative">
+                  <div className="w-72 h-96 md:w-80 md:h-[440px]">
+                    {heroPhoto ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={heroPhoto}
+                        alt={`${s.specialistName} — ${s.specialistTitle}`}
+                        className="w-full h-full object-cover rounded-3xl shadow-2xl"
+                      />
+                    ) : (
+                      <div className="w-full h-full rounded-3xl bg-[#F5F0E8] flex flex-col items-center justify-center gap-3">
+                        <svg className="w-14 h-14 text-[#7B6B54]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <p className="text-[#7B6B54]/40 text-sm text-center px-4">Фото специалиста</p>
+                      </div>
+                    )}
+                  </div>
+                  {/* Quote card overlay */}
+                  <div className="absolute -bottom-6 -left-4 md:-left-6 bg-white rounded-2xl shadow-lg px-6 py-4 border border-[var(--color-warm-border)] max-w-[280px]">
+                    <p className="text-sm font-bold italic text-gray-800 leading-snug">
+                      «Занимаюсь любимым делом — подологией»
+                    </p>
+                    <div className="mt-2">
+                      <p className="text-sm font-bold text-[var(--color-primary)]">{s.specialistName}</p>
+                      <p className="text-xs text-[var(--color-primary-muted)] uppercase tracking-wider">подолог · Измайлово</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Hero text - RIGHT */}
+              <div className="reveal">
+                <span className="inline-block px-4 py-1.5 border border-[#7B6B54]/30 text-[#9A8B74] rounded-full text-xs font-semibold tracking-wider uppercase mb-5">
                   Подологический кабинет · Измайлово
-                </p>
+                </span>
                 <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
                   {s.heroTitle}
                 </h1>
@@ -176,77 +177,45 @@ export default async function Home() {
                 )}
                 <div className="mt-8 flex flex-col sm:flex-row items-start gap-4">
                   <a
-                    href={s.heroCtaUrl || "#booking"}
-                    className="inline-flex items-center px-7 py-3.5 bg-[#6b5b7b] text-white font-semibold rounded-xl hover:bg-[#5a4a6a] shadow-md hover:shadow-lg transition-all text-base"
+                    href="#contacts"
+                    className="inline-flex items-center px-7 py-3.5 bg-[#5B7B5E] text-white font-semibold rounded-full hover:bg-[#4A6A4D] shadow-md hover:shadow-lg transition-all text-base"
                   >
                     {s.heroCtaText}
-                    <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
                   </a>
                   <a
-                    href={`tel:${s.phone}`}
-                    className="inline-flex items-center px-7 py-3.5 border-2 border-[#6b5b7b] text-[#6b5b7b] font-semibold rounded-xl hover:bg-[#6b5b7b] hover:text-white transition-all text-base"
+                    href="#services"
+                    className="inline-flex items-center px-7 py-3.5 border-2 border-[#7B6B54]/30 text-[#7B6B54] font-semibold rounded-full hover:bg-[#7B6B54] hover:text-white transition-all text-base"
                   >
-                    <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    Позвонить
+                    Услуги и цены
                   </a>
                 </div>
                 {/* Stats */}
                 <div className="mt-10 flex items-center gap-8">
                   <div>
-                    <p className="text-3xl font-bold text-[#6b5b7b]">8+</p>
-                    <p className="text-sm text-gray-500 mt-0.5">лет опыта</p>
+                    <p className="text-3xl font-bold text-[#7B6B54]">8+</p>
+                    <p className="text-xs text-gray-500 mt-0.5 uppercase tracking-wide">лет опыта</p>
                   </div>
-                  <div className="w-px h-10 bg-gray-200" />
+                  <div className="w-px h-10 bg-[#E8E0D4]" />
                   <div>
-                    <p className="text-3xl font-bold text-[#6b5b7b]">1000+</p>
-                    <p className="text-sm text-gray-500 mt-0.5">довольных клиентов</p>
+                    <p className="text-3xl font-bold text-[#7B6B54]">1000+</p>
+                    <p className="text-xs text-gray-500 mt-0.5 uppercase tracking-wide">довольных клиентов</p>
                   </div>
-                  <div className="w-px h-10 bg-gray-200" />
+                  <div className="w-px h-10 bg-[#E8E0D4]" />
                   <div>
-                    <p className="text-3xl font-bold text-[#6b5b7b]">5.0</p>
-                    <p className="text-sm text-gray-500 mt-0.5">Яндекс Карты</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Hero photo */}
-              <div className="order-1 md:order-2 flex justify-center">
-                <div className="relative w-72 h-96 md:w-80 md:h-[420px]">
-                  {heroPhoto ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={heroPhoto}
-                      alt={`${s.specialistName} — ${s.specialistTitle}`}
-                      className="w-full h-full object-cover rounded-3xl shadow-2xl"
-                    />
-                  ) : (
-                    <div className="w-full h-full rounded-3xl bg-gradient-to-br from-[#6b5b7b]/15 to-[#6b5b7b]/5 border-2 border-dashed border-[#6b5b7b]/20 flex flex-col items-center justify-center gap-3 shadow-inner">
-                      <svg className="w-14 h-14 text-[#6b5b7b]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                      <p className="text-[#6b5b7b]/40 text-sm text-center px-4">Фото специалиста<br />(добавьте в настройках)</p>
-                    </div>
-                  )}
-                  {/* Decorative badge */}
-                  <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-lg px-5 py-3 border border-gray-100">
-                    <p className="text-xs text-gray-500">Опыт</p>
-                    <p className="text-base font-bold text-[#6b5b7b]">{s.specialistExp}</p>
+                    <p className="text-3xl font-bold text-[#7B6B54]">5.0</p>
+                    <p className="text-xs text-gray-500 mt-0.5 uppercase tracking-wide">Яндекс Карты</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           {/* Decorative circles */}
-          <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#6b5b7b]/5 rounded-full" />
-          <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-[#6b5b7b]/5 rounded-full" />
+          <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#7B6B54]/5 rounded-full" />
+          <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-[#5B7B5E]/5 rounded-full" />
         </section>
 
         {/* ═══════════ DISCLAIMER BAR ═══════════ */}
-        <div className="bg-gray-50 border-b border-gray-100">
+        <div className="bg-[#FAF7F2] border-b border-[#E8E0D4]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
             <p className="text-xs text-gray-500 text-center">
               Подолог — специалист в области профессионального ухода за стопами и ногтями. Услуги носят косметический и профилактический характер. При наличии заболеваний необходима консультация врача.
@@ -259,7 +228,7 @@ export default async function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               {/* About photo */}
-              <div className="flex justify-center">
+              <div className="flex justify-center reveal">
                 <div className="relative w-72 h-80 md:w-80 md:h-96">
                   {aboutPhoto ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
@@ -269,15 +238,15 @@ export default async function Home() {
                       className="w-full h-full object-cover rounded-3xl shadow-xl"
                     />
                   ) : (
-                    <div className="w-full h-80 md:h-96 rounded-3xl bg-gradient-to-br from-[#6b5b7b]/10 to-[#6b5b7b]/5 border-2 border-dashed border-[#6b5b7b]/20 flex flex-col items-center justify-center gap-3">
-                      <svg className="w-14 h-14 text-[#6b5b7b]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-full h-80 md:h-96 rounded-3xl bg-gradient-to-br from-[#7B6B54]/10 to-[#7B6B54]/5 border-2 border-dashed border-[#7B6B54]/20 flex flex-col items-center justify-center gap-3">
+                      <svg className="w-14 h-14 text-[#7B6B54]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
-                      <p className="text-[#6b5b7b]/40 text-sm text-center px-4">Фото специалиста<br />(добавьте в настройках)</p>
+                      <p className="text-[#7B6B54]/40 text-sm text-center px-4">Фото специалиста<br />(добавьте в настройках)</p>
                     </div>
                   )}
                   {/* Experience badge */}
-                  <div className="absolute -bottom-4 -right-4 bg-[#6b5b7b] text-white rounded-2xl shadow-lg px-5 py-3">
+                  <div className="absolute -bottom-4 -right-4 bg-[#7B6B54] text-white rounded-2xl shadow-lg px-5 py-3">
                     <p className="text-2xl font-bold">8+</p>
                     <p className="text-xs text-white/80">лет опыта</p>
                   </div>
@@ -285,17 +254,17 @@ export default async function Home() {
               </div>
 
               {/* About text */}
-              <div>
-                <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+              <div className="reveal">
+                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
                   О специалисте
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
                   {s.specialistName}
                 </h2>
-                <p className="mt-1 text-xl text-[#7b6e8a] font-medium">{s.specialistTitle}</p>
+                <p className="mt-1 text-xl text-[#9A8B74] font-medium">{s.specialistTitle}</p>
 
                 {s.specialistBio && (
-                  <blockquote className="mt-5 pl-4 border-l-4 border-[#6b5b7b]/30">
+                  <blockquote className="mt-5 pl-4 border-l-4 border-[#7B6B54]/30">
                     <p className="text-gray-700 leading-relaxed italic whitespace-pre-line">
                       {s.specialistBio}
                     </p>
@@ -313,7 +282,7 @@ export default async function Home() {
                       `${s.specialistExp} практики`,
                     ].map((item, i) => (
                       <li key={i} className="flex items-start gap-2.5 text-sm text-gray-700">
-                        <svg className="w-5 h-5 text-[#6b5b7b] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5 text-[#7B6B54] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                         {item}
@@ -323,8 +292,8 @@ export default async function Home() {
                 </div>
 
                 <a
-                  href={s.heroCtaUrl || "#booking"}
-                  className="inline-flex items-center mt-8 px-7 py-3.5 bg-[#6b5b7b] text-white font-semibold rounded-xl hover:bg-[#5a4a6a] shadow-md hover:shadow-lg transition-all"
+                  href="#contacts"
+                  className="inline-flex items-center mt-8 px-7 py-3.5 bg-[#5B7B5E] text-white font-semibold rounded-full hover:bg-[#4A6A4D] shadow-md hover:shadow-lg transition-all"
                 >
                   Записаться на приём
                 </a>
@@ -335,10 +304,10 @@ export default async function Home() {
 
         {/* ═══════════ ADVANTAGES ═══════════ */}
         {advantages.length > 0 && (
-          <section className="py-20 bg-gray-50">
+          <section className="py-20 bg-[#FAF7F2]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-14">
-                <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+              <div className="text-center mb-14 reveal">
+                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
                   Преимущества
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
@@ -349,9 +318,9 @@ export default async function Home() {
                 {advantages.map((adv, idx) => (
                   <div
                     key={adv.id}
-                    className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow border border-gray-100"
+                    className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow border border-[#E8E0D4] card-hover reveal"
                   >
-                    <div className="w-14 h-14 rounded-xl bg-[#6b5b7b]/10 text-[#6b5b7b] flex items-center justify-center mb-5">
+                    <div className="w-14 h-14 rounded-xl bg-[#7B6B54]/10 text-[#7B6B54] flex items-center justify-center mb-5">
                       {advantageIcons[idx % advantageIcons.length]}
                     </div>
                     <h3 className="text-lg font-bold text-gray-900 mb-2">{adv.title}</h3>
@@ -367,8 +336,8 @@ export default async function Home() {
         {services.length > 0 && (
           <section id="services" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-14">
-                <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+              <div className="text-center mb-14 reveal">
+                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
                   Что я делаю
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
@@ -382,9 +351,9 @@ export default async function Home() {
                 {services.map((svc) => (
                   <div
                     key={svc.id}
-                    className="group bg-white rounded-2xl p-8 border border-gray-100 hover:border-[#6b5b7b]/30 shadow-sm hover:shadow-lg transition-all"
+                    className="group bg-white rounded-2xl p-8 border border-[#E8E0D4] hover:border-[#7B6B54]/30 shadow-sm hover:shadow-lg transition-all card-hover reveal"
                   >
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#6b5b7b] transition-colors">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#7B6B54] transition-colors">
                       {svc.name}
                     </h3>
                     <p className="mt-3 text-gray-600 leading-relaxed">{svc.description}</p>
@@ -399,8 +368,8 @@ export default async function Home() {
               </div>
               <div className="text-center mt-10">
                 <a
-                  href={s.heroCtaUrl || "#booking"}
-                  className="inline-flex items-center px-7 py-3.5 bg-[#6b5b7b] text-white font-semibold rounded-xl hover:bg-[#5a4a6a] shadow-md hover:shadow-lg transition-all"
+                  href="#contacts"
+                  className="inline-flex items-center px-7 py-3.5 bg-[#5B7B5E] text-white font-semibold rounded-full hover:bg-[#4A6A4D] shadow-md hover:shadow-lg transition-all"
                 >
                   Записаться на услугу
                 </a>
@@ -411,10 +380,10 @@ export default async function Home() {
 
         {/* ═══════════ PRICES ═══════════ */}
         {prices.length > 0 && (
-          <section id="prices" className="py-20 bg-gray-50">
+          <section id="prices" className="py-20 bg-[#FAF7F2]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-14">
-                <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+              <div className="text-center mb-14 reveal">
+                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
                   Прайс-лист
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
@@ -422,10 +391,10 @@ export default async function Home() {
                 </h2>
                 <p className="mt-3 text-gray-500">Точная стоимость определяется после осмотра. Запишитесь на консультацию.</p>
               </div>
-              <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+              <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm overflow-hidden border border-[#E8E0D4] reveal">
                 <table className="w-full">
                   <thead>
-                    <tr className="bg-[#6b5b7b] text-white">
+                    <tr className="bg-[#7B6B54] text-white">
                       <th className="text-left py-4 px-6 font-semibold">Услуга</th>
                       <th className="text-center py-4 px-4 font-semibold hidden sm:table-cell">Длительность</th>
                       <th className="text-right py-4 px-6 font-semibold">Цена</th>
@@ -433,10 +402,10 @@ export default async function Home() {
                   </thead>
                   <tbody>
                     {prices.map((price, idx) => (
-                      <tr key={price.id} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
+                      <tr key={price.id} className={idx % 2 === 0 ? "bg-white" : "bg-[#FAF7F2]/50"}>
                         <td className="py-4 px-6 text-gray-900 font-medium">{price.serviceName}</td>
                         <td className="py-4 px-4 text-center text-gray-500 hidden sm:table-cell">{price.duration}</td>
-                        <td className="py-4 px-6 text-right font-bold text-[#6b5b7b] whitespace-nowrap">{price.price}</td>
+                        <td className="py-4 px-6 text-right font-bold text-[#7B6B54] whitespace-nowrap">{price.price}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -450,8 +419,8 @@ export default async function Home() {
         {gallery.length > 0 && (
           <section id="gallery" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-14">
-                <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+              <div className="text-center mb-14 reveal">
+                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
                   Мои работы
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
@@ -479,10 +448,10 @@ export default async function Home() {
         )}
 
         {/* ═══════════ PODOLOGY ═══════════ */}
-        <section id="podology" className="py-20 bg-gray-50">
+        <section id="podology" className="py-20 bg-[#FAF7F2]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+            <div className="text-center mb-14 reveal">
+              <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
                 О профессии
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
@@ -496,8 +465,9 @@ export default async function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <div className="text-xs font-semibold text-[#7b6e8a] uppercase tracking-wider mb-2">История</div>
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#E8E0D4] podology-card card-hover reveal">
+                <div className="w-10 h-10 rounded-full bg-[#7B6B54]/10 text-[#7B6B54] flex items-center justify-center mb-4 text-sm font-bold">1</div>
+                <div className="text-xs font-semibold text-[#9A8B74] uppercase tracking-wider mb-2">История</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Как появилась профессия</h3>
                 <p className="text-gray-600 leading-relaxed mb-3">
                   Подология выделилась в самостоятельную дисциплину в Европе и США в XX веке. Первоначально специалисты занимались исключительно лечением заболеваний стоп, затем профиль расширился до профессионального ухода.
@@ -507,8 +477,9 @@ export default async function Home() {
                 </p>
               </div>
 
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <div className="text-xs font-semibold text-[#7b6e8a] uppercase tracking-wider mb-2">Суть профессии</div>
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#E8E0D4] podology-card card-hover reveal">
+                <div className="w-10 h-10 rounded-full bg-[#7B6B54]/10 text-[#7B6B54] flex items-center justify-center mb-4 text-sm font-bold">2</div>
+                <div className="text-xs font-semibold text-[#9A8B74] uppercase tracking-wider mb-2">Суть профессии</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Чем занимается подолог</h3>
                 <p className="text-gray-600 leading-relaxed mb-3">
                   Подолог помогает с проблемами, которые мешают нормально ходить и жить: вросшие ногти, натоптыши, трещины пяток, мозоли, деформации ногтевых пластин, грибковые поражения.
@@ -518,8 +489,9 @@ export default async function Home() {
                 </p>
               </div>
 
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <div className="text-xs font-semibold text-[#7b6e8a] uppercase tracking-wider mb-2">Зачем это нужно</div>
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#E8E0D4] podology-card card-hover reveal">
+                <div className="w-10 h-10 rounded-full bg-[#7B6B54]/10 text-[#7B6B54] flex items-center justify-center mb-4 text-sm font-bold">3</div>
+                <div className="text-xs font-semibold text-[#9A8B74] uppercase tracking-wider mb-2">Зачем это нужно</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Как это влияет на жизнь</h3>
                 <p className="text-gray-600 leading-relaxed mb-3">
                   Проблемы со стопами напрямую влияют на осанку, нагрузку на суставы и общее самочувствие.
@@ -531,7 +503,7 @@ export default async function Home() {
                     "Здоровые стопы — это нормальная нагрузка на суставы и позвоночник",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                      <svg className="w-4 h-4 text-[#6b5b7b] mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 text-[#7B6B54] mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       {item}
@@ -543,8 +515,8 @@ export default async function Home() {
 
             <div className="text-center mt-10">
               <a
-                href={podologyCtaUrl}
-                className="inline-flex items-center px-7 py-3.5 bg-[#6b5b7b] text-white font-semibold rounded-xl hover:bg-[#5a4a6a] shadow-md hover:shadow-lg transition-all"
+                href={podologyCtaUrlFixed}
+                className="inline-flex items-center px-7 py-3.5 bg-[#5B7B5E] text-white font-semibold rounded-full hover:bg-[#4A6A4D] shadow-md hover:shadow-lg transition-all"
               >
                 {podologyCtaText}
               </a>
@@ -556,8 +528,8 @@ export default async function Home() {
         {reviews.length > 0 && (
           <section id="reviews" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-14">
-                <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+              <div className="text-center mb-14 reveal">
+                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
                   Отзывы клиентов
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
@@ -584,10 +556,10 @@ export default async function Home() {
 
         {/* ═══════════ ARTICLES ═══════════ */}
         {articlesForGrid.length > 0 && (
-          <section id="articles" className="py-20 bg-gray-50">
+          <section id="articles" className="py-20 bg-[#FAF7F2]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-14">
-                <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+              <div className="text-center mb-14 reveal">
+                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
                   Блог
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
@@ -599,7 +571,7 @@ export default async function Home() {
                   <Link
                     key={article.id}
                     href={`/articles/${article.slug}`}
-                    className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#6b5b7b]/30 shadow-sm hover:shadow-lg transition-all"
+                    className="group bg-white rounded-2xl overflow-hidden border border-[#E8E0D4] hover:border-[#7B6B54]/30 shadow-sm hover:shadow-lg transition-all card-hover reveal"
                   >
                     {article.coverImage && (
                       <div className="h-48 overflow-hidden">
@@ -613,11 +585,11 @@ export default async function Home() {
                     )}
                     <div className="p-7">
                       {article.tag && (
-                        <span className="inline-block px-3 py-1 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-xs font-semibold mb-3">
+                        <span className="inline-block px-3 py-1 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-xs font-semibold mb-3">
                           {article.tag}
                         </span>
                       )}
-                      <h3 className="text-lg font-bold text-gray-900 group-hover:text-[#6b5b7b] transition-colors line-clamp-2">
+                      <h3 className="text-lg font-bold text-gray-900 group-hover:text-[#7B6B54] transition-colors line-clamp-2">
                         {article.title}
                       </h3>
                       {article.excerpt && (
@@ -625,7 +597,7 @@ export default async function Home() {
                           {article.excerpt}
                         </p>
                       )}
-                      <span className="inline-flex items-center mt-4 text-sm font-medium text-[#6b5b7b] group-hover:gap-2 transition-all">
+                      <span className="inline-flex items-center mt-4 text-sm font-medium text-[#7B6B54] group-hover:gap-2 transition-all">
                         Читать
                         <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -643,8 +615,8 @@ export default async function Home() {
         {tools.length > 0 && (
           <section className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-14">
-                <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+              <div className="text-center mb-14 reveal">
+                <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
                   Оборудование
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
@@ -662,10 +634,10 @@ export default async function Home() {
                   return (
                     <div
                       key={tool.id}
-                      className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100"
+                      className="bg-white rounded-2xl p-8 shadow-sm border border-[#E8E0D4] card-hover reveal"
                     >
                       <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-[#6b5b7b]/10 text-[#6b5b7b] flex items-center justify-center shrink-0">
+                        <div className="w-12 h-12 rounded-xl bg-[#7B6B54]/10 text-[#7B6B54] flex items-center justify-center shrink-0">
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -674,7 +646,7 @@ export default async function Home() {
                         <div>
                           <h3 className="text-lg font-bold text-gray-900">{tool.name}</h3>
                           {tool.purpose && (
-                            <p className="text-sm text-[#7b6e8a] font-medium mt-0.5">
+                            <p className="text-sm text-[#9A8B74] font-medium mt-0.5">
                               {tool.purpose}
                             </p>
                           )}
@@ -702,10 +674,10 @@ export default async function Home() {
         )}
 
         {/* ═══════════ CONTACTS ═══════════ */}
-        <section id="contacts" className="py-20 bg-gray-50">
+        <section id="contacts" className="py-20 bg-[#FAF7F2]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <span className="inline-block px-4 py-1.5 bg-[#6b5b7b]/10 text-[#6b5b7b] rounded-full text-sm font-medium mb-4">
+            <div className="text-center mb-14 reveal">
+              <span className="inline-block px-4 py-1.5 bg-[#7B6B54]/10 text-[#7B6B54] rounded-full text-sm font-medium mb-4">
                 Как связаться
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
@@ -717,35 +689,35 @@ export default async function Home() {
               <div className="space-y-6">
                 {/* Phone */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#6b5b7b]/10 text-[#6b5b7b] flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#7B6B54]/10 text-[#7B6B54] flex items-center justify-center shrink-0">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Телефон</p>
-                    <a href={`tel:${s.phone}`} className="text-lg font-semibold text-gray-900 hover:text-[#6b5b7b] transition-colors">
+                    <a href={`tel:${s.phone}`} className="text-lg font-semibold text-gray-900 hover:text-[#7B6B54] transition-colors">
                       {s.phoneDisplay}
                     </a>
                   </div>
                 </div>
                 {/* Email */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#6b5b7b]/10 text-[#6b5b7b] flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#7B6B54]/10 text-[#7B6B54] flex items-center justify-center shrink-0">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Электронная почта</p>
-                    <a href={`mailto:${s.email}`} className="text-lg font-semibold text-gray-900 hover:text-[#6b5b7b] transition-colors">
+                    <a href={`mailto:${s.email}`} className="text-lg font-semibold text-gray-900 hover:text-[#7B6B54] transition-colors">
                       {s.email}
                     </a>
                   </div>
                 </div>
                 {/* Address */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#6b5b7b]/10 text-[#6b5b7b] flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#7B6B54]/10 text-[#7B6B54] flex items-center justify-center shrink-0">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -758,7 +730,7 @@ export default async function Home() {
                       href={`https://yandex.ru/maps/?text=${s.mapQuery}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm text-[#6b5b7b] hover:underline mt-1"
+                      className="inline-flex items-center gap-1 text-sm text-[#7B6B54] hover:underline mt-1"
                     >
                       Показать на карте
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -769,7 +741,7 @@ export default async function Home() {
                 </div>
                 {/* Working hours */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#6b5b7b]/10 text-[#6b5b7b] flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#7B6B54]/10 text-[#7B6B54] flex items-center justify-center shrink-0">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -837,11 +809,11 @@ export default async function Home() {
                     )}
                   </div>
                 </div>
-                <div className="mt-8 p-6 bg-[#6b5b7b]/5 rounded-2xl text-center">
+                <div className="mt-8 p-6 bg-[#7B6B54]/5 rounded-2xl text-center">
                   <p className="text-gray-700 font-medium mb-4">Запишитесь на приём прямо сейчас</p>
                   <a
                     href={`tel:${s.phone}`}
-                    className="inline-flex items-center px-8 py-3.5 bg-[#6b5b7b] text-white font-semibold rounded-xl hover:bg-[#5a4a6a] shadow-lg hover:shadow-xl transition-all"
+                    className="inline-flex items-center px-8 py-3.5 bg-[#5B7B5E] text-white font-semibold rounded-full hover:bg-[#4A6A4D] shadow-lg hover:shadow-xl transition-all"
                   >
                     <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />

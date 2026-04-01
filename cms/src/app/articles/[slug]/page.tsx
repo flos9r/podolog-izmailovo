@@ -21,7 +21,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-lg font-bold" style={{ color: "#7b6e8a" }}>
+          <Link href="/" className="text-lg font-bold" style={{ color: "#7B6B54" }}>
             {settings?.specialistName || "Подолог"}
           </Link>
           <Link href="/#articles" className="text-sm text-gray-600 hover:text-gray-900">
@@ -33,7 +33,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       {/* Article */}
       <article className="max-w-3xl mx-auto px-4 py-12">
         {article.tag && (
-          <span className="inline-block px-3 py-1 text-xs font-medium rounded-full mb-4" style={{ backgroundColor: "#f3f0f6", color: "#7b6e8a" }}>
+          <span className="inline-block px-3 py-1 text-xs font-medium rounded-full mb-4" style={{ backgroundColor: "#FAF7F2", color: "#7B6B54" }}>
             {article.tag}
           </span>
         )}
@@ -62,7 +62,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <ul className="space-y-1">
               {sources.map((src, i) => (
                 <li key={i}>
-                  <a href={src.url} target="_blank" rel="noopener noreferrer" className="text-sm hover:underline" style={{ color: "#7b6e8a" }}>
+                  <a href={src.url} target="_blank" rel="noopener noreferrer" className="text-sm hover:underline" style={{ color: "#7B6B54" }}>
                     {src.text} ↗
                   </a>
                 </li>
@@ -72,7 +72,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         )}
 
         <div className="mt-12 pt-8 border-t border-gray-200 text-center">
-          <Link href="/#articles" className="inline-block px-6 py-3 rounded-lg text-white font-medium" style={{ backgroundColor: "#7b6e8a" }}>
+          <Link href="/#articles" className="inline-block px-6 py-3 rounded-lg text-white font-medium" style={{ backgroundColor: "#7B6B54" }}>
             ← Все статьи
           </Link>
         </div>
